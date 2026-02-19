@@ -1,0 +1,4155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeGear Guide - Checklist de EPIs e Calculadora de Riscos</title>
+    <meta name="description" content="Sistema de checklist de EPIs por função industrial com validação de riscos e registro em planilha.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Adicionar jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        /* ===== NOVA PALETA DE CORES BASEADA NA LOGO ===== */
+        :root {
+            /* Cores principais da logo */
+            --primary: #f15a24;      /* Laranja principal vibrante */
+            --secondary: #fcb041;    /* Laranja amarelado secundário */
+            --neutral-dark: #77787c; /* Cinza médio azulado */
+            --neutral-light: #bdbbbc;/* Cinza claro rosado */
+            
+            /* Cores derivadas */
+            --primary-dark: #d14a1d;   /* 15% mais escuro */
+            --primary-light: #f8a585;  /* 30% mais claro */
+            --secondary-dark: #e09a38; /* 15% mais escuro */
+            --secondary-light: #fed089;/* 30% mais claro */
+            
+            /* Cores de estado */
+            --success: #27ae60;        /* Verde mantido */
+            --warning: #f0a31e;        /* Amarelo ajustado */
+            --danger: #e74c3c;         /* Vermelho ajustado */
+            
+            /* Cores neutras */
+            --background: #f8f9fa;     /* Fundo muito claro */
+            --surface: #ffffff;        /* Superfícies brancas */
+            --text: #2c3e50;          /* Texto escuro */
+            --text-light: #77787c;     /* Texto secundário */
+            --white: #ffffff;
+            --gray: #95a5a6;
+            
+            /* Cores de destaque */
+            --accent: #2a5caa;        /* Azul complementar para contraste */
+            --accent-light: #4a7cca;  /* Azul mais claro */
+            --accent-dark: #1a3a6a;   /* Azul mais escuro */
+            
+            /* Utilitários */
+            --shadow: 0 8px 24px rgba(241, 90, 36, 0.12);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+.logo-img {
+    height: 40px;        /* ajuste conforme necessário */
+    width: auto;
+    margin-right: 10px;  /* espaçamento entre a imagem e o texto */
+}
+
+        /* Todo o CSS permanece IDÊNTICO ao original */
+        /* ... */
+        
+        /* Por brevidade, omiti a repetição do CSS aqui, mas no arquivo final ele deve estar completo. */
+        /* ===== NOVA PALETA DE CORES BASEADA NA LOGO ===== */
+        :root {
+            /* Cores principais da logo */
+            --primary: #f15a24;      /* Laranja principal vibrante */
+            --secondary: #fcb041;    /* Laranja amarelado secundário */
+            --neutral-dark: #77787c; /* Cinza médio azulado */
+            --neutral-light: #bdbbbc;/* Cinza claro rosado */
+            
+            /* Cores derivadas */
+            --primary-dark: #d14a1d;   /* 15% mais escuro */
+            --primary-light: #f8a585;  /* 30% mais claro */
+            --secondary-dark: #e09a38; /* 15% mais escuro */
+            --secondary-light: #fed089;/* 30% mais claro */
+            
+            /* Cores de estado */
+            --success: #27ae60;        /* Verde mantido */
+            --warning: #f0a31e;        /* Amarelo ajustado */
+            --danger: #e74c3c;         /* Vermelho ajustado */
+            
+            /* Cores neutras */
+            --background: #f8f9fa;     /* Fundo muito claro */
+            --surface: #ffffff;        /* Superfícies brancas */
+            --text: #2c3e50;          /* Texto escuro */
+            --text-light: #77787c;     /* Texto secundário */
+            --white: #ffffff;
+            --gray: #95a5a6;
+            
+            /* Cores de destaque */
+            --accent: #2a5caa;        /* Azul complementar para contraste */
+            --accent-light: #4a7cca;  /* Azul mais claro */
+            --accent-dark: #1a3a6a;   /* Azul mais escuro */
+            
+            /* Utilitários */
+            --shadow: 0 8px 24px rgba(241, 90, 36, 0.12);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* ===== RESET E ESTILOS GERAIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+            transition: var(--transition);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--neutral-dark);
+        }
+
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2.2rem; }
+        h3 { font-size: 1.6rem; }
+
+        @media (min-width: 1024px) {
+            h1 { font-size: 3.2rem; }
+            h2 { font-size: 2.6rem; }
+            h3 { font-size: 1.8rem; }
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(241, 90, 36, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(241, 90, 36, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success) 0%, #2ECC71 100%);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #F5B041 100%);
+            color: var(--neutral-dark);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger) 0%, #EC7063 100%);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        section {
+            padding: 4rem 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mb-3 { margin-bottom: 3rem; }
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mt-3 { margin-top: 3rem; }
+
+        /* ===== HEADER ATUALIZADO ===== */
+        header {
+            background-color: var(--surface);
+            box-shadow: 0 4px 20px rgba(119, 120, 124, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            color: var(--secondary);
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--neutral-dark);
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links .btn {
+            padding: 0.7rem 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--secondary);
+        }
+
+        /* ===== HERO SECTION ATUALIZADA ===== */
+        .hero {
+            text-align: center;
+            padding: 6rem 0;
+            background: linear-gradient(135deg, rgba(241, 90, 36, 0.1) 0%, rgba(252, 176, 65, 0.05) 100%);
+            border-radius: 0 0 var(--radius) var(--radius);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="%23ffffff" opacity="0.3" d="M0,0 L100,0 L100,100 Z"/></svg>');
+            background-size: cover;
+            z-index: 0;
+        }
+
+        .hero > .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--neutral-dark) 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: var(--text);
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+
+        /* ===== SISTEMA DE NAVEGAÇÃO HIERÁRQUICO ===== */
+        .hierarchy-nav {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (min-width: 1024px) {
+            .hierarchy-nav {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+
+        .nav-step {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            border: 1px solid rgba(189, 187, 188, 0.2);
+        }
+
+        .nav-step-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid rgba(189, 187, 188, 0.3);
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .nav-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 300px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .nav-options::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .nav-options::-webkit-scrollbar-track {
+            background: rgba(189, 187, 188, 0.2);
+            border-radius: 10px;
+        }
+
+        .nav-options::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 10px;
+        }
+
+        .nav-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: var(--background);
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .nav-option:hover {
+            background-color: rgba(241, 90, 36, 0.05);
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .nav-option.active {
+            background: linear-gradient(135deg, rgba(241, 90, 36, 0.1) 0%, rgba(241, 90, 36, 0.05) 100%);
+            border-color: var(--primary);
+        }
+
+        .nav-option-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(241, 90, 36, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .nav-option-content {
+            flex: 1;
+        }
+
+        .nav-option-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--neutral-dark);
+        }
+
+        .nav-option-desc {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .nav-option-arrow {
+            color: var(--primary);
+            opacity: 0.5;
+        }
+
+        .nav-option.active .nav-option-arrow {
+            opacity: 1;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(189, 187, 188, 0.2);
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb-item.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-light);
+            opacity: 0.5;
+        }
+
+        /* ===== SISTEMA DE FILTROS ===== */
+        .filters-container {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(189, 187, 188, 0.2);
+        }
+
+        .filters-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .filter-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--background);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-tag:hover {
+            background-color: rgba(241, 90, 36, 0.1);
+        }
+
+        .filter-tag.active {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: 2px solid rgba(189, 187, 188, 0.5);
+            border-radius: var(--radius);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(241, 90, 36, 0.1);
+        }
+
+        /* ===== LAYOUT PRINCIPAL ===== */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .card {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+            transition: var(--transition);
+            border: 1px solid rgba(189, 187, 188, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 32px rgba(241, 90, 36, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(189, 187, 188, 0.3);
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--primary);
+            background: linear-gradient(135deg, rgba(241, 90, 36, 0.1) 0%, rgba(252, 176, 65, 0.05) 100%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ===== FORMULÁRIO SIMPLIFICADO ===== */
+        .identification-form {
+            margin-bottom: 2rem;
+        }
+
+        .form-note {
+            background-color: rgba(241, 90, 36, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--neutral-dark);
+        }
+
+        .form-note i {
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--neutral-dark);
+        }
+
+        .required::after {
+            content: " *";
+            color: var(--danger);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(189, 187, 188, 0.5);
+            border-radius: var(--radius);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--surface);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(241, 90, 36, 0.1);
+            background-color: var(--surface);
+        }
+
+        /* ===== CHECKLIST DE EPIS ORGANIZADO POR REGIÃO ===== */
+        .checklist-container {
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .checklist-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .checklist-container::-webkit-scrollbar-track {
+            background: rgba(189, 187, 188, 0.2);
+            border-radius: 10px;
+        }
+
+        .checklist-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 10px;
+        }
+
+        .epi-region {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(189, 187, 188, 0.3);
+        }
+
+        .region-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(241, 90, 36, 0.05) 0%, rgba(241, 90, 36, 0.02) 100%);
+            border-radius: var(--radius);
+        }
+
+        .region-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .region-title {
+            flex: 1;
+        }
+
+        .region-count {
+            background-color: var(--surface);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            box-shadow: 0 2px 8px rgba(119, 120, 124, 0.1);
+        }
+
+        .epi-item {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem;
+            background-color: var(--background);
+            border-radius: var(--radius);
+            margin-bottom: 1rem;
+            transition: var(--transition);
+            border-left: 6px solid transparent;
+            cursor: pointer;
+        }
+
+        .epi-item:hover {
+            background-color: rgba(241, 90, 36, 0.05);
+            transform: translateX(5px);
+        }
+
+        .epi-item.checked {
+            background-color: rgba(39, 174, 96, 0.1);
+            border-left-color: var(--success);
+        }
+
+        .epi-item.unchecked {
+            background-color: rgba(231, 76, 60, 0.05);
+            border-left-color: transparent;
+        }
+
+        .epi-checkbox {
+            width: 22px;
+            height: 22px;
+            margin-right: 1rem;
+            cursor: pointer;
+            accent-color: var(--success);
+        }
+
+        .epi-info {
+            flex: 1;
+        }
+
+        .epi-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .epi-norm {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .epi-status {
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .status-ok {
+            background-color: rgba(39, 174, 96, 0.2);
+            color: var(--success);
+        }
+
+        .status-missing {
+            background-color: rgba(231, 76, 60, 0.2);
+            color: var(--danger);
+        }
+
+        .epi-required {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+
+        .required-badge {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+        }
+
+        .optional-badge {
+            background-color: rgba(240, 163, 30, 0.1);
+            color: var(--warning);
+        }
+
+        /* ===== CALCULADORA DE RISCOS ===== */
+        .risk-calculator {
+            margin-top: 2rem;
+        }
+
+        .risk-results {
+            margin-top: 1.5rem;
+        }
+
+        .risk-item {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--radius);
+            background-color: var(--background);
+            border-left: 6px solid;
+            animation: fadeIn 0.5s ease;
+            transition: var(--transition);
+        }
+
+        .risk-item:hover {
+            transform: translateX(5px);
+        }
+
+        .risk-item.high {
+            border-left-color: var(--danger);
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(231, 76, 60, 0.05) 100%);
+        }
+
+        .risk-item.medium {
+            border-left-color: var(--warning);
+            background: linear-gradient(135deg, rgba(240, 163, 30, 0.1) 0%, rgba(240, 163, 30, 0.05) 100%);
+        }
+
+        .risk-item.low {
+            border-left-color: var(--success);
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.1) 0%, rgba(39, 174, 96, 0.05) 100%);
+        }
+
+        .risk-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .risk-icon {
+            font-size: 1.5rem;
+        }
+
+        .risk-description {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .risk-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid rgba(119, 120, 124, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: 0 4px 8px rgba(119, 120, 124, 0.05);
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(119, 120, 124, 0.1);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* ===== ORIENTAÇÕES ===== */
+        .guidance-container {
+            margin-top: 2rem;
+        }
+
+        .guidance-item {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: var(--radius);
+            background: linear-gradient(135deg, rgba(241, 90, 36, 0.1) 0%, rgba(241, 90, 36, 0.05) 100%);
+            border-left: 6px solid var(--primary);
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .guidance-item.active {
+            display: block;
+        }
+
+        .guidance-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .guidance-icon {
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+
+        /* ===== BOTÃO DE CONTINUAR ===== */
+        .continue-container {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(189, 187, 188, 0.3);
+            text-align: center;
+        }
+
+        .selected-activity-info {
+            background-color: rgba(241, 90, 36, 0.05);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .selected-activity-info h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== MODAIS ===== */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(119, 120, 124, 0.7);
+            z-index: 1002;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 20px 40px rgba(119, 120, 124, 0.2);
+        }
+
+        .confirmation-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(189, 187, 188, 0.3);
+        }
+
+        .confirmation-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        .warning-icon {
+            background: linear-gradient(135deg, rgba(240, 163, 30, 0.2) 0%, rgba(240, 163, 30, 0.1) 100%);
+            color: var(--warning);
+        }
+
+        .danger-icon {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.2) 0%, rgba(231, 76, 60, 0.1) 100%);
+            color: var(--danger);
+        }
+
+        .confirmation-title {
+            color: var(--neutral-dark);
+            margin: 0;
+            flex: 1;
+        }
+
+        .confirmation-message {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .missing-items-list {
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: var(--background);
+            border-radius: var(--radius);
+            border: 1px solid rgba(189, 187, 188, 0.5);
+        }
+
+        .missing-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--warning);
+        }
+
+        .missing-item.danger {
+            border-left-color: var(--danger);
+        }
+
+        .missing-item i {
+            color: var(--warning);
+        }
+
+        .missing-item.danger i {
+            color: var(--danger);
+        }
+
+        .confirmation-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .confirmation-buttons .btn {
+            flex: 1;
+        }
+
+        .btn-cancel {
+            background: transparent;
+            border: 2px solid var(--text-light);
+            color: var(--text-light);
+        }
+
+        .btn-cancel:hover {
+            background-color: var(--text-light);
+            color: var(--white);
+        }
+
+        /* ===== NOTIFICAÇÕES ===== */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            z-index: 10000;
+            animation: slideInRight 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            max-width: 400px;
+            min-width: 300px;
+        }
+
+        .notification.hiding {
+            animation: slideOutRight 0.3s ease;
+        }
+
+        .notification-danger {
+            background: linear-gradient(135deg, var(--danger) 0%, #EC7063 100%);
+            color: var(--white);
+            border-left: 6px solid rgba(255,255,255,0.3);
+        }
+
+        .notification-warning {
+            background: linear-gradient(135deg, var(--warning) 0%, #F5B041 100%);
+            color: var(--neutral-dark);
+            border-left: 6px solid rgba(119, 120, 124, 0.1);
+        }
+
+        .notification-success {
+            background: linear-gradient(135deg, var(--success) 0%, #2ECC71 100%);
+            color: var(--white);
+            border-left: 6px solid rgba(255,255,255,0.3);
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: var(--transition);
+            padding: 0.25rem;
+            border-radius: 4px;
+        }
+
+        .notification-close:hover {
+            opacity: 1;
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* ===== STATUS DE VALIDAÇÃO ===== */
+        .validation-status {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            padding: 1rem 1.5rem;
+            box-shadow: var(--shadow);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 2px solid transparent;
+            transition: var(--transition);
+            min-width: 300px;
+            max-width: 500px;
+        }
+
+        .validation-status.hidden {
+            transform: translateX(-50%) translateY(100%);
+            opacity: 0;
+        }
+
+        .validation-status.valid {
+            border-color: var(--success);
+            background-color: rgba(39, 174, 96, 0.1);
+        }
+
+        .validation-status.invalid {
+            border-color: var(--danger);
+            background-color: rgba(231, 76, 60, 0.1);
+        }
+
+        .validation-status.warning {
+            border-color: var(--warning);
+            background-color: rgba(240, 163, 30, 0.1);
+        }
+
+        .validation-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .valid .validation-icon {
+            color: var(--success);
+        }
+
+        .invalid .validation-icon {
+            color: var(--danger);
+        }
+
+        .warning .validation-icon {
+            color: var(--warning);
+        }
+
+        .validation-message {
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        .validation-count {
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, var(--neutral-dark) 0%, #5a5b5f 100%);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+    .footer-content {
+        grid-template-columns: 2fr 1fr; /* primeira coluna maior */
+    }
+}
+
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .footer-about p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .footer-section h4 {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+            transform: translateX(8px);
+        }
+
+        .footer-contact p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            line-height: 1.6;
+        }
+
+        .footer-contact i {
+            color: var(--secondary);
+            width: 20px;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* ===== MODAL DE SUCESSO ===== */
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(119, 120, 124, 0.7);
+            z-index: 1001;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            backdrop-filter: blur(5px);
+        }
+
+        .confirmation-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid rgba(189, 187, 188, 0.3);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background-color: rgba(189, 187, 188, 0.3);
+            color: var(--danger);
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2.5rem;
+        }
+
+        .modal-icon.success {
+            background: linear-gradient(135deg, rgba(39, 174, 96, 0.2) 0%, rgba(39, 174, 96, 0.1) 100%);
+            color: var(--success);
+        }
+
+        .modal-icon.warning {
+            background: linear-gradient(135deg, rgba(240, 163, 30, 0.2) 0%, rgba(240, 163, 30, 0.1) 100%);
+            color: var(--warning);
+        }
+
+        .modal-icon.danger {
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.2) 0%, rgba(231, 76, 60, 0.1) 100%);
+            color: var(--danger);
+        }
+
+        /* ===== ANIMAÇÕES ===== */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 767px) {
+            section {
+                padding: 3rem 0;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero {
+                padding: 4rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--surface);
+                flex-direction: column;
+                padding: 1.5rem;
+                box-shadow: 0 20px 40px rgba(119, 120, 124, 0.1);
+                border-radius: 0 0 var(--radius) var(--radius);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hierarchy-nav {
+                grid-template-columns: 1fr;
+            }
+            
+            .notification {
+                min-width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+            }
+            
+            .validation-status {
+                min-width: calc(100% - 40px);
+                max-width: calc(100% - 40px);
+            }
+            
+            .continue-container .btn {
+                width: 100%;
+            }
+        }
+        /* Na prática, você copia o bloco style inteiro do index.html original e cola aqui. */
+	#validationStatus {
+   	 display: none !important;
+	}
+    </style>
+</head>
+<body>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+   	    <img src="C:\Users\Gabriel\Desktop\Projeto Integrador\VERSÕES OFICIAIS E CÓDIGOS\CLS 1.0\CLS logo.jpg" alt="CLS" class="logo-img">
+            <span>CLS - Checklist Service</span>
+	    </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-links" id="navLinks">
+    <a href="index.html"><i class="fas fa-home"></i> Início</a>
+    <a href="info.html"><i class="fas fa-info-circle"></i> Guia de EPIs</a>
+    <a href="login.html" class="btn" id="loginLink"><i class="fas fa-sign-in-alt"></i> Login</a>
+    <a href="login.html" class="btn" id="logoutLink" style="display: none;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+	    </div>
+        </div>
+    </header>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero">
+        <div class="container">
+            <h1>Sistema de Checklist de EPIs</h1>
+            <p>Garanta sua segurança no trabalho com nosso sistema inteligente de verificação de Equipamentos de Proteção Individual. Selecione sua função, marque os EPIs utilizados e receba orientações em tempo real.</p>
+            
+            <div class="hero-buttons">
+                <a href="#professionSelection" class="btn btn-success">
+                    <i class="fas fa-clipboard-check float"></i> Iniciar Checklist
+                </a>
+                <a href="info.html" class="btn btn-outline">
+                    <i class="fas fa-book"></i> Guia de EPIs
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTEÚDO PRINCIPAL ===== -->
+    <main class="container">
+        <section id="professionSelection">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb" id="breadcrumb">
+                <div class="breadcrumb-item active">
+                    <i class="fas fa-home"></i> Início
+                </div>
+                <div class="breadcrumb-separator">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="breadcrumb-item">
+                    Selecione uma categoria
+                </div>
+            </div>
+            
+            <!-- Sistema de Filtros -->
+            <div class="filters-container">
+                <div class="filters-header">
+                    <h3>Filtros</h3>
+                    <button class="btn btn-outline" id="clearFiltersBtn">
+                        <i class="fas fa-times"></i> Limpar Filtros
+                    </button>
+                </div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar categoria, profissão ou atividade...">
+                </div>
+                <div class="filter-tags mt-2" id="filterTags">
+                    <div class="filter-tag active" data-filter="all">
+                        <i class="fas fa-layer-group"></i> Todas
+                    </div>
+                    <div class="filter-tag" data-filter="high-risk">
+                        <i class="fas fa-exclamation-triangle"></i> Alto Risco
+                    </div>
+                    <div class="filter-tag" data-filter="medium-risk">
+                        <i class="fas fa-exclamation-circle"></i> Médio Risco
+                    </div>
+                    <div class="filter-tag" data-filter="low-risk">
+                        <i class="fas fa-check-circle"></i> Baixo Risco
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navegação Hierárquica -->
+            <div class="hierarchy-nav">
+                <!-- Passo 1: Selecionar Categoria -->
+                <div class="nav-step">
+                    <div class="nav-step-header">
+                        <div class="step-number">1</div>
+                        <h3>Selecione a Categoria</h3>
+                    </div>
+                    <div class="nav-options" id="categoryOptions">
+                        <!-- Categorias serão carregadas via JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Passo 2: Selecionar Profissão -->
+                <div class="nav-step">
+                    <div class="nav-step-header">
+                        <div class="step-number">2</div>
+                        <h3>Selecione a Profissão</h3>
+                    </div>
+                    <div class="nav-options" id="professionOptions">
+                        <div class="text-center" style="padding: 2rem; color: var(--text-light);">
+                            <i class="fas fa-arrow-left fa-2x mb-2"></i>
+                            <p>Selecione uma categoria primeiro</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Passo 3: Selecionar Atividade -->
+                <div class="nav-step">
+                    <div class="nav-step-header">
+                        <div class="step-number">3</div>
+                        <h3>Selecione a Atividade</h3>
+                    </div>
+                    <div class="nav-options" id="activityOptions">
+                        <div class="text-center" style="padding: 2rem; color: var(--text-light);">
+                            <i class="fas fa-arrow-left fa-2x mb-2"></i>
+                            <p>Selecione uma profissão primeiro</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Informações da Atividade Selecionada -->
+            <div id="selectedActivityInfo" class="hidden">
+                <div class="selected-activity-info">
+                    <h4 id="selectedActivityName">Atividade selecionada</h4>
+                    <p id="selectedActivityDescription">Descrição da atividade</p>
+                    <p><strong>Nível de risco:</strong> <span id="selectedActivityRisk" class="risk-high">ALTO</span></p>
+                    <p><strong>Riscos identificados:</strong> <span id="selectedActivityRisks">Riscos listados aqui</span></p>
+                </div>
+                
+                <div class="continue-container">
+                    <button class="btn btn-success" id="continueToChecklistBtn">
+                        <i class="fas fa-arrow-right"></i> Continuar para Checklist de EPIs
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Seção do Checklist (inicialmente oculta) -->
+        <section id="checklistSection" class="hidden">
+            <div class="main-layout">
+                <!-- COLUNA ESQUERDA: Formulário e Checklist -->
+                <div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-user card-icon"></i> Identificação do Funcionário</h2>
+                        </div>
+                        
+                        <!-- Comentário sobre login mantido como lembrete -->
+                        <!-- Com o sistema de login, estas informações serão preenchidas automaticamente. -->
+                        
+                        <form id="employeeForm" class="identification-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="employeeName" class="required">
+                                        <i class="fas fa-user"></i> Nome Completo
+                                    </label>
+                                    <input type="text" id="employeeName" required placeholder="Digite seu nome completo">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="employeeId" class="required">
+                                        <i class="fas fa-id-card"></i> Matrícula
+                                    </label>
+                                    <input type="text" id="employeeId" required placeholder="Número de matrícula">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="employeeSector" class="required">
+                                        <i class="fas fa-building"></i> Setor
+                                    </label>
+                                    <input type="text" id="employeeSector" required placeholder="Ex: Manutenção, Produção">
+                                </div>
+                            </div>
+                            
+                            <!-- NOVO CAMPO: OS (Ordem de Serviço) - Obrigatório -->
+<div class="form-group">
+    <label for="workOrder" class="required">
+        <i class="fas fa-clipboard-list"></i> OS (Ordem de Serviço)
+    </label>
+    <input type="text" id="workOrder" required placeholder="Número da OS">
+</div>
+                            
+                            <div class="form-group">
+                                <label for="workDescription" class="required">
+                                    <i class="fas fa-tasks"></i> Descrição da Atividade
+                                </label>
+                                <textarea id="workDescription" rows="3" required placeholder="Descreva brevemente a atividade que será realizada"></textarea>
+                            </div>
+                        </form>
+                        
+                        <div class="selected-profession-info" id="selectedProfessionInfo">
+                            <!-- Informações da profissão selecionada serão exibidas aqui -->
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-2">
+                        <div class="card-header">
+                            <h2><i class="fas fa-clipboard-check card-icon"></i> Checklist de EPIs</h2>
+                            <span id="checklistStatus" class="status-missing">0/0 itens verificados</span>
+                        </div>
+                        
+                        <div class="checklist-container" id="checklistContainer">
+                            <!-- Checklist organizado por região será gerado dinamicamente via JavaScript -->
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <button id="submitBtn" class="btn btn-success pulse" style="padding: 1.2rem 3rem; font-size: 1.2rem;">
+                                <i class="fas fa-paper-plane"></i> Registrar Checklist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- COLUNA DIREITA: Calculadora e Orientações -->
+                <div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-calculator card-icon"></i> Calculadora de Riscos</h2>
+                        </div>
+                        
+                        <div class="risk-calculator">
+                            <p>Com base nos EPIs selecionados e não selecionados, o sistema calcula o nível de risco da atividade:</p>
+                            
+                            <div class="risk-results" id="riskResults">
+                                <!-- Resultados serão gerados dinamicamente -->
+                            </div>
+                            
+                            <div class="risk-stats" id="riskStats">
+                                <!-- Estatísticas serão geradas dinamicamente -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card mt-2">
+                        <div class="card-header">
+                            <h2><i class="fas fa-exclamation-triangle card-icon"></i> Orientações de Segurança</h2>
+                        </div>
+                        
+                        <div class="guidance-container" id="guidanceContainer">
+                            <!-- Orientações serão geradas dinamicamente -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== MODAIS ===== -->
+    <div class="modal" id="optionalConfirmationModal">
+        <div class="modal-content">
+            <div class="confirmation-header">
+                <div class="confirmation-icon warning-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3 class="confirmation-title">EPIs Opcionais Não Marcados</h3>
+            </div>
+            
+            <div class="confirmation-message">
+                <p>Você está prestes a finalizar o checklist sem marcar alguns EPIs <strong>opcionais/recomendados</strong>.</p>
+                <p>Estes equipamentos não são obrigatórios, mas são recomendados para maior segurança.</p>
+                
+                <div class="missing-items-list" id="optionalMissingList">
+                    <!-- Itens opcionais não marcados serão listados aqui -->
+                </div>
+                
+                <p><strong>Deseja continuar mesmo assim?</strong></p>
+            </div>
+            
+            <div class="confirmation-buttons">
+                <button class="btn btn-cancel" id="cancelOptionalBtn">
+                    <i class="fas fa-times"></i> Voltar e Verificar
+                </button>
+                <button class="btn btn-warning" id="confirmOptionalBtn">
+                    <i class="fas fa-check"></i> Sim, Finalizar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="requiredBlockModal">
+        <div class="modal-content">
+            <div class="confirmation-header">
+                <div class="confirmation-icon danger-icon">
+                    <i class="fas fa-ban"></i>
+                </div>
+                <h3 class="confirmation-title">EPIs Obrigatórios Faltantes</h3>
+            </div>
+            
+            <div class="confirmation-message">
+                <p><strong>Não é possível finalizar o checklist!</strong></p>
+                <p>Você precisa marcar <strong>TODOS</strong> os EPIs obrigatórios antes de enviar.</p>
+                
+                <div class="missing-items-list" id="requiredMissingList">
+                    <!-- Itens obrigatórios não marcados serão listados aqui -->
+                </div>
+                
+                <p style="margin-top: 1rem; padding: 0.75rem; background-color: rgba(231, 76, 60, 0.1); border-radius: var(--radius);">
+                    <i class="fas fa-exclamation-circle"></i> <strong>ATENÇÃO:</strong> A atividade <strong>NÃO</strong> pode ser realizada sem estes EPIs.
+                </p>
+            </div>
+            
+            <div class="confirmation-buttons">
+                <button class="btn btn-danger" id="understandRequiredBtn">
+                    <i class="fas fa-check"></i> Entendi, Vou Regularizar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== STATUS DE VALIDAÇÃO FIXO ===== -->
+    <div class="validation-status hidden" id="validationStatus">
+        <div class="validation-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="validation-message">
+            <span id="validationText">Todos os EPIs obrigatórios estão em uso</span>
+        </div>
+        <div class="validation-count" id="validationCount">0/0</div>
+    </div>
+
+    <!-- ===== FOOTER ===== -->
+   <footer>
+    <div class="container">
+        <div class="footer-content">
+            <!-- Coluna 1: Sobre + YouTube -->
+            <div class="footer-about">
+                <div class="footer-logo">CLS - Checklist Service</div>
+                <p>O CLS simplifica a gestão de segurança do trabalho. Checklists digitais de EPIs com envio automático por e-mail, garantindo auditoria fácil e conformidade com as principais normas regulamentadoras (NR-6, NR-10, NR-12).</p>
+                
+                <div class="social-links">
+                    <a href="#" title="YouTube (pitch do projeto)"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <!-- Coluna 2: Links Rápidos + Contato -->
+            <div class="footer-section">
+                <h4>Links Rápidos</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Página Inicial</a></li>
+                    <li><a href="info.html"><i class="fas fa-info-circle"></i> Guia de EPIs</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Área de Login</a></li>
+                </ul>
+                
+                <h4 style="margin-top: 2rem;">Contato</h4>
+                <div class="footer-contact">
+                    <p><i class="fas fa-envelope"></i> contato@safegear.com</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+    <p>© 2026 clservice.com.br - Sistema de checklist de EPIs</p>
+</div>
+    </div>
+</footer>
+
+    <!-- ===== MODAL DE SUCESSO ===== -->
+    <div class="confirmation-modal" id="confirmationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Registro Enviado com Sucesso!</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            
+            <div class="modal-icon success" id="modalIcon">
+                <i class="fas fa-check"></i>
+            </div>
+            
+            <div id="modalMessage">
+                <p>Seu checklist foi registrado com sucesso na planilha de controle.</p>
+                <p><strong>ID do Registro:</strong> <span id="recordId">#0001</span></p>
+                <p><strong>Data/Hora:</strong> <span id="recordTime">00/00/0000 00:00</span></p>
+            </div>
+            
+            <div class="text-center mt-3">
+                <button id="printBtn" class="btn btn-outline">
+                    <i class="fas fa-print"></i> Imprimir Comprovante
+                </button>
+                <button id="newCheckBtn" class="btn">
+                    <i class="fas fa-plus"></i> Novo Checklist
+                </button>
+                <button id="downloadPDFBtn" class="btn btn-success">
+                    <i class="fas fa-download"></i> Baixar PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== ESTRUTURA DE DADOS COMPLETA ATUALIZADA COM CONSEQUÊNCIAS =====
+        const catalogoProfissoes = {
+            categorias: {
+                "producao-siderurgia": {
+                    id: "producao-siderurgia",
+                    nome: "Produção / Siderurgia",
+                    icon: "fas fa-industry",
+                    descricao: "Processos siderúrgicos e metalúrgicos",
+                    riscoMedio: "ALTO",
+                    profissoes: {
+                        "operador-processos-siderurgicos": {
+                            id: "operador-processos-siderurgicos",
+                            nome: "Operador de Processos Siderúrgicos",
+                            icon: "fas fa-sliders-h",
+                            codigo: "PS-01",
+                            atividades: [
+                                {
+                                    id: "operacao-aciria",
+                                    nome: "Operação de processos de aciaria",
+                                    descricao: "Controle e operação de fornos e conversores",
+                                    riscos: ["Calor radiante", "Projeção de metal", "Gases tóxicos"],
+                                    nivelRisco: "ALTO",
+                                    epis: {
+                                        cabeca: [
+                                            { 
+                                                id: "capacete-aciria", 
+                                                nome: "Capacete de segurança com jugular", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Traumatismo craniano em caso de queda de objetos ou impacto"
+                                            }
+                                        ],
+                                        olhos: [
+                                            { 
+                                                id: "oculos-aciria", 
+                                                nome: "Óculos de proteção com filtro IR/UV", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras na retina, catarata precoce, cegueira temporária"
+                                            }
+                                        ],
+                                        tronco: [
+                                            { 
+                                                id: "avental-couro", 
+                                                nome: "Avental de couro aluminizado", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras graves de 2º e 3º graus por respingos de metal"
+                                            }
+                                        ],
+                                        maos: [
+                                            { 
+                                                id: "luvas-aciria", 
+                                                nome: "Luvas de raspa de cano longo", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras, cortes, amputações"
+                                            }
+                                        ],
+                                        pes: [
+                                            { 
+                                                id: "botas-aciria", 
+                                                nome: "Botas de segurança com solado antiderrapante", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Queimaduras nos pés, escorregões, queda de objetos nos pés"
+                                            }
+                                        ],
+                                        respiratoria: [
+                                            { 
+                                                id: "respirador-aciria", 
+                                                nome: "Respirador com filtro para gases", 
+                                                norm: "NR-15", 
+                                                obrigatorio: false, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Intoxicação por monóxido de carbono, problemas respiratórios crônicos"
+                                            }
+                                        ],
+                                        audicao: [
+                                            { 
+                                                id: "protetor-auditivo", 
+                                                nome: "Protetor auditivo tipo concha", 
+                                                norm: "NR-6", 
+                                                obrigatorio: false, 
+                                                risco: "BAIXO",
+                                                consequencia: "Perda auditiva gradual, zumbido constante"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: "controle-producao-aco",
+                                    nome: "Controle de produção do aço",
+                                    descricao: "Monitoramento e ajuste de parâmetros de produção",
+                                    riscos: ["Exposição a altas temperaturas", "Ruído", "Vibração"],
+                                    nivelRisco: "MÉDIO",
+                                    epis: {
+                                        cabeca: [
+                                            { 
+                                                id: "capacete-basico", 
+                                                nome: "Capacete de segurança básico", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Traumatismo craniano em caso de queda de objetos"
+                                            }
+                                        ],
+                                        olhos: [
+                                            { 
+                                                id: "oculos-basico", 
+                                                nome: "Óculos de proteção", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Lesões oculares por partículas em suspensão"
+                                            }
+                                        ],
+                                        maos: [
+                                            { 
+                                                id: "luvas-basicas", 
+                                                nome: "Luvas de proteção térmica", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Queimaduras e cortes nas mãos"
+                                            }
+                                        ],
+                                        pes: [
+                                            { 
+                                                id: "botas-basicas", 
+                                                nome: "Botas de segurança", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "BAIXO",
+                                                consequencia: "Quedas e lesões nos pés"
+                                            }
+                                        ],
+                                        audicao: [
+                                            { 
+                                                id: "protetor-auditivo-insercao", 
+                                                nome: "Protetor auditivo de inserção", 
+                                                norm: "NR-6", 
+                                                obrigatorio: false, 
+                                                risco: "BAIXO",
+                                                consequencia: "Perda auditiva progressiva"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: "monitoramento-variaveis",
+                                    nome: "Monitoramento de variáveis do processo",
+                                    descricao: "Análise de parâmetros e controle de qualidade",
+                                    riscos: ["Exposição a radiação", "Estresse térmico"],
+                                    nivelRisco: "MÉDIO",
+                                    epis: {
+                                        cabeca: [
+                                            { 
+                                                id: "capacete-monitoramento", 
+                                                nome: "Capacete de segurança", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Traumatismo craniano"
+                                            }
+                                        ],
+                                        olhos: [
+                                            { 
+                                                id: "oculos-protecao", 
+                                                nome: "Óculos de proteção", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Lesões oculares"
+                                            }
+                                        ],
+                                        tronco: [
+                                            { 
+                                                id: "avental-resistente", 
+                                                nome: "Avental resistente", 
+                                                norm: "NR-6", 
+                                                obrigatorio: false, 
+                                                risco: "BAIXO",
+                                                consequencia: "Lesões no tronco por respingos"
+                                            }
+                                        ],
+                                        maos: [
+                                            { 
+                                                id: "luvas-protecao", 
+                                                nome: "Luvas de proteção", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Lesões nas mãos"
+                                            }
+                                        ],
+                                        pes: [
+                                            { 
+                                                id: "botas-seguranca", 
+                                                nome: "Botas de segurança", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "BAIXO",
+                                                consequencia: "Lesões nos pés"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        "operador-alto-forno": {
+                            id: "operador-alto-forno",
+                            nome: "Operador de Alto-Forno",
+                            icon: "fas fa-fire",
+                            codigo: "PS-02",
+                            atividades: [
+                                {
+                                    id: "operacao-alto-forno",
+                                    nome: "Operação de alto-forno",
+                                    descricao: "Controle do processo de redução do minério",
+                                    riscos: ["Calor extremo", "Gases combustíveis", "Explosões"],
+                                    nivelRisco: "ALTÍSSIMO",
+                                    epis: {
+                                        cabeca: [
+                                            { 
+                                                id: "capacete-alto-forno", 
+                                                nome: "Capacete com face shield", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTÍSSIMO",
+                                                consequencia: "Queimaduras faciais graves, traumatismo craniano"
+                                            }
+                                        ],
+                                        tronco: [
+                                            { 
+                                                id: "avental-aluminizado", 
+                                                nome: "Avental aluminizado completo", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTÍSSIMO",
+                                                consequencia: "Queimaduras graves no tronco, risco de incêndio nas roupas"
+                                            }
+                                        ],
+                                        maos: [
+                                            { 
+                                                id: "luvas-alto-forno", 
+                                                nome: "Luvas de amianto tratado", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras graves nas mãos e braços"
+                                            }
+                                        ],
+                                        pes: [
+                                            { 
+                                                id: "botas-alto-forno", 
+                                                nome: "Botas de segurança com isolamento térmico", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras nos pés, derretimento de calçados comuns"
+                                            }
+                                        ],
+                                        respiratoria: [
+                                            { 
+                                                id: "respirador-co", 
+                                                nome: "Respirador autônomo ou com filtro para CO", 
+                                                norm: "NR-15", 
+                                                obrigatorio: true, 
+                                                risco: "ALTÍSSIMO",
+                                                consequencia: "Intoxicação aguda por monóxido de carbono, morte em minutos"
+                                            }
+                                        ],
+                                        pernas: [
+                                            { 
+                                                id: "perneiras", 
+                                                nome: "Perneiras de couro", 
+                                                norm: "NR-6", 
+                                                obrigatorio: false, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Queimaduras nas pernas"
+                                            }
+                                        ],
+                                        bracos: [
+                                            { 
+                                                id: "mangas", 
+                                                nome: "Mangas de proteção", 
+                                                norm: "NR-6", 
+                                                obrigatorio: false, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Queimaduras nos braços"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    id: "controle-carga-temperatura",
+                                    nome: "Controle de carga e temperatura",
+                                    descricao: "Regulação de matérias-primas e temperatura",
+                                    riscos: ["Queimaduras", "Intoxicação por monóxido", "Incêndios"],
+                                    nivelRisco: "ALTO",
+                                    epis: {
+                                        cabeca: [
+                                            { 
+                                                id: "capacete-protecao", 
+                                                nome: "Capacete de proteção", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Traumatismo craniano, queimaduras no couro cabeludo"
+                                            }
+                                        ],
+                                        olhos: [
+                                            { 
+                                                id: "oculos-protecao-termica", 
+                                                nome: "Óculos de proteção térmica", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras oculares, cegueira temporária"
+                                            }
+                                        ],
+                                        tronco: [
+                                            { 
+                                                id: "avental-couro", 
+                                                nome: "Avental de couro", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras graves no tronco"
+                                            }
+                                        ],
+                                        maos: [
+                                            { 
+                                                id: "luvas-termicas", 
+                                                nome: "Luvas térmicas", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras graves nas mãos"
+                                            }
+                                        ],
+                                        pes: [
+                                            { 
+                                                id: "botas-termicas", 
+                                                nome: "Botas térmicas", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras nos pés"
+                                            }
+                                        ],
+                                        respiratoria: [
+                                            { 
+                                                id: "respirador-gases", 
+                                                nome: "Respirador para gases", 
+                                                norm: "NR-15", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Intoxicação por gases tóxicos, problemas respiratórios"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                "metal-mecanica": {
+                    id: "metal-mecanica",
+                    nome: "Metal Mecânica",
+                    icon: "fas fa-cogs",
+                    descricao: "Usinagem, soldagem e fabricação mecânica",
+                    riscoMedio: "MÉDIO-ALTO",
+                    profissoes: {
+                        "soldador": {
+                            id: "soldador",
+                            nome: "Soldador",
+                            icon: "fas fa-burn",
+                            codigo: "MM-01",
+                            atividades: [
+                                {
+                                    id: "soldagem-eletrica",
+                                    nome: "Soldagem elétrica",
+                                    descricao: "Soldagem com eletrodo revestido",
+                                    riscos: ["Choque elétrico", "Queimaduras", "Fumos metálicos"],
+                                    nivelRisco: "ALTO",
+                                    epis: {
+                                        cabeca: [
+                                            { 
+                                                id: "capacete-solda", 
+                                                nome: "Capacete para soldagem", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras faciais, danos oculares permanentes"
+                                            }
+                                        ],
+                                        olhos: [
+                                            { 
+                                                id: "mascara-solda", 
+                                                nome: "Máscara de solda com filtro apropriado", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTÍSSIMO",
+                                                consequencia: "Cegueira por flash de solda (oftalmia), queimaduras na retina"
+                                            }
+                                        ],
+                                        tronco: [
+                                            { 
+                                                id: "avental-solda", 
+                                                nome: "Avental de couro para solda", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras graves no tronco por respingos de metal"
+                                            }
+                                        ],
+                                        maos: [
+                                            { 
+                                                id: "luvas-solda", 
+                                                nome: "Luvas de raspa para solda", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras graves nas mãos, choque elétrico"
+                                            }
+                                        ],
+                                        pes: [
+                                            { 
+                                                id: "botas-solda", 
+                                                nome: "Botas de couro de cano longo", 
+                                                norm: "NR-6", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Queimaduras nos pés, queda de objetos pesados"
+                                            }
+                                        ],
+                                        respiratoria: [
+                                            { 
+                                                id: "respirador-solda", 
+                                                nome: "Respirador com filtro P100", 
+                                                norm: "NR-15", 
+                                                obrigatorio: true, 
+                                                risco: "ALTO",
+                                                consequencia: "Intoxicação por fumos metálicos, doenças respiratórias crônicas"
+                                            }
+                                        ],
+                                        bracos: [
+                                            { 
+                                                id: "mangas-solda", 
+                                                nome: "Mangas de proteção", 
+                                                norm: "NR-6", 
+                                                obrigatorio: false, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Queimaduras nos braços"
+                                            }
+                                        ],
+                                        pernas: [
+                                            { 
+                                                id: "perneiras-solda", 
+                                                nome: "Perneiras de couro", 
+                                                norm: "NR-6", 
+                                                obrigatorio: false, 
+                                                risco: "MÉDIO",
+                                                consequencia: "Queimaduras nas pernas"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        };
+
+        // ===== VARIÁVEIS GLOBAIS =====
+        let currentState = {
+            selectedCategory: null,
+            selectedProfession: null,
+            selectedActivity: null,
+            currentEPIs: {},
+            searchTerm: '',
+            currentFilter: 'all',
+            filteredActivities: []
+        };
+
+        let validationSystem = null;
+        let lastRecordData = null;
+        let lastRecordId = null;
+        let lastRecordTimestamp = null;
+
+        // ===== INICIALIZAÇÃO =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // ===== VERIFICAÇÃO DE LOGIN =====
+const urlParams = new URLSearchParams(window.location.search);
+const userParam = urlParams.get('user');
+let userData = null;
+
+// Prioridade: sessionStorage > parâmetro da URL
+const storedUser = sessionStorage.getItem('user');
+if (storedUser) {
+    try {
+        userData = JSON.parse(storedUser);
+    } catch (e) {
+        console.error('Erro ao parsear usuário do storage', e);
+    }
+} else if (userParam) {
+    try {
+        userData = JSON.parse(decodeURIComponent(userParam));
+        // Salva no storage para as próximas navegações
+        sessionStorage.setItem('user', JSON.stringify(userData));
+    } catch (e) {
+        console.error('Erro ao parsear parâmetro user', e);
+    }
+}
+
+if (!userData) {
+    window.location.href = 'login.html';
+    return;
+}
+
+// Preenche os campos do formulário
+document.getElementById('employeeName').value = userData.nome || '';
+document.getElementById('employeeId').value = userData.matricula || '';
+document.getElementById('employeeSector').value = userData.setor || '';
+
+            // Inicializar sistema de validação
+            validationSystem = new ValidationSystem();
+            
+            // Menu mobile
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    navLinks.classList.toggle('active');
+                    const icon = this.querySelector('i');
+                    if (icon.classList.contains('fa-bars')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+            }
+            
+            // Fechar menu ao clicar em um link
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function() {
+                    navLinks.classList.remove('active');
+                    if (mobileMenuBtn) {
+                        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                    }
+                });
+            });
+            
+            // Carregar categorias
+            loadCategories();
+            
+            // Inicializar filtros
+            initFilters();
+            
+            // Inicializar eventos
+            initEventListeners();
+            
+            // Limpar qualquer rascunho salvo
+            localStorage.removeItem('epiChecklistDraft');
+        });
+
+        // ===== FILTROS APRIMORADOS =====
+        function initFilters() {
+            // Filtros por risco
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    
+                    // Atualizar estado
+                    currentState.currentFilter = filter;
+                    
+                    // Atualizar UI
+                    document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Aplicar filtro nas atividades
+                    if (currentState.selectedProfession) {
+                        filterActivities();
+                    }
+                });
+            });
+            
+            // Busca
+            const searchInput = document.getElementById('searchInput');
+            
+            searchInput.addEventListener('input', function() {
+                currentState.searchTerm = this.value.toLowerCase().trim();
+                applySearchFilter();
+            });
+            
+            // Limpar filtros
+            document.getElementById('clearFiltersBtn').addEventListener('click', function() {
+                // Resetar todos os estados de filtro
+                currentState.searchTerm = '';
+                currentState.currentFilter = 'all';
+                currentState.selectedCategory = null;
+                currentState.selectedProfession = null;
+                currentState.selectedActivity = null;
+                currentState.filteredActivities = [];
+                
+                // Resetar UI dos filtros
+                document.getElementById('searchInput').value = '';
+                document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                document.querySelector('.filter-tag[data-filter="all"]').classList.add('active');
+                
+                // Desmarcar todas as seleções ativas
+                document.querySelectorAll('.nav-option.active').forEach(option => {
+                    option.classList.remove('active');
+                });
+                
+                // Resetar breadcrumb
+                updateBreadcrumb();
+                
+                // Ocultar seções
+                document.getElementById('selectedActivityInfo').classList.add('hidden');
+                document.getElementById('checklistSection').classList.add('hidden');
+                
+                // Recarregar categorias
+                loadCategories();
+                
+                // Resetar profissões
+                document.getElementById('professionOptions').innerHTML = `
+                    <div class="text-center" style="padding: 2rem; color: var(--text-light);">
+                        <i class="fas fa-arrow-left fa-2x mb-2"></i>
+                        <p>Selecione uma categoria primeiro</p>
+                    </div>
+                `;
+                
+                // Resetar atividades
+                document.getElementById('activityOptions').innerHTML = `
+                    <div class="text-center" style="padding: 2rem; color: var(--text-light);">
+                        <i class="fas fa-arrow-left fa-2x mb-2"></i>
+                        <p>Selecione uma profissão primeiro</p>
+                    </div>
+                `;
+                
+                // Notificação de sucesso
+                validationSystem.showNotification(
+                    'success',
+                    'Filtros Limpos',
+                    'Todos os filtros foram resetados com sucesso!',
+                    3000
+                );
+            });
+        }
+
+        // ===== CARREGAMENTO DE DADOS =====
+        function loadCategories() {
+            const container = document.getElementById('categoryOptions');
+            container.innerHTML = '';
+            
+            Object.values(catalogoProfissoes.categorias).forEach(categoria => {
+                const option = document.createElement('div');
+                option.className = 'nav-option';
+                option.dataset.categoryId = categoria.id;
+                option.innerHTML = `
+                    <div class="nav-option-icon">
+                        <i class="${categoria.icon}"></i>
+                    </div>
+                    <div class="nav-option-content">
+                        <div class="nav-option-title">${categoria.nome}</div>
+                        <div class="nav-option-desc">${categoria.descricao}</div>
+                    </div>
+                    <div class="nav-option-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                `;
+                
+                option.addEventListener('click', () => selectCategory(categoria.id));
+                container.appendChild(option);
+            });
+            
+            applySearchFilter();
+        }
+
+        function loadProfessions(categoryId) {
+            const container = document.getElementById('professionOptions');
+            const category = catalogoProfissoes.categorias[categoryId];
+            
+            if (!category) {
+                container.innerHTML = '<div class="text-center" style="padding: 2rem; color: var(--danger);"><p>Categoria não encontrada</p></div>';
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            Object.values(category.profissoes).forEach(profissao => {
+                const option = document.createElement('div');
+                option.className = 'nav-option';
+                option.dataset.professionId = profissao.id;
+                option.innerHTML = `
+                    <div class="nav-option-icon">
+                        <i class="${profissao.icon}"></i>
+                    </div>
+                    <div class="nav-option-content">
+                        <div class="nav-option-title">${profissao.nome}</div>
+                        <div class="nav-option-desc">Código: ${profissao.codigo}</div>
+                    </div>
+                    <div class="nav-option-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                `;
+                
+                option.addEventListener('click', () => selectProfession(categoryId, profissao.id));
+                container.appendChild(option);
+            });
+            
+            applySearchFilter();
+        }
+
+        function loadActivities(categoryId, professionId) {
+            const container = document.getElementById('activityOptions');
+            const profession = catalogoProfissoes.categorias[categoryId]?.profissoes[professionId];
+            
+            if (!profession) {
+                container.innerHTML = '<div class="text-center" style="padding: 2rem; color: var(--danger);"><p>Profissão não encontrada</p></div>';
+                return;
+            }
+            
+            // Armazenar atividades para filtragem
+            currentState.filteredActivities = profession.atividades;
+            
+            // Aplicar filtros iniciais
+            filterActivities();
+        }
+
+        // ===== SELEÇÃO DE OPÇÕES =====
+        function selectCategory(categoryId) {
+            currentState.selectedCategory = categoryId;
+            currentState.selectedProfession = null;
+            currentState.selectedActivity = null;
+            
+            // Atualizar UI
+            document.querySelectorAll('#categoryOptions .nav-option').forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.dataset.categoryId === categoryId) opt.classList.add('active');
+            });
+            
+            // Carregar profissões
+            loadProfessions(categoryId);
+            
+            // Limpar atividades
+            document.getElementById('activityOptions').innerHTML = `
+                <div class="text-center" style="padding: 2rem; color: var(--text-light);">
+                    <i class="fas fa-arrow-left fa-2x mb-2"></i>
+                    <p>Selecione uma profissão primeiro</p>
+                </div>
+            `;
+            
+            // Atualizar breadcrumb
+            updateBreadcrumb();
+            
+            // Ocultar informações da atividade
+            document.getElementById('selectedActivityInfo').classList.add('hidden');
+            
+            // Ocultar checklist
+            document.getElementById('checklistSection').classList.add('hidden');
+        }
+
+        function selectProfession(categoryId, professionId) {
+            currentState.selectedProfession = professionId;
+            currentState.selectedActivity = null;
+            
+            // Atualizar UI
+            document.querySelectorAll('#professionOptions .nav-option').forEach(opt => {
+                opt.classList.remove('active');
+                if (opt.dataset.professionId === professionId) opt.classList.add('active');
+            });
+            
+            // Carregar atividades
+            loadActivities(categoryId, professionId);
+            
+            // Atualizar breadcrumb
+            updateBreadcrumb();
+            
+            // Ocultar informações da atividade
+            document.getElementById('selectedActivityInfo').classList.add('hidden');
+            
+            // Ocultar checklist
+            document.getElementById('checklistSection').classList.add('hidden');
+        }
+
+        function selectActivity(activity) {
+            // Seleção única - desmarcar todas as outras
+            document.querySelectorAll('#activityOptions .nav-option').forEach(opt => {
+                opt.classList.remove('active');
+                opt.querySelector('.nav-option-arrow i').className = 'fas fa-chevron-right';
+            });
+            
+            // Marcar a selecionada
+            const selectedOption = document.querySelector(`[data-activity-id="${activity.id}"]`);
+            if (selectedOption) {
+                selectedOption.classList.add('active');
+                selectedOption.querySelector('.nav-option-arrow i').className = 'fas fa-check';
+            }
+            
+            // Armazenar atividade selecionada
+            currentState.selectedActivity = activity;
+            
+            // Atualizar informações da atividade selecionada
+            updateSelectedActivityInfo(activity);
+            
+            // Mostrar seção de continuar
+            document.getElementById('selectedActivityInfo').classList.remove('hidden');
+            
+            // Scroll para a seção
+            document.getElementById('selectedActivityInfo').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function updateSelectedActivityInfo(activity) {
+            const container = document.getElementById('selectedActivityInfo');
+            const riskClass = getRiskClass(activity.nivelRisco);
+            
+            document.getElementById('selectedActivityName').textContent = activity.nome;
+            document.getElementById('selectedActivityDescription').textContent = activity.descricao;
+            
+            const riskElement = document.getElementById('selectedActivityRisk');
+            riskElement.textContent = activity.nivelRisco;
+            riskElement.className = riskClass;
+            
+            document.getElementById('selectedActivityRisks').textContent = activity.riscos.join(', ');
+        }
+
+        // ===== ATUALIZAÇÃO DA UI =====
+        function updateBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            const category = currentState.selectedCategory ? 
+                catalogoProfissoes.categorias[currentState.selectedCategory] : null;
+            const profession = category && currentState.selectedProfession ?
+                category.profissoes[currentState.selectedProfession] : null;
+            const activity = currentState.selectedActivity;
+            
+            let html = `
+                <div class="breadcrumb-item active">
+                    <i class="fas fa-home"></i> Início
+                </div>
+                <div class="breadcrumb-separator">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <div class="breadcrumb-item ${currentState.selectedCategory ? 'active' : ''}">
+                    ${category ? category.nome : 'Selecione uma categoria'}
+                </div>
+            `;
+            
+            if (profession) {
+                html += `
+                    <div class="breadcrumb-separator">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="breadcrumb-item ${activity ? 'active' : ''}">
+                        ${profession.nome}
+                    </div>
+                `;
+            }
+            
+            if (activity) {
+                html += `
+                    <div class="breadcrumb-separator">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                    <div class="breadcrumb-item active">
+                        ${activity.nome}
+                    </div>
+                `;
+            }
+            
+            breadcrumb.innerHTML = html;
+        }
+
+        // ===== FILTROS E BUSCA =====
+        function applySearchFilter() {
+            const searchTerm = currentState.searchTerm;
+            
+            // Filtrar categorias
+            if (currentState.selectedCategory === null) {
+                let hasVisible = false;
+                document.querySelectorAll('#categoryOptions .nav-option').forEach(option => {
+                    const title = option.querySelector('.nav-option-title').textContent.toLowerCase();
+                    const desc = option.querySelector('.nav-option-desc').textContent.toLowerCase();
+                    
+                    if (searchTerm === '' || title.includes(searchTerm) || desc.includes(searchTerm)) {
+                        option.style.display = 'flex';
+                        hasVisible = true;
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+                
+                if (!hasVisible && searchTerm !== '') {
+                    document.getElementById('categoryOptions').innerHTML = `
+                        <div class="text-center" style="padding: 2rem; color: var(--text-light);">
+                            <i class="fas fa-search fa-2x mb-2"></i>
+                            <p>Nenhuma categoria encontrada para "${searchTerm}"</p>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Filtrar profissões
+            if (currentState.selectedCategory && currentState.selectedProfession === null) {
+                let hasVisible = false;
+                document.querySelectorAll('#professionOptions .nav-option').forEach(option => {
+                    const title = option.querySelector('.nav-option-title').textContent.toLowerCase();
+                    const desc = option.querySelector('.nav-option-desc').textContent.toLowerCase();
+                    
+                    if (searchTerm === '' || title.includes(searchTerm) || desc.includes(searchTerm)) {
+                        option.style.display = 'flex';
+                        hasVisible = true;
+                    } else {
+                        option.style.display = 'none';
+                    }
+                });
+                
+                if (!hasVisible && searchTerm !== '') {
+                    document.getElementById('professionOptions').innerHTML = `
+                        <div class="text-center" style="padding: 2rem; color: var(--text-light);">
+                            <i class="fas fa-search fa-2x mb-2"></i>
+                            <p>Nenhuma profissão encontrada para "${searchTerm}"</p>
+                        </div>
+                    `;
+                }
+            }
+            
+            // Filtrar atividades
+            if (currentState.selectedProfession) {
+                filterActivities();
+            }
+        }
+
+        function filterActivities() {
+            const container = document.getElementById('activityOptions');
+            const searchTerm = currentState.searchTerm;
+            const filter = currentState.currentFilter;
+            
+            if (!currentState.filteredActivities || currentState.filteredActivities.length === 0) {
+                container.innerHTML = '<div class="text-center" style="padding: 2rem; color: var(--text-light);"><p>Nenhuma atividade encontrada</p></div>';
+                return;
+            }
+            
+            let filtered = currentState.filteredActivities;
+            
+            // Aplicar filtro de risco
+            if (filter !== 'all') {
+                filtered = filtered.filter(activity => {
+                    const riskLevel = activity.nivelRisco.toLowerCase();
+                    switch(filter) {
+                        case 'high-risk':
+                            return riskLevel.includes('alto') || riskLevel.includes('altíssimo');
+                        case 'medium-risk':
+                            return riskLevel.includes('médio');
+                        case 'low-risk':
+                            return riskLevel.includes('baixo');
+                        default:
+                            return true;
+                    }
+                });
+            }
+            
+            // Aplicar busca
+            if (searchTerm !== '') {
+                filtered = filtered.filter(activity => 
+                    activity.nome.toLowerCase().includes(searchTerm) ||
+                    activity.descricao.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            // Exibir atividades filtradas
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center" style="padding: 2rem; color: var(--text-light);">
+                        <i class="fas fa-search fa-2x mb-2"></i>
+                        <p>Nenhuma atividade encontrada com os filtros aplicados</p>
+                        <small>Tente alterar os filtros ou o termo de busca</small>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            
+            filtered.forEach(atividade => {
+                const option = document.createElement('div');
+                option.className = 'nav-option';
+                option.dataset.activityId = atividade.id;
+                option.innerHTML = `
+                    <div class="nav-option-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="nav-option-content">
+                        <div class="nav-option-title">${atividade.nome}</div>
+                        <div class="nav-option-desc">${atividade.descricao}</div>
+                        <div class="${getRiskClass(atividade.nivelRisco)}" style="display: inline-block; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; margin-top: 0.25rem;">
+                            ${atividade.nivelRisco}
+                        </div>
+                    </div>
+                    <div class="nav-option-arrow">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                `;
+                
+                option.addEventListener('click', () => selectActivity(atividade));
+                container.appendChild(option);
+            });
+            
+            // Restaurar seleção se houver
+            if (currentState.selectedActivity) {
+                const selectedOption = document.querySelector(`[data-activity-id="${currentState.selectedActivity.id}"]`);
+                if (selectedOption) {
+                    selectedOption.classList.add('active');
+                    selectedOption.querySelector('.nav-option-arrow i').className = 'fas fa-check';
+                }
+            }
+        }
+
+        // ===== TRANSIÇÃO PARA CHECKLIST =====
+        document.getElementById('continueToChecklistBtn').addEventListener('click', function() {
+            if (!currentState.selectedActivity) {
+                alert('Selecione uma atividade para prosseguir.');
+                return;
+            }
+            
+            // Gerar checklist baseado na atividade
+            generateChecklistByActivity();
+            
+            // Atualizar informações da profissão
+            updateProfessionInfo();
+            
+            // Mostrar seção do checklist
+            document.getElementById('checklistSection').classList.remove('hidden');
+            document.getElementById('checklistSection').scrollIntoView({ behavior: 'smooth' });
+            
+            // Atualizar orientações
+            updateGuidance();
+            
+            // Validar checklist
+            validationSystem.validateChecklist(currentState.currentEPIs);
+        });
+
+        function generateChecklistByActivity() {
+            const activity = currentState.selectedActivity;
+            
+            if (!activity || !activity.epis) {
+                alert('Atividade não possui EPIs definidos.');
+                return;
+            }
+            
+            // Inicializar EPIs
+            currentState.currentEPIs = {};
+            
+            // Organizar EPIs por região
+            const regions = {
+                cabeca: { nome: "Proteção da Cabeça", icon: "fas fa-hard-hat", epis: [] },
+                olhos: { nome: "Proteção dos Olhos", icon: "fas fa-glasses", epis: [] },
+                audicao: { nome: "Proteção Auditiva", icon: "fas fa-ear-deaf", epis: [] },
+                respiratoria: { nome: "Proteção Respiratória", icon: "fas fa-head-side-mask", epis: [] },
+                tronco: { nome: "Proteção do Tronco", icon: "fas fa-vest", epis: [] },
+                maos: { nome: "Proteção das Mãos", icon: "fas fa-hand-paper", epis: [] },
+                pes: { nome: "Proteção dos Pés", icon: "fas fa-shoe-prints", epis: [] },
+                bracos: { nome: "Proteção dos Braços", icon: "fas fa-hand", epis: [] },
+                pernas: { nome: "Proteção das Pernas", icon: "fas fa-walking", epis: [] }
+            };
+            
+            // Agrupar EPIs por região
+            Object.entries(activity.epis).forEach(([regionKey, epiList]) => {
+                if (regions[regionKey]) {
+                    epiList.forEach(epi => {
+                        const epiId = `${activity.id}_${epi.id}`;
+                        currentState.currentEPIs[epiId] = {
+                            ...epi,
+                            region: regionKey,
+                            checked: false
+                        };
+                        regions[regionKey].epis.push(currentState.currentEPIs[epiId]);
+                    });
+                }
+            });
+            
+            // Gerar HTML do checklist organizado por região
+            const container = document.getElementById('checklistContainer');
+            let html = '';
+            
+            // Iterar sobre regiões que possuem EPIs
+            Object.values(regions).forEach(region => {
+                if (region.epis.length > 0) {
+                    const requiredCount = region.epis.filter(epi => epi.obrigatorio).length;
+                    const optionalCount = region.epis.filter(epi => !epi.obrigatorio).length;
+                    
+                    html += `
+                        <div class="epi-region">
+                            <div class="region-header">
+                                <div class="region-icon">
+                                    <i class="${region.icon}"></i>
+                                </div>
+                                <div class="region-title">
+                                    <h3>${region.nome}</h3>
+                                    <small>${requiredCount} obrigatório(s), ${optionalCount} recomendado(s)</small>
+                                </div>
+                                <div class="region-count">${region.epis.length}</div>
+                            </div>
+                    `;
+                    
+                    // EPIs obrigatórios
+                    const obrigatorios = region.epis.filter(epi => epi.obrigatorio);
+                    if (obrigatorios.length > 0) {
+                        obrigatorios.forEach(epi => {
+                            const epiId = `${activity.id}_${epi.id}`;
+                            html += `
+                                <div class="epi-item unchecked" data-item="${epiId}">
+                                    <input type="checkbox" class="epi-checkbox" id="${epiId}" data-obrigatorio="true">
+                                    <div class="epi-info">
+                                        <div class="epi-name">
+                                            ${epi.nome}
+                                            <span class="epi-required required-badge">OBRIGATÓRIO</span>
+                                        </div>
+                                        <div class="epi-norm">${epi.norm} • Risco: ${epi.risco}</div>
+                                    </div>
+                                    <div class="epi-status status-missing">FALTANDO</div>
+                                </div>
+                            `;
+                        });
+                    }
+                    
+                    // EPIs opcionais
+                    const opcionais = region.epis.filter(epi => !epi.obrigatorio);
+                    if (opcionais.length > 0) {
+                        opcionais.forEach(epi => {
+                            const epiId = `${activity.id}_${epi.id}`;
+                            html += `
+                                <div class="epi-item unchecked" data-item="${epiId}">
+                                    <input type="checkbox" class="epi-checkbox" id="${epiId}" data-obrigatorio="false">
+                                    <div class="epi-info">
+                                        <div class="epi-name">
+                                            ${epi.nome}
+                                            <span class="epi-required optional-badge">RECOMENDADO</span>
+                                        </div>
+                                        <div class="epi-norm">${epi.norm} • Risco: ${epi.risco}</div>
+                                    </div>
+                                    <div class="epi-status status-missing">FALTANDO</div>
+                                </div>
+                            `;
+                        });
+                    }
+                    
+                    html += `</div>`;
+                }
+            });
+            
+            container.innerHTML = html;
+            
+            // Adicionar eventos aos checkboxes
+            document.querySelectorAll('.epi-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const itemId = this.id;
+                    const itemElement = this.closest('.epi-item');
+                    const statusElement = itemElement.querySelector('.epi-status');
+                    
+                    // Atualizar estado no objeto
+                    if (currentState.currentEPIs[itemId]) {
+                        currentState.currentEPIs[itemId].checked = this.checked;
+                    }
+                    
+                    // Atualizar UI
+                    if (this.checked) {
+                        itemElement.classList.remove('unchecked');
+                        itemElement.classList.add('checked');
+                        statusElement.textContent = 'EM USO';
+                        statusElement.className = 'epi-status status-ok';
+                    } else {
+                        itemElement.classList.remove('checked');
+                        itemElement.classList.add('unchecked');
+                        statusElement.textContent = 'FALTANDO';
+                        statusElement.className = 'epi-status status-missing';
+                    }
+                    
+                    // Atualizar contador
+                    updateChecklistStatus();
+                    
+                    // Atualizar calculadora de riscos
+                    updateRiskCalculator();
+                    
+                    // Atualizar orientações
+                    updateGuidance();
+                    
+                    // Validar checklist
+                    validationSystem.validateChecklist(currentState.currentEPIs);
+                });
+            });
+            
+            // Atualizar status inicial
+            updateChecklistStatus();
+            updateRiskCalculator();
+        }
+
+        function updateProfessionInfo() {
+            const container = document.getElementById('selectedProfessionInfo');
+            const category = catalogoProfissoes.categorias[currentState.selectedCategory];
+            const profession = category.profissoes[currentState.selectedProfession];
+            const activity = currentState.selectedActivity;
+            
+            if (!profession || !activity) return;
+            
+            container.innerHTML = `
+                <div class="form-note" style="margin-top: 1.5rem;">
+                    <i class="${profession.icon}"></i>
+                    <div>
+                        <strong>${profession.nome}</strong> (${profession.codigo})<br>
+                        <small>Categoria: ${category.nome}</small><br>
+                        <small>Atividade: ${activity.nome}</small>
+                    </div>
+                </div>
+            `;
+        }
+
+        // ===== FUNÇÕES DE ATUALIZAÇÃO DO CHECKLIST =====
+        function updateChecklistStatus() {
+            const totalItems = Object.keys(currentState.currentEPIs).length;
+            const checkedItems = Object.values(currentState.currentEPIs).filter(item => item.checked).length;
+            const requiredItems = Object.values(currentState.currentEPIs).filter(item => item.obrigatorio).length;
+            const checkedRequired = Object.values(currentState.currentEPIs).filter(item => item.obrigatorio && item.checked).length;
+            
+            const statusElement = document.getElementById('checklistStatus');
+            statusElement.textContent = `${checkedItems}/${totalItems} itens verificados`;
+            
+            if (checkedRequired === requiredItems && requiredItems > 0) {
+                statusElement.className = 'epi-status status-ok';
+            } else if (checkedRequired === 0) {
+                statusElement.className = 'epi-status status-missing';
+            } else {
+                statusElement.className = 'epi-status';
+                statusElement.style.background = 'linear-gradient(135deg, rgba(240, 163, 30, 0.2) 0%, rgba(240, 163, 30, 0.1) 100%)';
+                statusElement.style.color = 'var(--warning)';
+            }
+        }
+
+        function updateRiskCalculator() {
+            const totalItems = Object.keys(currentState.currentEPIs).length;
+            const checkedItems = Object.values(currentState.currentEPIs).filter(item => item.checked).length;
+            const requiredItems = Object.values(currentState.currentEPIs).filter(item => item.obrigatorio).length;
+            const checkedRequired = Object.values(currentState.currentEPIs).filter(item => item.obrigatorio && item.checked).length;
+            
+            const missingRequired = requiredItems - checkedRequired;
+            const percentage = totalItems > 0 ? Math.round((checkedItems / totalItems) * 100) : 0;
+            const requiredPercentage = requiredItems > 0 ? Math.round((checkedRequired / requiredItems) * 100) : 0;
+            
+            // Determinar nível de risco
+            let riskLevel = 'Baixo';
+            let riskColor = 'low';
+            let riskIcon = 'fa-check-circle';
+            let riskDescription = '';
+            
+            if (missingRequired === 0 && requiredItems > 0) {
+                riskLevel = 'Baixo';
+                riskColor = 'low';
+                riskIcon = 'fa-check-circle';
+                riskDescription = '✅ Todos os EPIs obrigatórios estão sendo utilizados. Risco controlado.';
+            } else if (missingRequired <= 1 && requiredItems > 2) {
+                riskLevel = 'Moderado';
+                riskColor = 'medium';
+                riskIcon = 'fa-exclamation-triangle';
+                riskDescription = `⚠️ Falta ${missingRequired} EPI obrigatório. Risco aumentado - regularize imediatamente.`;
+            } else {
+                riskLevel = 'Alto';
+                riskColor = 'high';
+                riskIcon = 'fa-times-circle';
+                riskDescription = `🚨 Faltam ${missingRequired} EPIs obrigatórios. RISCO ELEVADO - atividade NÃO deve ser iniciada.`;
+            }
+            
+            // Atualizar resultados
+            const resultsContainer = document.getElementById('riskResults');
+            resultsContainer.innerHTML = `
+                <div class="risk-item ${riskColor}">
+                    <div class="risk-title">
+                        <i class="fas ${riskIcon} risk-icon"></i>
+                        <h4>Nível de Risco Atual: ${riskLevel}</h4>
+                    </div>
+                    <p class="risk-description">${riskDescription}</p>
+                </div>
+            `;
+            
+            // Adicionar itens de risco específicos com CONSEQUÊNCIAS
+            const missingEPIs = Object.values(currentState.currentEPIs).filter(item => item.obrigatorio && !item.checked);
+            if (missingEPIs.length > 0) {
+                resultsContainer.innerHTML += `
+                <div class="risk-item high">
+                    <div class="risk-title">
+                        <i class="fas fa-exclamation-triangle risk-icon"></i>
+                        <h4>EPIs OBRIGATÓRIOS FALTANTES</h4>
+                    </div>
+                    <p class="risk-description"><strong>Atenção:</strong> Os seguintes EPIs são essenciais para sua segurança:</p>
+                </div>
+                `;
+                
+                missingEPIs.forEach(item => {
+                    resultsContainer.innerHTML += `
+                    <div class="risk-item high" style="margin-top: 1rem;">
+                        <div class="risk-title">
+                            <i class="fas fa-shield-alt risk-icon"></i>
+                            <h4>${item.nome}</h4>
+                        </div>
+                        <div class="risk-description">
+                            <p><strong>Nível de Risco:</strong> ${item.risco}</p>
+                            <p><strong>Consequência do não uso:</strong> ${item.consequencia || 'Risco não especificado'}</p>
+                            <p><strong>Norma:</strong> ${item.norm}</p>
+                        </div>
+                    </div>
+                    `;
+                });
+            }
+            
+            // Atualizar estatísticas
+            const statsContainer = document.getElementById('riskStats');
+            statsContainer.innerHTML = `
+                <div class="stat-item">
+                    <span class="stat-value">${percentage}%</span>
+                    <span class="stat-label">EPIs em uso</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">${requiredPercentage}%</span>
+                    <span class="stat-label">Obrigatórios</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">${missingRequired}</span>
+                    <span class="stat-label">Faltantes críticos</span>
+                </div>
+            `;
+        }
+
+        function updateGuidance() {
+            const container = document.getElementById('guidanceContainer');
+            const missingEPIs = Object.values(currentState.currentEPIs).filter(item => item.obrigatorio && !item.checked);
+            
+            let html = '';
+            
+            if (missingEPIs.length === 0) {
+                html += `
+                <div class="guidance-item active">
+                    <div class="guidance-header">
+                        <i class="fas fa-check-circle guidance-icon"></i>
+                        <h4>Todos os EPIs obrigatórios estão em uso</h4>
+                    </div>
+                    <p>✅ Você está adequadamente protegido para a atividade.<br>
+                    ✅ Verifique se todos os equipamentos estão em bom estado.<br>
+                    ✅ Mantenha os EPIs durante toda a atividade.<br>
+                    ✅ Em caso de dano a qualquer EPI, interrompa a atividade imediatamente.</p>
+                </div>
+                `;
+            } else {
+                html += `
+                <div class="guidance-item active">
+                    <div class="guidance-header">
+                        <i class="fas fa-exclamation-triangle guidance-icon"></i>
+                        <h4>EPIs OBRIGATÓRIOS FALTANTES</h4>
+                    </div>
+                    <p><strong>ATENÇÃO:</strong> A atividade NÃO deve ser iniciada sem os seguintes EPIs:</p>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                `;
+                
+                missingEPIs.forEach(item => {
+                    html += `<li><strong>${item.nome}:</strong> Risco ${item.risco}</li>`;
+                });
+                
+                html += `
+                    </ul>
+                    <p style="margin-top: 1rem;"><strong>Ação necessária:</strong> Obtenha os EPIs faltantes antes de iniciar qualquer trabalho.</p>
+                </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        // ===== FUNÇÕES AUXILIARES =====
+        function getRiskClass(riskLevel) {
+            const level = riskLevel.toLowerCase();
+            if (level.includes('altíssimo') || level.includes('alto')) {
+                return 'risk-high';
+            } else if (level.includes('médio')) {
+                return 'risk-medium';
+            } else {
+                return 'risk-low';
+            }
+        }
+
+        // ===== SISTEMA DE VALIDAÇÃO AVANÇADO =====
+        class ValidationSystem {
+            constructor() {
+                this.statusElement = document.getElementById('validationStatus');
+                this.statusText = document.getElementById('validationText');
+                this.statusCount = document.getElementById('validationCount');
+                this.lastValidationTime = 0;
+                this.debounceDelay = 300;
+            }
+
+            validateChecklist(checklist) {
+                const now = Date.now();
+                if (now - this.lastValidationTime < this.debounceDelay) return;
+                this.lastValidationTime = now;
+
+                const requiredItems = Object.values(checklist).filter(item => item.obrigatorio);
+                const optionalItems = Object.values(checklist).filter(item => !item.obrigatorio);
+                
+                const checkedRequired = requiredItems.filter(item => item.checked).length;
+                const checkedOptional = optionalItems.filter(item => item.checked).length;
+                
+                const totalRequired = requiredItems.length;
+                const totalOptional = optionalItems.length;
+                const totalChecked = checkedRequired + checkedOptional;
+                const totalItems = totalRequired + totalOptional;
+                
+                this.updateFixedStatus(checkedRequired, totalRequired, checkedOptional, totalOptional);
+                
+                return {
+                    isReadyForSubmit: checkedRequired === totalRequired,
+                    missingRequired: requiredItems.filter(item => !item.checked),
+                    missingOptional: optionalItems.filter(item => !item.checked),
+                    stats: {
+                        checkedRequired,
+                        totalRequired,
+                        checkedOptional,
+                        totalOptional,
+                        totalChecked,
+                        totalItems
+                    }
+                };
+            }
+
+            updateFixedStatus(checkedRequired, totalRequired, checkedOptional, totalOptional) {
+                if (totalRequired === 0) {
+                    this.hideStatus();
+                    return;
+                }
+
+                this.statusElement.classList.remove('hidden', 'valid', 'invalid', 'warning');
+                
+                if (checkedRequired === totalRequired) {
+                    this.statusElement.classList.add('valid');
+                    this.statusText.textContent = totalOptional > 0 
+                        ? `Pronto para enviar! (${checkedOptional}/${totalOptional} opcionais)`
+                        : 'Todos os EPIs obrigatórios estão em uso';
+                    this.statusCount.textContent = `${checkedRequired}/${totalRequired}`;
+                    this.statusElement.querySelector('.validation-icon').className = 'validation-icon';
+                    this.statusElement.querySelector('.validation-icon').innerHTML = '<i class="fas fa-check-circle"></i>';
+                } else if (checkedRequired === 0) {
+                    this.statusElement.classList.add('invalid');
+                    this.statusText.textContent = `Nenhum EPI obrigatório marcado`;
+                    this.statusCount.textContent = `0/${totalRequired}`;
+                    this.statusElement.querySelector('.validation-icon').className = 'validation-icon';
+                    this.statusElement.querySelector('.validation-icon').innerHTML = '<i class="fas fa-times-circle"></i>';
+                } else {
+                    this.statusElement.classList.add('warning');
+                    this.statusText.textContent = `Faltam ${totalRequired - checkedRequired} EPIs obrigatórios`;
+                    this.statusCount.textContent = `${checkedRequired}/${totalRequired}`;
+                    this.statusElement.querySelector('.validation-icon').className = 'validation-icon';
+                    this.statusElement.querySelector('.validation-icon').innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                }
+                
+                this.statusElement.classList.remove('hidden');
+            }
+
+            hideStatus() {
+                this.statusElement.classList.add('hidden');
+            }
+
+            showNotification(type, title, message, duration = 5000) {
+                document.querySelectorAll('.notification').forEach(n => n.remove());
+                
+                const notification = document.createElement('div');
+                notification.className = `notification notification-${type}`;
+                notification.innerHTML = `
+                    <div class="notification-icon">
+                        <i class="fas fa-${type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-triangle' : 'check-circle'}"></i>
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-title">${title}</div>
+                        <div class="notification-message">${message}</div>
+                    </div>
+                    <button class="notification-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                notification.querySelector('.notification-close').addEventListener('click', () => {
+                    notification.classList.add('hiding');
+                    setTimeout(() => notification.remove(), 300);
+                });
+                
+                if (duration > 0) {
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.classList.add('hiding');
+                            setTimeout(() => notification.remove(), 300);
+                        }
+                    }, duration);
+                }
+                
+                return notification;
+            }
+
+            showRequiredBlockModal(missingItems) {
+                const modal = document.getElementById('requiredBlockModal');
+                const listContainer = document.getElementById('requiredMissingList');
+                
+                listContainer.innerHTML = '';
+                missingItems.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'missing-item danger';
+                    itemElement.innerHTML = `
+                        <i class="fas fa-exclamation-circle"></i>
+                        <div>
+                            <strong>${item.nome}</strong><br>
+                            <small>${item.norm}</small>
+                        </div>
+                    `;
+                    listContainer.appendChild(itemElement);
+                });
+                
+                modal.classList.add('active');
+                modal.scrollTop = 0;
+                
+                return new Promise((resolve) => {
+                    document.getElementById('understandRequiredBtn').onclick = () => {
+                        modal.classList.remove('active');
+                        resolve(false);
+                    };
+                    
+                    modal.onclick = (e) => {
+                        if (e.target === modal) {
+                            modal.classList.remove('active');
+                            resolve(false);
+                        }
+                    };
+                });
+            }
+
+            showOptionalConfirmationModal(missingItems) {
+                const modal = document.getElementById('optionalConfirmationModal');
+                const listContainer = document.getElementById('optionalMissingList');
+                
+                listContainer.innerHTML = '';
+                missingItems.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'missing-item';
+                    itemElement.innerHTML = `
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>${item.nome}</strong><br>
+                            <small>${item.norm} (Recomendado)</small>
+                        </div>
+                    `;
+                    listContainer.appendChild(itemElement);
+                });
+                
+                modal.classList.add('active');
+                modal.scrollTop = 0;
+                
+                return new Promise((resolve) => {
+                    document.getElementById('confirmOptionalBtn').onclick = () => {
+                        modal.classList.remove('active');
+                        resolve(true);
+                    };
+                    
+                    document.getElementById('cancelOptionalBtn').onclick = () => {
+                        modal.classList.remove('active');
+                        resolve(false);
+                    };
+                    
+                    modal.onclick = (e) => {
+                        if (e.target === modal) {
+                            modal.classList.remove('active');
+                            resolve(false);
+                        }
+                    };
+                });
+            }
+        }
+
+        // ===== SISTEMA DE GERAÇÃO DE PDF =====
+        async function generateAndDownloadPDF(recordData, recordId, timestamp) {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Configurações do documento
+            doc.setFont("helvetica");
+            doc.setFontSize(20);
+            
+            // Cabeçalho
+            doc.setTextColor(241, 90, 36);
+            doc.text("CHECKLIST DE EPIs - COMPROVANTE", 105, 20, { align: "center" });
+            
+            doc.setFontSize(10);
+            doc.setTextColor(119, 120, 124);
+            doc.text(`Documento gerado por SafeGear Guide - ID: ${recordId}`, 105, 27, { align: "center" });
+            
+            // Linha divisória
+            doc.setDrawColor(241, 90, 36);
+            doc.setLineWidth(0.5);
+            doc.line(20, 32, 190, 32);
+            
+            // Informações básicas
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.setFont("helvetica", "bold");
+            doc.text("INFORMAÇÕES DO REGISTRO", 20, 42);
+            doc.setFont("helvetica", "normal");
+            
+            doc.setFontSize(10);
+            doc.text(`Data/Hora: ${new Date(timestamp).toLocaleString('pt-BR')}`, 20, 50);
+            doc.text(`ID do Registro: ${recordId}`, 20, 56);
+            doc.text(`Status: ${recordData.missingRequiredCount > 0 ? 'NÃO CONFORME' : 'CONFORME'}`, 20, 62);
+            
+            // Informações do funcionário
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("INFORMAÇÕES DO FUNCIONÁRIO", 20, 74);
+            doc.setFont("helvetica", "normal");
+            
+            doc.setFontSize(10);
+            doc.text(`Nome: ${recordData.employeeName}`, 20, 82);
+            doc.text(`Matrícula: ${recordData.employeeId}`, 20, 88);
+            doc.text(`Setor: ${recordData.employeeSector}`, 20, 94);
+            
+            // Informações da OS (nova)
+            if (recordData.workOrder) {
+                doc.text(`OS: ${recordData.workOrder}`, 20, 100);
+            }
+            
+            // Informações da atividade
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("INFORMAÇÕES DA ATIVIDADE", 20, 112);
+            doc.setFont("helvetica", "normal");
+            
+            doc.setFontSize(10);
+            doc.text(`Categoria: ${recordData.category}`, 20, 120);
+            doc.text(`Profissão: ${recordData.profession}`, 20, 126);
+            doc.text(`Código: ${recordData.professionCode}`, 20, 132);
+            doc.text(`Atividade: ${recordData.activity}`, 20, 138);
+            doc.text(`Descrição: ${recordData.workDescription}`, 20, 144);
+            
+            // Análise de riscos
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("ANÁLISE DE RISCOS", 20, 156);
+            doc.setFont("helvetica", "normal");
+            
+            doc.setFontSize(10);
+            const riscoText = recordData.missingRequiredCount > 0 ? "ALTO RISCO" : "RISCO CONTROLADO";
+            const riscoColor = recordData.missingRequiredCount > 0 ? [231, 76, 60] : [39, 174, 96];
+            
+            doc.setTextColor(riscoColor[0], riscoColor[1], riscoColor[2]);
+            doc.text(`Nível de Risco: ${riscoText}`, 20, 164);
+            doc.setTextColor(0, 0, 0);
+            doc.text(`EPIs obrigatórios em uso: ${recordData.checkedCount - (recordData.totalEPIs - recordData.totalRequired)}/${recordData.totalRequired}`, 20, 170);
+            doc.text(`EPIs totais em uso: ${recordData.checkedCount}/${recordData.totalEPIs}`, 20, 176);
+            
+            // Lista de EPIs
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("EQUIPAMENTOS DE PROTEÇÃO INDIVIDUAL", 20, 188);
+            doc.setFont("helvetica", "normal");
+            
+            let yPos = 196;
+            const checkedEPIs = recordData.checkedEPIs.split('; ');
+            const missingEPIs = recordData.missingEPIs.split('; ');
+            
+            // EPIs em uso
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "bold");
+            doc.text("✅ EPIs EM USO:", 20, yPos);
+            doc.setFont("helvetica", "normal");
+            
+            yPos += 8;
+            checkedEPIs.forEach((epi, index) => {
+                if (epi.trim()) {
+                    if (yPos > 270) {
+                        doc.addPage();
+                        yPos = 20;
+                    }
+                    doc.text(`• ${epi.trim()}`, 25, yPos);
+                    yPos += 6;
+                }
+            });
+            
+            // EPIs faltantes (se houver)
+            if (missingEPIs[0].trim()) {
+                yPos += 4;
+                doc.setFont("helvetica", "bold");
+                doc.setTextColor(231, 76, 60);
+                doc.text("❌ EPIs FALTANTES (CRÍTICOS):", 20, yPos);
+                doc.setFont("helvetica", "normal");
+                doc.setTextColor(0, 0, 0);
+                
+                yPos += 8;
+                missingEPIs.forEach((epi, index) => {
+                    if (epi.trim()) {
+                        if (yPos > 270) {
+                            doc.addPage();
+                            yPos = 20;
+                        }
+                        doc.text(`• ${epi.trim()}`, 25, yPos);
+                        yPos += 6;
+                    }
+                });
+            }
+            
+            // Rodapé e assinatura
+            doc.addPage();
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("DECLARAÇÃO E ASSINATURA", 105, 40, { align: "center" });
+            doc.setFont("helvetica", "normal");
+            
+            doc.setFontSize(10);
+            doc.text("Eu, _____________________________________________________,", 20, 60);
+            doc.text("declaro que todas as informações acima são verdadeiras e que compreendo", 20, 70);
+            doc.text("os riscos associados à atividade descrita.", 20, 76);
+            
+            doc.text("Assinatura do Funcionário: _________________________________________", 20, 90);
+            doc.text("Data: ____/____/________      Hora: ______:______", 20, 100);
+            
+            doc.text("Assinatura do Supervisor: _________________________________________", 20, 120);
+            doc.text("Data: ____/____/________      Hora: ______:______", 20, 130);
+            
+            // Informações de segurança
+            doc.setFontSize(9);
+            doc.setTextColor(119, 120, 124);
+            doc.text("Documento válido por 24 horas. Em caso de acidente, apresente este comprovante.", 105, 180, { align: "center" });
+            doc.text("Conforme NR-6 - Equipamento de Proteção Individual", 105, 186, { align: "center" });
+            doc.text("SafeGear Guide © 2023 - Sistema de Gestão de Segurança do Trabalho", 105, 192, { align: "center" });
+            
+            // Salvar PDF
+            doc.save(`Checklist_EPI_${recordId}.pdf`);
+            
+            return true;
+        }
+
+        // ===== SISTEMA DE SUBMISSÃO SIMPLIFICADO =====
+        async function validateAndSubmit() {
+            // 1. Validar formulário básico
+            if (!validateForm()) {
+                validationSystem.showNotification(
+                    'warning',
+                    'Formulário Incompleto',
+                    'Por favor, preencha todos os campos obrigatórios!',
+                    4000
+                );
+                return false;
+            }
+
+            // 2. Validar checklist
+            const validation = validationSystem.validateChecklist(currentState.currentEPIs);
+            
+            // 3. Verificar EPIs obrigatórios
+            if (!validation.isReadyForSubmit) {
+                // Mostrar modal de bloqueio
+                await validationSystem.showRequiredBlockModal(validation.missingRequired);
+                
+                // Mostrar notificação
+                validationSystem.showNotification(
+                    'danger',
+                    'EPIs Obrigatórios Faltantes',
+                    `Faltam ${validation.missingRequired.length} EPIs obrigatórios para finalizar`,
+                    5000
+                );
+                
+                return false;
+            }
+
+            // 4. Verificar EPIs opcionais
+            if (validation.missingOptional.length > 0) {
+                // Pedir confirmação para opcionais faltantes
+                const shouldProceed = await validationSystem.showOptionalConfirmationModal(validation.missingOptional);
+                
+                if (!shouldProceed) {
+                    validationSystem.showNotification(
+                        'warning',
+                        'Submissão Cancelada',
+                        'Você optou por verificar os EPIs opcionais antes de enviar',
+                        3000
+                    );
+                    return false;
+                }
+            }
+
+            // 5. Tudo validado - proceder com submissão simulada
+            return await performSubmission(validation.stats);
+        }
+
+        function validateForm() {
+                const requiredFields = [
+        'employeeName',
+        'employeeId',
+        'employeeSector',
+        'workDescription',
+        'workOrder'
+    ];
+            
+            let isValid = true;
+            
+            requiredFields.forEach(fieldId => {
+                const field = document.getElementById(fieldId);
+                if (!field.value.trim()) {
+                    field.style.borderColor = 'var(--danger)';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = 'rgba(189, 187, 188, 0.5)';
+                }
+            });
+            
+            return isValid;
+        }
+
+        
+async function performSubmission(stats) {
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.innerHTML;
+    
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+    submitBtn.disabled = true;
+
+    try {
+        // Preparar dados
+        let recordData;
+        try {
+            recordData = prepareRecordData(stats);
+        } catch (prepareError) {
+            console.warn('Erro ao preparar dados, criando fallback:', prepareError);
+            recordData = {
+                employeeName: document.getElementById('employeeName')?.value || 'Não informado',
+                employeeId: document.getElementById('employeeId')?.value || '0000',
+                employeeSector: document.getElementById('employeeSector')?.value || 'Geral',
+                workOrder: document.getElementById('workOrder')?.value || '',
+                category: 'Categoria',
+                profession: 'Profissão',
+                professionCode: '000',
+                activity: 'Atividade',
+                workDescription: document.getElementById('workDescription')?.value || '',
+                checkedEPIs: 'Nenhum',
+                missingEPIs: 'Nenhum',
+                totalEPIs: 0,
+                checkedCount: 0,
+                totalRequired: 0,
+                missingRequiredCount: 0,
+                riskLevel: 'BAIXO',
+                status: 'REGISTRADO',
+                stats
+            };
+        }
+
+        const result = {
+            id: 'REG-' + Date.now().toString().slice(-8) + '-' + Math.random().toString(36).substr(2, 4).toUpperCase(),
+            timestamp: new Date().toISOString()
+        };
+
+        if (typeof lastRecordData !== 'undefined') lastRecordData = recordData;
+        if (typeof lastRecordId !== 'undefined') lastRecordId = result.id;
+        if (typeof lastRecordTimestamp !== 'undefined') lastRecordTimestamp = result.timestamp;
+
+        // Geração de PDF (opcional, falha silenciosa)
+        let pdfGenerated = false;
+        try {
+            if (typeof generateAndDownloadPDF === 'function') {
+                await generateAndDownloadPDF(recordData, result.id, result.timestamp);
+                pdfGenerated = true;
+            }
+        } catch (pdfError) {
+            console.error('Erro no PDF:', pdfError);
+        }
+
+        // Modal de sucesso (se falhar, usa apenas notificação)
+        try {
+            if (typeof showSuccessModal === 'function') {
+                showSuccessModal(recordData, result.id, result.timestamp);
+            }
+        } catch (modalError) {
+            console.error('Erro no modal:', modalError);
+        }
+
+        // Notificação de sucesso (sempre exibida)
+        if (validationSystem?.showNotification) {
+            validationSystem.showNotification(
+                'success',
+                pdfGenerated ? 'Checklist Enviado com PDF!' : 'Checklist Registrado',
+                `Registro ${result.id} salvo${pdfGenerated ? ' e PDF gerado' : ''}.`,
+                5000
+            );
+        }
+
+        return true;
+    } catch (error) {
+        console.error('Erro inesperado:', error);
+        if (validationSystem?.showNotification) {
+            validationSystem.showNotification('danger', 'Erro', 'Ocorreu um erro inesperado.', 5000);
+        }
+        return true;
+    } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+        function prepareRecordData(stats) {
+            const employeeName = document.getElementById('employeeName').value;
+            const employeeId = document.getElementById('employeeId').value;
+            const employeeSector = document.getElementById('employeeSector').value;
+            const workDescription = document.getElementById('workDescription').value;
+            const workOrder = document.getElementById('workOrder').value; // NOVO CAMPO
+            
+            const category = catalogoProfissoes.categorias[currentState.selectedCategory];
+            const profession = category.profissoes[currentState.selectedProfession];
+            
+            const checkedEPIs = Object.entries(currentState.currentEPIs)
+                .filter(([_, item]) => item.checked)
+                .map(([_, item]) => item.nome);
+            
+            const missingEPIs = Object.entries(currentState.currentEPIs)
+                .filter(([_, item]) => item.obrigatorio && !item.checked)
+                .map(([_, item]) => item.nome);
+            
+            return {
+                timestamp: new Date().toISOString(),
+                employeeName,
+                employeeId,
+                employeeSector,
+                workOrder, // NOVO CAMPO
+                category: category.nome,
+                profession: profession.nome,
+                professionCode: profession.codigo,
+                activity: currentState.selectedActivity.nome,
+                workDescription,
+                checkedEPIs: checkedEPIs.join('; '),
+                missingEPIs: missingEPIs.join('; '),
+                totalEPIs: stats.totalItems,
+                checkedCount: stats.totalChecked,
+                totalRequired: Object.values(currentState.currentEPIs).filter(item => item.obrigatorio).length,
+                missingRequiredCount: missingEPIs.length,
+                riskLevel: missingEPIs.length > 0 ? 'ALTO' : stats.checkedOptional < stats.totalOptional ? 'MODERADO' : 'BAIXO',
+                status: missingEPIs.length > 0 ? 'PENDENTE' : 'CONFORME',
+                stats: stats
+            };
+        }
+
+        // ===== EVENT LISTENERS =====
+        function initEventListeners() {
+            // Botão de envio
+            document.getElementById('submitBtn').addEventListener('click', async function() {
+                const result = await validateAndSubmit();
+                
+                if (result) {
+                    console.log('Checklist enviado com sucesso!');
+                }
+            });
+            
+            // Modal de sucesso
+            document.getElementById('modalClose').addEventListener('click', function() {
+                document.getElementById('confirmationModal').classList.remove('active');
+            });
+            
+            document.getElementById('newCheckBtn').addEventListener('click', function() {
+                document.getElementById('confirmationModal').classList.remove('active');
+                resetForm();
+            });
+            
+            document.getElementById('printBtn').addEventListener('click', function() {
+                window.print();
+            });
+            
+            document.getElementById('downloadPDFBtn').addEventListener('click', function() {
+                if (lastRecordData && lastRecordId && lastRecordTimestamp) {
+                    generateAndDownloadPDF(lastRecordData, lastRecordId, lastRecordTimestamp);
+                } else {
+                    validationSystem.showNotification(
+                        'warning',
+                        'PDF Indisponível',
+                        'Nenhum registro recente encontrado para gerar PDF.',
+                        3000
+                    );
+                }
+            });
+            
+            document.getElementById('confirmationModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        }
+
+        function showSuccessModal(recordData, recordId, timestamp) {
+            const modal = document.getElementById('confirmationModal');
+            const modalIcon = document.getElementById('modalIcon');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalMessage = document.getElementById('modalMessage');
+            
+            const missingRequired = recordData.missingRequiredCount;
+            
+            if (missingRequired === 0) {
+                modalTitle.textContent = 'Checklist Conforme!';
+                modalIcon.className = 'modal-icon success';
+                modalIcon.innerHTML = '<i class="fas fa-check"></i>';
+                
+                modalMessage.innerHTML = `
+                    <p><strong>✅ TODOS OS EPIs OBRIGATÓRIOS EM USO</strong></p>
+                    <p>Seu checklist foi registrado com sucesso. Atividade liberada com segurança.</p>
+                    <p><strong>ID do Registro:</strong> ${recordId}</p>
+                    <p><strong>Funcionário:</strong> ${recordData.employeeName}</p>
+                    <p><strong>Profissão:</strong> ${recordData.profession} (${recordData.professionCode})</p>
+                    <p><strong>Atividade:</strong> ${recordData.activity}</p>
+                    <p><strong>OS:</strong> ${recordData.workOrder || 'Não informada'}</p>
+                    <p><strong>EPIs em uso:</strong> ${recordData.checkedCount}/${recordData.totalEPIs}</p>
+                    <p><strong>Nível de Risco:</strong> <span style="color: var(--success); font-weight: 600;">BAIXO</span></p>
+                `;
+            } else {
+                modalTitle.textContent = 'Checklist Registrado com Alertas!';
+                modalIcon.className = 'modal-icon warning';
+                modalIcon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                
+                modalMessage.innerHTML = `
+                    <p><strong>⚠️ ATENÇÃO: EPIs Obrigatórios Faltantes</strong></p>
+                    <p>Seu checklist foi registrado, mas a atividade NÃO está autorizada.</p>
+                    <p><strong>ID do Registro:</strong> ${recordId}</p>
+                    <p><strong>Funcionário:</strong> ${recordData.employeeName}</p>
+                    <p><strong>OS:</strong> ${recordData.workOrder || 'Não informada'}</p>
+                    <p><strong>Faltam ${missingRequired} EPIs obrigatórios</strong></p>
+                `;
+            }
+            
+            document.getElementById('recordId').textContent = recordId;
+            document.getElementById('recordTime').textContent = new Date(timestamp).toLocaleString('pt-BR');
+            
+            modal.classList.add('active');
+        }
+
+        function resetForm() {
+            // Resetar estado
+            currentState.selectedActivity = null;
+            currentState.currentEPIs = {};
+            
+            // Resetar formulário, mas manter dados do usuário? Vamos recarregar a página para simplificar.
+            // Ou podemos reter os dados do usuário da URL. Melhor recarregar a página para limpar tudo.
+            window.location.reload();
+        }
+
+        // ===== EXTRAS =====
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && e.target.tagName === 'INPUT' && !e.target.type === 'checkbox') {
+                e.preventDefault();
+                const inputs = Array.from(document.querySelectorAll('input, textarea, select'));
+                const index = inputs.indexOf(e.target);
+                if (index > -1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            }
+        });
+
+        // Limpar localStorage ao sair da página
+        window.addEventListener('beforeunload', function() {
+            localStorage.removeItem('epiChecklistDraft');
+        });
+    </script>
+	<script>
+    (function() {
+        // Verifica se existe usuário no sessionStorage
+        const isLoggedIn = sessionStorage.getItem('user') !== null;
+        const loginLink = document.getElementById('loginLink');
+        const logoutLink = document.getElementById('logoutLink');
+
+        if (isLoggedIn) {
+            if (loginLink) loginLink.style.display = 'none';
+            if (logoutLink) logoutLink.style.display = 'inline-flex';
+        } else {
+            if (loginLink) loginLink.style.display = 'inline-flex';
+            if (logoutLink) logoutLink.style.display = 'none';
+        }
+
+        // Adiciona evento de clique ao link de logout
+        if (logoutLink) {
+            logoutLink.addEventListener('click', function(e) {
+                e.preventDefault();      // impede navegação para login.html
+                logout();
+            });
+        }
+    })();
+
+    // Função de logout global
+    window.logout = function() {
+        sessionStorage.removeItem('user');
+        window.location.href = 'login.html';
+    };
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeGear Guide - Login</title>
+    <meta name="description" content="Faça login no sistema SafeGear Guide para acessar o checklist de EPIs">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ===== NOVA PALETA DE CORES BASEADA NA LOGO ===== */
+        :root {
+
+	    /* Cores principais da logo */
+            --primary: #f15a24;      /* Laranja principal vibrante */
+            --secondary: #fcb041;    /* Laranja amarelado secundário */
+            --neutral-dark: #77787c; /* Cinza médio azulado */
+            --neutral-light: #bdbbbc;/* Cinza claro rosado */
+            
+            /* Cores derivadas */
+            --primary-dark: #d14a1d;   /* 15% mais escuro */
+            --primary-light: #f8a585;  /* 30% mais claro */
+            --secondary-dark: #e09a38; /* 15% mais escuro */
+            --secondary-light: #fed089;/* 30% mais claro */
+            
+            /* Cores de estado */
+            --success: #27ae60;        /* Verde mantido */
+            --warning: #f0a31e;        /* Amarelo ajustado */
+            --danger: #e74c3c;         /* Vermelho ajustado */
+            
+            /* Cores neutras */
+            --background: #f8f9fa;     /* Fundo muito claro */
+            --surface: #ffffff;        /* Superfícies brancas */
+            --text: #2c3e50;          /* Texto escuro */
+            --text-light: #77787c;     /* Texto secundário */
+            --white: #ffffff;
+            --gray: #95a5a6;
+            
+            /* Cores de destaque */
+            --accent: #2a5caa;        /* Azul complementar para contraste */
+            --accent-light: #4a7cca;  /* Azul mais claro */
+            --accent-dark: #1a3a6a;   /* Azul mais escuro */
+            
+            /* Utilitários */
+            --shadow: 0 8px 24px rgba(241, 90, 36, 0.12);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+	.logo-img {
+    height: 40px;        /* ajuste conforme necessário */
+    width: auto;
+    margin-right: 10px;  /* espaçamento entre a imagem e o texto */
+}
+
+        /* ===== RESET E ESTILOS GERAIS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+            color: var(--neutral-dark);
+        }
+
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2.2rem; }
+        h3 { font-size: 1.6rem; }
+
+        @media (min-width: 1024px) {
+            h1 { font-size: 3.2rem; }
+            h2 { font-size: 2.6rem; }
+            h3 { font-size: 1.8rem; }
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        a:hover {
+            color: var(--primary-dark);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(241, 90, 36, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(241, 90, 36, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-full {
+            width: 100%;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mb-3 { margin-bottom: 3rem; }
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mt-3 { margin-top: 3rem; }
+
+        /* ===== HEADER ===== */
+        header {
+            background-color: var(--surface);
+            box-shadow: 0 4px 20px rgba(119, 120, 124, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            flex-shrink: 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 1.5rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.6rem;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            color: var(--secondary);
+            font-size: 2rem;
+            animation: pulse 2s infinite;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--neutral-dark);
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: var(--transition);
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover::after {
+            width: 80%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links .btn {
+            padding: 0.7rem 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn:hover {
+            color: var(--secondary);
+        }
+
+        /* ===== CONTEÚDO PRINCIPAL - LOGIN ===== */
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+            background: linear-gradient(135deg, rgba(241, 90, 36, 0.02) 0%, rgba(252, 176, 65, 0.01) 100%);
+            min-height: calc(100vh - 140px);
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .login-card {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            padding: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(189, 187, 188, 0.2);
+            transition: var(--transition);
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 16px 32px rgba(241, 90, 36, 0.15);
+        }
+
+        .login-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(241, 90, 36, 0.1) 0%, rgba(252, 176, 65, 0.05) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+            color: var(--primary);
+        }
+
+        .login-form {
+            margin-top: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--neutral-dark);
+        }
+
+        .required::after {
+            content: " *";
+            color: var(--danger);
+        }
+
+        input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid rgba(189, 187, 188, 0.5);
+            border-radius: var(--radius);
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--surface);
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(241, 90, 36, 0.1);
+            background-color: var(--surface);
+        }
+
+        .login-footer {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid rgba(189, 187, 188, 0.3);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .register-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .register-link:hover {
+            background-color: rgba(241, 90, 36, 0.1);
+        }
+
+        /* ===== ANIMAÇÕES ===== */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, var(--neutral-dark) 0%, #5a5b5f 100%);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+            flex-shrink: 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        @media (min-width: 768px) {
+    .footer-content {
+        grid-template-columns: 2fr 1fr; /* primeira coluna maior */
+    }
+}
+
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--white);
+        }
+
+        .footer-about p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .footer-section h4 {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+            transform: translateX(8px);
+        }
+
+        .footer-contact p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            line-height: 1.6;
+        }
+
+        .footer-contact i {
+            color: var(--secondary);
+            width: 20px;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            transform: translateY(-5px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVIDADE ===== */
+        @media (max-width: 767px) {
+            main {
+                padding: 1.5rem;
+                min-height: calc(100vh - 120px);
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--surface);
+                flex-direction: column;
+                padding: 1.5rem;
+                box-shadow: 0 20px 40px rgba(119, 120, 124, 0.1);
+                border-radius: 0 0 var(--radius) var(--radius);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .login-card {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 1.5rem;
+            }
+            
+            .login-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+        }
+
+/* ===== NOTIFICAÇÕES ===== */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1.25rem 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    z-index: 10000;
+    animation: slideInRight 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    max-width: 400px;
+    min-width: 300px;
+}
+
+.notification.hiding {
+    animation: slideOutRight 0.3s ease;
+}
+
+.notification-danger {
+    background: linear-gradient(135deg, var(--danger) 0%, #EC7063 100%);
+    color: var(--white);
+    border-left: 6px solid rgba(255,255,255,0.3);
+}
+
+.notification-warning {
+    background: linear-gradient(135deg, var(--warning) 0%, #F5B041 100%);
+    color: var(--neutral-dark);
+    border-left: 6px solid rgba(119, 120, 124, 0.1);
+}
+
+.notification-success {
+    background: linear-gradient(135deg, var(--success) 0%, #2ECC71 100%);
+    color: var(--white);
+    border-left: 6px solid rgba(255,255,255,0.3);
+}
+
+.notification-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: var(--transition);
+    padding: 0.25rem;
+    border-radius: 4px;
+}
+
+.notification-close:hover {
+    opacity: 1;
+    background-color: rgba(255,255,255,0.2);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+           <a href="index.html" class="logo">
+    		<img src="C:\Users\Gabriel\Desktop\Projeto Integrador\VERSÕES OFICIAIS E CÓDIGOS\CLS 1.0\CLS logo.jpg" alt="CLS" class="logo-img">
+    		<span>CLS - Checklist Service</span>
+	   </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="nav-links" id="navLinks">
+                <a href="index.html"><i class="fas fa-home"></i> Início</a>
+                <a href="info.html"><i class="fas fa-info-circle"></i> Guia de EPIs</a>
+                <a href="login.html" class="btn"><i class="fas fa-sign-in-alt"></i> Login</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="login-wrapper">
+            <div class="login-card">
+                <div class="login-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                
+                <h2 class="text-center">Acesse sua conta</h2>
+                <p class="text-center mb-3">Entre no sistema SafeGear Guide para gerenciar checklists de EPIs</p>
+                
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="email" class="required">
+                            <i class="fas fa-envelope"></i> E-mail
+                        </label>
+                        <input type="email" id="email" required placeholder="seu.email@empresa.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="required">
+                            <i class="fas fa-key"></i> Senha
+                        </label>
+                        <input type="password" id="password" required placeholder="Digite sua senha">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-full mt-2">
+                        <i class="fas fa-sign-in-alt"></i> Entrar no Sistema
+                    </button>
+                </form>
+                
+                <div class="login-footer">
+                    <p>Não tem uma conta corporativa?</p>
+                    <a href="#contact-admin" class="register-link">
+                        <i class="fas fa-user-plus"></i> Solicitar acesso ao administrador
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+   <footer>
+    <div class="container">
+        <div class="footer-content">
+            <!-- Coluna 1: Sobre + YouTube -->
+            <div class="footer-about">
+                <div class="footer-logo">CLS - Checklist Service</div>
+                <p>O CLS simplifica a gestão de segurança do trabalho. Checklists digitais de EPIs com envio automático por e-mail, garantindo auditoria fácil e conformidade com as principais normas regulamentadoras (NR-6, NR-10, NR-12).</p>
+               
+                
+                <div class="social-links">
+                    <a href="#" title="YouTube (pitch do projeto)"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <!-- Coluna 2: Links Rápidos + Contato -->
+            <div class="footer-section">
+                <h4>Links Rápidos</h4>
+                <ul class="footer-links">
+                    <li><a href="index.html"><i class="fas fa-home"></i> Página Inicial</a></li>
+                    <li><a href="info.html"><i class="fas fa-info-circle"></i> Guia de EPIs</a></li>
+                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Área de Login</a></li>
+                </ul>
+                
+                <h4 style="margin-top: 2rem;">Contato</h4>
+                <div class="footer-contact">
+                    <p><i class="fas fa-envelope"></i> contato@safegear.com</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+    <p>© 2026 clservice.com.br - Sistema de checklist de EPIs</p>
+</div>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // LOG 1: Confirma que o DOM carregou
+        console.log('DOM carregado - script executando');
+	
+	// Função de notificação personalizada
+function showNotification(type, title, message, duration = 5000) {
+    // Remove notificações anteriores
+    document.querySelectorAll('.notification').forEach(n => n.remove());
+    
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-icon">
+            <i class="fas fa-${type === 'danger' ? 'times-circle' : type === 'warning' ? 'exclamation-triangle' : 'check-circle'}"></i>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title">${title}</div>
+            <div class="notification-message">${message}</div>
+        </div>
+        <button class="notification-close">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    notification.querySelector('.notification-close').addEventListener('click', () => {
+        notification.classList.add('hiding');
+        setTimeout(() => notification.remove(), 300);
+    });
+    
+    if (duration > 0) {
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.classList.add('hiding');
+                setTimeout(() => notification.remove(), 300);
+            }
+        }, duration);
+    }
+    
+    return notification;
+}
+
+
+        // Menu mobile (código existente - NÃO ALTERE)
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('fa-bars')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+        }
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                navLinks.classList.remove('active');
+                if (mobileMenuBtn) {
+                    mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                }
+            });
+        });
+
+        // Código de login
+        const loginForm = document.getElementById('loginForm');
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwzwq_2x7Wi-cUUhEy7uFZxfHdo99BaqqsH829U8GoEmMdq8w8WXbaDG4c5bjoS6Mmueg/exec';
+
+      // Verifica se há mensagem de erro na URL
+ loginForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    console.log('Submit do formulário disparado');
+
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    console.log('Email digitado:', email);
+    console.log('Senha digitada:', password);
+
+    if (!email || !password) {
+        showNotification('warning', 'Campos obrigatórios', 'Preencha e-mail e senha para continuar.', 4000);
+        return;
+    }
+
+    const submitBtn = loginForm.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
+    submitBtn.disabled = true;
+
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                'email': email,
+                'senha': password
+            })
+        });
+
+        console.log('Resposta recebida, status:', response.status);
+
+        const data = await response.json();
+        console.log('Dados da resposta:', JSON.stringify(data, null, 2));
+
+        if (data.success) {
+            sessionStorage.setItem('user', JSON.stringify(data.usuario));
+            window.location.href = 'index.html';
+        } else {
+            // Notificação personalizada em vez de alert e redirecionamento
+            showNotification('danger', 'Falha no login', data.mensagem || 'E-mail ou senha inválidos.', 5000);
+            // Não redireciona para login.html?error=1
+        }
+    } catch (error) {
+        console.error('Erro no fetch:', error);
+        showNotification('danger', 'Erro de conexão', 'Não foi possível conectar ao servidor. Tente novamente.', 5000);
+    } finally {
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+});
+
+        
+    });
+</script>
+</body>
+</html>
