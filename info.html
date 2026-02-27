@@ -37,19 +37,23 @@
             --white: #ffffff;
             --gray: #95a5a6;
             
+            /* Cores de destaque */
+            --accent: #2a5caa;        /* Azul complementar para contraste */
+            --accent-light: #4a7cca;  /* Azul mais claro */
+            --accent-dark: #1a3a6a;   /* Azul mais escuro */
+            
             /* Utilitários */
             --shadow: 0 8px 24px rgba(241, 90, 36, 0.12);
             --radius: 12px;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-	.logo-img {
-    height: 40px;        /* ajuste conforme necessário */
-    width: auto;
-    margin-right: 10px;  /* espaçamento entre a imagem e o texto */
-}
+        .logo-img {
+            height: 40px;
+            width: auto;
+            margin-right: 10px;
+        }
 
-        /* O resto do CSS permanece igual, mas usando as novas variáveis */
         /* ===== RESET E ESTILOS GERAIS ===== */
         * {
             margin: 0;
@@ -666,25 +670,6 @@
             font-size: 0.9rem;
         }
 
-        .video-placeholder {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, rgba(241, 90, 36, 0.1) 0%, rgba(252, 176, 65, 0.05) 100%);
-            border-radius: var(--radius);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin-top: 1.5rem;
-            color: var(--primary);
-            border: 2px dashed rgba(189, 187, 188, 0.5);
-        }
-
-        .video-placeholder i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
         .detail-info-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -781,11 +766,11 @@
             margin-bottom: 2rem;
         }
 
-       @media (min-width: 768px) {
-    .footer-content {
-        grid-template-columns: 2fr 1fr; /* primeira coluna maior */
-    }
-}
+        @media (min-width: 768px) {
+            .footer-content {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
 
         .footer-logo {
             font-family: 'Montserrat', sans-serif;
@@ -952,20 +937,20 @@
     <header>
         <div class="container header-container">
             <a href="index.html" class="logo">
-    		<img src="CLS logo.jpg" alt="CLS" class="logo-img">
-    		<span>CLS - Checklist Service</span>
-	    </a>
+                <img src="C:\Users\Gabriel\Desktop\Projeto Integrador\VERSÕES OFICIAIS E CÓDIGOS\CLS 1.0\CLS logo.jpg" alt="CLS" class="logo-img">
+                <span>CLS - Checklist Service</span>
+            </a>
             
             <button class="mobile-menu-btn" id="mobileMenuBtn">
                 <i class="fas fa-bars"></i>
             </button>
             
             <div class="nav-links" id="navLinks">
-    <a href="index.html"><i class="fas fa-home"></i> Início</a>
-    <a href="info.html"><i class="fas fa-info-circle"></i> Guia de EPIs</a>
-    <a href="login.html" class="btn" id="loginLink"><i class="fas fa-sign-in-alt"></i> Login</a>
-    <a href="login.html" class="btn" id="logoutLink" style="display: none;"><i class="fas fa-sign-out-alt"></i> Sair</a>
-	     </div>
+                <a href="index.html"><i class="fas fa-home"></i> Início</a>
+                <a href="info.html"><i class="fas fa-info-circle"></i> Guia de EPIs</a>
+                <a href="login.html" class="btn" id="loginLink"><i class="fas fa-sign-in-alt"></i> Login</a>
+                <a href="login.html" class="btn" id="logoutLink" style="display: none;"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            </div>
         </div>
     </header>
 
@@ -1006,39 +991,39 @@
 
     <!-- ===== FOOTER ===== -->
     <footer>
-    <div class="container">
-        <div class="footer-content">
-            <!-- Coluna 1: Sobre + YouTube -->
-            <div class="footer-about">
-                <div class="footer-logo">CLS - Checklist Service</div>
-                <p>O CLS simplifica a gestão de segurança do trabalho. Checklists digitais de EPIs com envio automático por e-mail, garantindo auditoria fácil e conformidade com as principais normas regulamentadoras (NR-6, NR-10, NR-12).</p>
+        <div class="container">
+            <div class="footer-content">
+                <!-- Coluna 1: Sobre + YouTube -->
+                <div class="footer-about">
+                    <div class="footer-logo">CLS - Checklist Service</div>
+                    <p>O CLS simplifica a gestão de segurança do trabalho. Checklists digitais de EPIs com envio automático por e-mail, garantindo auditoria fácil e conformidade com as principais normas regulamentadoras (NR-6, NR-10, NR-12).</p>
+                    
+                    <div class="social-links">
+                        <a href="#" title="YouTube (pitch do projeto)"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
                 
-                <div class="social-links">
-                    <a href="#" title="YouTube (pitch do projeto)"><i class="fab fa-youtube"></i></a>
+                <!-- Coluna 2: Links Rápidos + Contato -->
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html"><i class="fas fa-home"></i> Página Inicial</a></li>
+                        <li><a href="info.html"><i class="fas fa-info-circle"></i> Guia de EPIs</a></li>
+                        <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Área de Login</a></li>
+                    </ul>
+                    
+                    <h4 style="margin-top: 2rem;">Contato</h4>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-envelope"></i> contato.clservice@gmail.com</p>
+                    </div>
                 </div>
             </div>
             
-            <!-- Coluna 2: Links Rápidos + Contato -->
-            <div class="footer-section">
-                <h4>Links Rápidos</h4>
-                <ul class="footer-links">
-                    <li><a href="index.html"><i class="fas fa-home"></i> Página Inicial</a></li>
-                    <li><a href="info.html"><i class="fas fa-info-circle"></i> Guia de EPIs</a></li>
-                    <li><a href="login.html"><i class="fas fa-sign-in-alt"></i> Área de Login</a></li>
-                </ul>
-                
-                <h4 style="margin-top: 2rem;">Contato</h4>
-                <div class="footer-contact">
-                    <p><i class="fas fa-envelope"></i> contato@safegear.com</p>
-                </div>
+            <div class="footer-bottom">
+                <p>© 2026 clservice.com.br - Sistema de checklist de EPIs</p>
             </div>
         </div>
-        
-       <div class="footer-bottom">
-    <p>© 2026 clservice.com.br - Sistema de checklist de EPIs</p>
-</div>
-    </div>
-</footer>
+    </footer>
 
     <script>
         // ===== DADOS COMPLETOS DOS EPIS =====
@@ -1495,8 +1480,10 @@
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.addEventListener('click', function() {
                     navLinks.classList.remove('active');
-                    mobileMenuBtn.querySelector('i').classList.remove('fa-times');
-                    mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                    if (mobileMenuBtn) {
+                        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                    }
                 });
             });
             
@@ -1684,7 +1671,7 @@
                 });
             }
             
-            // Gerar HTML do detalhe
+            // Gerar HTML do detalhe (sem vídeo e com referências às normas)
             const detailContainer = document.getElementById('epiDetailContainer');
             detailContainer.innerHTML = `
                 <div class="epi-detail-header">
@@ -1704,12 +1691,7 @@
                                 <img src="${epi.image}" alt="${epi.name}" class="detail-image">
                                 <div class="image-caption">Imagem ilustrativa do equipamento</div>
                             </div>
-                            
-                            <div class="video-placeholder">
-                                <i class="fas fa-video"></i>
-                                <p>Vídeo de demonstração em breve</p>
-                                <small>Espaço reservado para vídeo curto sobre uso correto</small>
-                            </div>
+                            <!-- Espaço de vídeo removido -->
                         </div>
                         
                         <div>
@@ -1721,6 +1703,9 @@
                             <div class="info-card">
                                 <h5><i class="fas fa-file-alt"></i> Normas e Certificações</h5>
                                 <p>${epi.norm}</p>
+                                <p style="font-size:0.85rem; color: var(--text-light); margin-top:0.5rem;">
+                                    <i class="fas fa-book-open"></i> Fonte: Normas regulamentadoras NR-6 e especificações técnicas oficiais (ABNT, ISO, ANSI, EN).
+                                </p>
                             </div>
                             
                             <div class="info-card ${riskClass}" style="border-left-color: ${getRiskColor(epi.risk)};">
@@ -1753,12 +1738,15 @@
                         <div class="specs-grid">
                             ${specsHTML}
                         </div>
+                        <p style="font-size:0.85rem; color: var(--text-light); margin-top:0.5rem;">
+                            <i class="fas fa-book-open"></i> Baseado em normas técnicas vigentes (consulte sempre a versão mais recente).
+                        </p>
                     </div>
                     ` : ''}
                     
                     <div style="margin-top: 2rem; padding: 1.5rem; background-color: rgba(241, 90, 36, 0.1); border-radius: var(--radius);">
                         <h5><i class="fas fa-lightbulb"></i> Dica de Segurança</h5>
-                        <p>Sempre inspecione seu EPI antes do uso. Verifique validade, integridade e limpeza. Em caso de dúvida sobre a adequação do equipamento, consulte o responsável pela segurança do trabalho.</p>
+                        <p>Sempre inspecione seu EPI antes do uso. Verifique validade, integridade e limpeza. Em caso de dúvida sobre a adequação do equipamento, consulte o responsável pela segurança do trabalho. Lembre-se: o uso de EPI com CA (Certificado de Aprovação) vencido ou danificado é proibido.</p>
                     </div>
                 </div>
             `;
@@ -1842,7 +1830,7 @@
                 tempoUso: 'Tempo de Uso Máximo',
                 tipoFiltro: 'Tipo de Filtro para Gases',
                 vidaUtil: 'Vida Útil do Filtro',
-                materialFacepiece: 'Material do Rostoeiro',
+                materialFacepiece: 'Material do Rosto',
                 comprimento: 'Comprimento',
                 resistencia: 'Resistências',
                 altura: 'Altura',
@@ -1857,7 +1845,6 @@
         function initEventListeners() {
             // Navegação por teclado
             document.addEventListener('keydown', function(e) {
-                // Navegação com setas nas categorias
                 if (e.key === 'Escape' && currentCategory) {
                     backToCategories();
                 }
@@ -1881,53 +1868,51 @@
             });
         }
 
-        // Iniciar pré-carregamento
         setTimeout(preloadImages, 1000);
     </script>
-<script>
-    (function() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const isLoggedIn = urlParams.has('user');
-        
-        const loginLink = document.getElementById('loginLink');
-        const logoutLink = document.getElementById('logoutLink');
-        
-        if (isLoggedIn) {
-            if (loginLink) loginLink.style.display = 'none';
-            if (logoutLink) logoutLink.style.display = 'inline-flex';
-        } else {
-            if (loginLink) loginLink.style.display = 'inline-flex';
-            if (logoutLink) logoutLink.style.display = 'none';
-        }
-    })();
+    <script>
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const isLoggedIn = urlParams.has('user');
+            
+            const loginLink = document.getElementById('loginLink');
+            const logoutLink = document.getElementById('logoutLink');
+            
+            if (isLoggedIn) {
+                if (loginLink) loginLink.style.display = 'none';
+                if (logoutLink) logoutLink.style.display = 'inline-flex';
+            } else {
+                if (loginLink) loginLink.style.display = 'inline-flex';
+                if (logoutLink) logoutLink.style.display = 'none';
+            }
+        })();
     </script>
-<script>
-    (function() {
-        const isLoggedIn = sessionStorage.getItem('user') !== null;
-        const loginLink = document.getElementById('loginLink');
-        const logoutLink = document.getElementById('logoutLink');
+    <script>
+        (function() {
+            const isLoggedIn = sessionStorage.getItem('user') !== null;
+            const loginLink = document.getElementById('loginLink');
+            const logoutLink = document.getElementById('logoutLink');
 
-        if (isLoggedIn) {
-            if (loginLink) loginLink.style.display = 'none';
-            if (logoutLink) logoutLink.style.display = 'inline-flex';
-        } else {
-            if (loginLink) loginLink.style.display = 'inline-flex';
-            if (logoutLink) logoutLink.style.display = 'none';
-        }
+            if (isLoggedIn) {
+                if (loginLink) loginLink.style.display = 'none';
+                if (logoutLink) logoutLink.style.display = 'inline-flex';
+            } else {
+                if (loginLink) loginLink.style.display = 'inline-flex';
+                if (logoutLink) logoutLink.style.display = 'none';
+            }
 
-        if (logoutLink) {
-            logoutLink.addEventListener('click', function(e) {
-                e.preventDefault();
-                logout();
-            });
-        }
-    })();
+            if (logoutLink) {
+                logoutLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    logout();
+                });
+            }
+        })();
 
-    window.logout = function() {
-        sessionStorage.removeItem('user');
-        window.location.href = 'login.html';
-    };
-</script>
+        window.logout = function() {
+            sessionStorage.removeItem('user');
+            window.location.href = 'login.html';
+        };
+    </script>
 </body>
-
 </html>
