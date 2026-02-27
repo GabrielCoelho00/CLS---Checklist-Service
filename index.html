@@ -2015,7 +2015,7 @@
                 
                 <h4 style="margin-top: 2rem;">Contato</h4>
                 <div class="footer-contact">
-                    <p><i class="fas fa-envelope"></i> contato@safegear.com</p>
+                    <p><i class="fas fa-envelope"></i> contato.clservice@gmail.com</p>
                 </div>
             </div>
         </div>
@@ -3960,6 +3960,11 @@ document.getElementById('employeeSector').value = userData.setor || '';
         formData.append('missingEPIs', recordData.missingEPIs);
         formData.append('status', recordData.status);
         formData.append('riskLevel', recordData.riskLevel);
+	formData.append('category', recordData.category);
+	formData.append('profession', recordData.profession);
+	formData.append('professionCode', recordData.professionCode);
+	formData.append('workDescription', recordData.workDescription);
+	formData.append('totalEPIs', recordData.checkedCount);
 
         
 	fetch(API_URL, {
