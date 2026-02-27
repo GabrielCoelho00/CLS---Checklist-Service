@@ -12,37 +12,26 @@
     <style>
         /* ===== NOVA PALETA DE CORES BASEADA NA LOGO ===== */
         :root {
-            /* Cores principais da logo */
-            --primary: #f15a24;      /* Laranja principal vibrante */
-            --secondary: #fcb041;    /* Laranja amarelado secundário */
-            --neutral-dark: #77787c; /* Cinza médio azulado */
-            --neutral-light: #bdbbbc;/* Cinza claro rosado */
-            
-            /* Cores derivadas */
-            --primary-dark: #d14a1d;   /* 15% mais escuro */
-            --primary-light: #f8a585;  /* 30% mais claro */
-            --secondary-dark: #e09a38; /* 15% mais escuro */
-            --secondary-light: #fed089;/* 30% mais claro */
-            
-            /* Cores de estado */
-            --success: #27ae60;        /* Verde mantido */
-            --warning: #f0a31e;        /* Amarelo ajustado */
-            --danger: #e74c3c;         /* Vermelho ajustado */
-            
-            /* Cores neutras */
-            --background: #f8f9fa;     /* Fundo muito claro */
-            --surface: #ffffff;        /* Superfícies brancas */
-            --text: #2c3e50;          /* Texto escuro */
-            --text-light: #77787c;     /* Texto secundário */
+            --primary: #f15a24;
+            --secondary: #fcb041;
+            --neutral-dark: #77787c;
+            --neutral-light: #bdbbbc;
+            --primary-dark: #d14a1d;
+            --primary-light: #f8a585;
+            --secondary-dark: #e09a38;
+            --secondary-light: #fed089;
+            --success: #27ae60;
+            --warning: #f0a31e;
+            --danger: #e74c3c;
+            --background: #f8f9fa;
+            --surface: #ffffff;
+            --text: #2c3e50;
+            --text-light: #77787c;
             --white: #ffffff;
             --gray: #95a5a6;
-            
-            /* Cores de destaque */
-            --accent: #2a5caa;        /* Azul complementar para contraste */
-            --accent-light: #4a7cca;  /* Azul mais claro */
-            --accent-dark: #1a3a6a;   /* Azul mais escuro */
-            
-            /* Utilitários */
+            --accent: #2a5caa;
+            --accent-light: #4a7cca;
+            --accent-dark: #1a3a6a;
             --shadow: 0 8px 24px rgba(241, 90, 36, 0.12);
             --radius: 12px;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -54,7 +43,6 @@
             margin-right: 10px;
         }
 
-        /* ===== RESET E ESTILOS GERAIS ===== */
         * {
             margin: 0;
             padding: 0;
@@ -71,7 +59,6 @@
             line-height: 1.6;
             color: var(--text);
             background-color: var(--background);
-            transition: var(--transition);
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -166,7 +153,6 @@
         .mt-2 { margin-top: 2rem; }
         .mt-3 { margin-top: 3rem; }
 
-        /* ===== HEADER ===== */
         header {
             background-color: var(--surface);
             box-shadow: 0 4px 20px rgba(119, 120, 124, 0.08);
@@ -253,7 +239,6 @@
             color: var(--secondary);
         }
 
-        /* ===== HERO SECTION ===== */
         .hero {
             text-align: center;
             padding: 6rem 0;
@@ -298,7 +283,6 @@
             line-height: 1.8;
         }
 
-        /* ===== CATEGORIAS DE EPIS ===== */
         .categories-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -379,7 +363,6 @@
             margin-top: auto;
         }
 
-        /* ===== LISTA DE EPIS POR CATEGORIA ===== */
         .epi-category-section {
             margin-top: 3rem;
             display: none;
@@ -565,7 +548,6 @@
             color: var(--white);
         }
 
-        /* ===== DETALHES DO EPI ===== */
         .epi-detail-overlay {
             position: fixed;
             top: 0;
@@ -734,7 +716,6 @@
             font-weight: 600;
         }
 
-        /* ===== ANIMAÇÕES ===== */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -751,7 +732,6 @@
             100% { transform: scale(1); }
         }
 
-        /* ===== FOOTER ===== */
         footer {
             background: linear-gradient(135deg, var(--neutral-dark) 0%, #5a5b5f 100%);
             color: var(--white);
@@ -872,7 +852,6 @@
             font-size: 0.9rem;
         }
 
-        /* ===== RESPONSIVIDADE ===== */
         @media (max-width: 767px) {
             section {
                 padding: 3rem 0;
@@ -933,7 +912,6 @@
     </style>
 </head>
 <body>
-    <!-- ===== HEADER ===== -->
     <header>
         <div class="container header-container">
             <a href="index.html" class="logo">
@@ -954,7 +932,6 @@
         </div>
     </header>
 
-    <!-- ===== HERO SECTION ===== -->
     <section class="hero">
         <div class="container">
             <h1>Guia de EPIs</h1>
@@ -965,35 +942,24 @@
         </div>
     </section>
 
-    <!-- ===== CATEGORIAS DE EPIS ===== -->
     <section id="categorias">
         <div class="container">
             <h2 class="text-center">Categorias de EPIs</h2>
             <p class="text-center mb-3">Selecione uma categoria para visualizar todos os EPIs disponíveis</p>
             
-            <div class="categories-grid" id="categoriesGrid">
-                <!-- Categorias serão carregadas via JavaScript -->
-            </div>
+            <div class="categories-grid" id="categoriesGrid"></div>
         </div>
     </section>
 
-    <!-- ===== LISTA DE EPIS POR CATEGORIA ===== -->
-    <div id="epiListContainer">
-        <!-- Lista de EPIs por categoria será carregada via JavaScript -->
-    </div>
+    <div id="epiListContainer"></div>
 
-    <!-- ===== DETALHES DO EPI (MODAL) ===== -->
     <div class="epi-detail-overlay" id="epiDetailOverlay">
-        <div class="epi-detail-container" id="epiDetailContainer">
-            <!-- Detalhes do EPI serão carregados via JavaScript -->
-        </div>
+        <div class="epi-detail-container" id="epiDetailContainer"></div>
     </div>
 
-    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <!-- Coluna 1: Sobre + YouTube -->
                 <div class="footer-about">
                     <div class="footer-logo">CLS - Checklist Service</div>
                     <p>O CLS simplifica a gestão de segurança do trabalho. Checklists digitais de EPIs com envio automático por e-mail, garantindo auditoria fácil e conformidade com as principais normas regulamentadoras (NR-6, NR-10, NR-12).</p>
@@ -1003,7 +969,6 @@
                     </div>
                 </div>
                 
-                <!-- Coluna 2: Links Rápidos + Contato -->
                 <div class="footer-section">
                     <h4>Links Rápidos</h4>
                     <ul class="footer-links">
@@ -1026,7 +991,6 @@
     </footer>
 
     <script>
-        // ===== DADOS COMPLETOS DOS EPIS =====
         const epiCatalog = {
             categories: [
                 {
@@ -1040,7 +1004,7 @@
                             id: "capacete-seguranca",
                             name: "Capacete de Segurança",
                             icon: "fas fa-helmet-safety",
-                            image: "https://images.unsplash.com/photo-1560264287-36b8e0fdbc7d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/capacete-seguranca.jpg",
                             description: "Protege a cabeça contra impactos de quedas de objetos, choques contra obstáculos e choques elétricos.",
                             norm: "NR-6, ABNT NBR 8221:2015, ISO 3873",
                             risk: "high",
@@ -1060,7 +1024,7 @@
                             id: "capacete-comunicacao",
                             name: "Capacete com Sistema de Comunicação",
                             icon: "fas fa-headset",
-                            image: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/capacete-comunicacao.jpg",
                             description: "Capacete integrado com sistema de comunicação por rádio para ambientes ruidosos.",
                             norm: "NR-6, ABNT NBR 8221",
                             risk: "medium",
@@ -1079,7 +1043,7 @@
                             id: "capuz-refratario",
                             name: "Capuz Refratário/Aluminizado",
                             icon: "fas fa-fire",
-                            image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/capuz-refratario.jpg",
                             description: "Proteção térmica para cabeça e pescoço contra calor radiante e respingos de metal.",
                             norm: "NR-6, NR-15",
                             risk: "high",
@@ -1098,7 +1062,7 @@
                             id: "capacete-para-solda",
                             name: "Capacete para Soldagem",
                             icon: "fas fa-burn",
-                            image: "https://images.unsplash.com/photo-1583947581924-860bda6a26df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/capacete-para-solda.jpg",
                             description: "Capacete com filtro escuro automático para proteção durante a soldagem.",
                             norm: "NR-6, NR-18",
                             risk: "high",
@@ -1126,7 +1090,7 @@
                             id: "oculos-protecao",
                             name: "Óculos de Proteção",
                             icon: "fas fa-glasses",
-                            image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/oculos-protecao.jpg",
                             description: "Protegem os olhos contra partículas projetadas, respingos químicos e poeiras.",
                             norm: "NR-6, ABNT NBR 13946, ANSI Z87.1",
                             risk: "high",
@@ -1145,7 +1109,7 @@
                             id: "viseira-protecao",
                             name: "Viseira de Proteção Facial",
                             icon: "fas fa-mask",
-                            image: "https://images.unsplash.com/photo-1584119164248-81a4c5fe3c2f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/viseira-protecao.jpg",
                             description: "Protege toda a face contra impactos, respingos químicos e radiação.",
                             norm: "NR-6, ABNT NBR 13946",
                             risk: "medium",
@@ -1163,7 +1127,7 @@
                             id: "oculos-laser",
                             name: "Óculos para Proteção a Laser",
                             icon: "fas fa-eye",
-                            image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/oculos-laser.jpg",
                             description: "Filtros específicos para diferentes comprimentos de onda de laser.",
                             norm: "NR-6, IEC 60825",
                             risk: "high",
@@ -1190,7 +1154,7 @@
                             id: "protetor-concha",
                             name: "Protetor Auditivo Tipo Concha",
                             icon: "fas fa-headphones",
-                            image: "https://images.unsplash.com/photo-1584305574647-0cc949598542?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/protetor-concha.jpg",
                             description: "Atenua ruídos ambientais para níveis seguros à saúde auditiva.",
                             norm: "NR-6, ABNT NBR 16077, ISO 4869",
                             risk: "medium",
@@ -1208,7 +1172,7 @@
                             id: "protetor-insercao",
                             name: "Protetor Auditivo de Inserção",
                             icon: "fas fa-ear-alt",
-                            image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/protetor-insercao.jpg",
                             description: "Protetores que se inserem no canal auditivo para maior conforto.",
                             norm: "NR-6, ABNT NBR 16077",
                             risk: "low",
@@ -1235,7 +1199,7 @@
                             id: "respirador-filtro",
                             name: "Respirador com Filtro PFF2/N95",
                             icon: "fas fa-wind",
-                            image: "https://images.unsplash.com/photo-1584467541266-ce93e7a92c61?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/respirador-filtro.jpg",
                             description: "Protege contra inalação de partículas, aerossóis e névoas.",
                             norm: "NR-6, NR-15, ABNT NBR 13698",
                             risk: "high",
@@ -1254,7 +1218,7 @@
                             id: "mascara-gas",
                             name: "Máscara com Filtro para Gases",
                             icon: "fas fa-smog",
-                            image: "https://images.unsplash.com/photo-1589656389586-40d570cbcf6e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/mascara-gas.jpg",
                             description: "Proteção contra gases e vapores específicos com filtros trocáveis.",
                             norm: "NR-6, NR-15, ABNT NBR 13698",
                             risk: "high",
@@ -1281,7 +1245,7 @@
                             id: "avental-couro",
                             name: "Avental de Couro para Solda",
                             icon: "fas fa-tshirt",
-                            image: "https://images.unsplash.com/photo-1591369822094-6d97d8f91c1a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/avental-couro.jpg",
                             description: "Protege contra respingos de solda, calor radiante e faíscas.",
                             norm: "NR-6, NR-18",
                             risk: "high",
@@ -1299,7 +1263,7 @@
                             id: "colete-refletivo",
                             name: "Colete de Segurança Refletivo",
                             icon: "fas fa-vest",
-                            image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/colete-refletivo.jpg",
                             description: "Aumenta a visibilidade do usuário em ambientes com baixa luminosidade.",
                             norm: "NR-6, ISO 20471",
                             risk: "medium",
@@ -1326,7 +1290,7 @@
                             id: "luvas-borracha",
                             name: "Luvas de Borracha Isolante",
                             icon: "fas fa-bolt",
-                            image: "https://images.unsplash.com/photo-1583947581924-860bda6a26df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/luvas-borracha.jpg",
                             description: "Protegem contra choques elétricos em trabalhos com eletricidade.",
                             norm: "NR-10, NR-6, ASTM D120",
                             risk: "high",
@@ -1344,7 +1308,7 @@
                             id: "luvas-corte",
                             name: "Luvas Anti-corte",
                             icon: "fas fa-cut",
-                            image: "https://images.unsplash.com/photo-1591369822094-6d97d8f91c1a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/luvas-corte.jpg",
                             description: "Protegem contra cortes por facas, lâminas e materiais afiados.",
                             norm: "NR-6, EN 388",
                             risk: "high",
@@ -1371,7 +1335,7 @@
                             id: "botas-seguranca",
                             name: "Botas de Segurança com Biqueira",
                             icon: "fas fa-boot",
-                            image: "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/botas-seguranca.jpg",
                             description: "Calçados com biqueira de aço que protegem contra esmagamento e quedas de objetos.",
                             norm: "NR-6, ABNT NBR ISO 20345",
                             risk: "high",
@@ -1389,7 +1353,7 @@
                             id: "botas-quimicas",
                             name: "Botas Impermeáveis Químicas",
                             icon: "fas fa-tint-slash",
-                            image: "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/botas-quimicas.jpg",
                             description: "Protegem contra respingos de produtos químicos e líquidos corrosivos.",
                             norm: "NR-6, ABNT NBR ISO 20347",
                             risk: "high",
@@ -1416,7 +1380,7 @@
                             id: "perneiras-couro",
                             name: "Perneiras de Couro",
                             icon: "fas fa-socks",
-                            image: "https://images.unsplash.com/photo-1591369822094-6d97d8f91c1a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/perneiras-couro.jpg",
                             description: "Protegem as pernas contra respingos de solda, calor e faíscas.",
                             norm: "NR-6, NR-18",
                             risk: "medium",
@@ -1434,7 +1398,7 @@
                             id: "mangas-protecao",
                             name: "Mangas de Proteção",
                             icon: "fas fa-hand",
-                            image: "https://images.unsplash.com/photo-1583947581924-860bda6a26df?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                            image: "images/epis/mangas-protecao.jpg",
                             description: "Protegem braços e antebraços contra calor, produtos químicos e cortes.",
                             norm: "NR-6",
                             risk: "medium",
@@ -1453,12 +1417,9 @@
             ]
         };
 
-        // ===== VARIÁVEIS GLOBAIS =====
         let currentCategory = null;
 
-        // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', function() {
-            // Menu mobile
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
             const navLinks = document.getElementById('navLinks');
             
@@ -1476,7 +1437,6 @@
                 });
             }
             
-            // Fechar menu ao clicar em um link
             document.querySelectorAll('.nav-links a').forEach(link => {
                 link.addEventListener('click', function() {
                     navLinks.classList.remove('active');
@@ -1487,14 +1447,10 @@
                 });
             });
             
-            // Carregar categorias
             loadCategories();
-            
-            // Inicializar eventos
             initEventListeners();
         });
 
-        // ===== CARREGAMENTO DE CATEGORIAS =====
         function loadCategories() {
             const container = document.getElementById('categoriesGrid');
             container.innerHTML = '';
@@ -1522,26 +1478,17 @@
             });
         }
 
-        // ===== SELEÇÃO DE CATEGORIA =====
         function selectCategory(categoryId) {
             currentCategory = categoryId;
-            
-            // Esconder categorias
             document.getElementById('categorias').style.display = 'none';
-            
-            // Mostrar lista de EPIs da categoria
             showEpiList(categoryId);
-            
-            // Scroll para o topo
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // ===== EXIBIR LISTA DE EPIS =====
         function showEpiList(categoryId) {
             const category = epiCatalog.categories.find(c => c.id === categoryId);
             if (!category) return;
             
-            // Criar container se não existir
             let container = document.getElementById('epiListContainer');
             if (!container) {
                 container = document.createElement('div');
@@ -1549,7 +1496,6 @@
                 document.querySelector('main').appendChild(container);
             }
             
-            // Gerar HTML da categoria
             container.innerHTML = `
                 <section class="epi-category-section active">
                     <div class="container">
@@ -1563,14 +1509,11 @@
                             </button>
                         </div>
                         
-                        <div class="epi-grid" id="epiGrid-${category.id}">
-                            <!-- EPIs serão carregados via JavaScript -->
-                        </div>
+                        <div class="epi-grid" id="epiGrid-${category.id}"></div>
                     </div>
                 </section>
             `;
             
-            // Carregar EPIs
             const epiGrid = document.getElementById(`epiGrid-${category.id}`);
             category.epiList.forEach(epi => {
                 const epiCard = document.createElement('div');
@@ -1605,10 +1548,8 @@
                 epiGrid.appendChild(epiCard);
             });
             
-            // Adicionar evento ao botão de voltar
             document.getElementById('backToCategoriesBtn').addEventListener('click', backToCategories);
             
-            // Adicionar eventos aos botões de detalhes
             document.querySelectorAll('.view-details-btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
@@ -1617,7 +1558,6 @@
                 });
             });
             
-            // Adicionar evento aos cards (para toda a área clicável)
             document.querySelectorAll('.epi-card').forEach(card => {
                 card.addEventListener('click', function(e) {
                     if (!e.target.closest('.view-details-btn')) {
@@ -1629,24 +1569,16 @@
             });
         }
 
-        // ===== VOLTAR PARA CATEGORIAS =====
         function backToCategories() {
-            // Esconder lista de EPIs
             const container = document.getElementById('epiListContainer');
             if (container) {
                 container.innerHTML = '';
             }
-            
-            // Mostrar categorias
             document.getElementById('categorias').style.display = 'block';
-            
-            // Scroll para categorias
             document.getElementById('categorias').scrollIntoView({ behavior: 'smooth' });
-            
             currentCategory = null;
         }
 
-        // ===== EXIBIR DETALHES DO EPI =====
         function showEpiDetail(categoryId, epiId) {
             const category = epiCatalog.categories.find(c => c.id === categoryId);
             if (!category) return;
@@ -1657,7 +1589,6 @@
             const riskClass = `risk-${epi.risk}`;
             const riskLabel = getRiskLabel(epi.risk);
             
-            // Gerar especificações
             let specsHTML = '';
             if (epi.specifications) {
                 Object.entries(epi.specifications).forEach(([key, value]) => {
@@ -1671,7 +1602,6 @@
                 });
             }
             
-            // Gerar HTML do detalhe (sem vídeo e com referências às normas)
             const detailContainer = document.getElementById('epiDetailContainer');
             detailContainer.innerHTML = `
                 <div class="epi-detail-header">
@@ -1691,7 +1621,6 @@
                                 <img src="${epi.image}" alt="${epi.name}" class="detail-image">
                                 <div class="image-caption">Imagem ilustrativa do equipamento</div>
                             </div>
-                            <!-- Espaço de vídeo removido -->
                         </div>
                         
                         <div>
@@ -1751,20 +1680,16 @@
                 </div>
             `;
             
-            // Mostrar overlay
             document.getElementById('epiDetailOverlay').classList.add('active');
             
-            // Adicionar eventos
             document.getElementById('closeDetailBtn').addEventListener('click', closeEpiDetail);
             
-            // Fechar ao clicar fora
             document.getElementById('epiDetailOverlay').addEventListener('click', function(e) {
                 if (e.target === this) {
                     closeEpiDetail();
                 }
             });
             
-            // Fechar com ESC
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     closeEpiDetail();
@@ -1772,11 +1697,8 @@
             });
         }
 
-        // ===== FECHAR DETALHES DO EPI =====
         function closeEpiDetail() {
             document.getElementById('epiDetailOverlay').classList.remove('active');
-            
-            // Remover evento ESC
             document.removeEventListener('keydown', function(e) {
                 if (e.key === 'Escape') {
                     closeEpiDetail();
@@ -1784,7 +1706,6 @@
             });
         }
 
-        // ===== FUNÇÕES AUXILIARES =====
         function getRiskLabel(riskLevel) {
             switch(riskLevel) {
                 case 'high': return 'ALTO RISCO';
@@ -1837,13 +1758,10 @@
                 cobertura: 'Área de Cobertura',
                 fixacao: 'Tipo de Fixação'
             };
-            
             return labels[key] || key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
         }
 
-        // ===== INICIALIZAR EVENT LISTENERS =====
         function initEventListeners() {
-            // Navegação por teclado
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && currentCategory) {
                     backToCategories();
@@ -1851,7 +1769,6 @@
             });
         }
 
-        // ===== PRECARREGAR IMAGENS =====
         function preloadImages() {
             const images = [];
             epiCatalog.categories.forEach(category => {
@@ -1861,7 +1778,6 @@
                     }
                 });
             });
-            
             images.forEach(src => {
                 const img = new Image();
                 img.src = src;
