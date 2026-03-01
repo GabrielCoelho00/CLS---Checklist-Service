@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafeGear Guide - Checklist de EPIs e Calculadora de Riscos</title>
+    <title>CLS - Checklist Service</title>
     <meta name="description" content="Sistema de checklist de EPIs por função industrial com validação de riscos e registro em planilha.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2056,485 +2056,1534 @@
     <script>
         // ===== ESTRUTURA DE DADOS COMPLETA ATUALIZADA COM CONSEQUÊNCIAS =====
         const catalogoProfissoes = {
-            categorias: {
-                "producao-siderurgia": {
-                    id: "producao-siderurgia",
-                    nome: "Produção / Siderurgia",
-                    icon: "fas fa-industry",
-                    descricao: "Processos siderúrgicos e metalúrgicos",
-                    riscoMedio: "ALTO",
-                    profissoes: {
-                        "operador-processos-siderurgicos": {
-                            id: "operador-processos-siderurgicos",
-                            nome: "Operador de Processos Siderúrgicos",
-                            icon: "fas fa-sliders-h",
-                            codigo: "PS-01",
-                            atividades: [
-                                {
-                                    id: "operacao-aciria",
-                                    nome: "Operação de processos de aciaria",
-                                    descricao: "Controle e operação de fornos e conversores",
-                                    riscos: ["Calor radiante", "Projeção de metal", "Gases tóxicos"],
-                                    nivelRisco: "ALTO",
-                                    epis: {
-                                        cabeca: [
-                                            { 
-                                                id: "capacete-aciria", 
-                                                nome: "Capacete de segurança com jugular", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Traumatismo craniano em caso de queda de objetos ou impacto"
-                                            }
-                                        ],
-                                        olhos: [
-                                            { 
-                                                id: "oculos-aciria", 
-                                                nome: "Óculos de proteção com filtro IR/UV", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras na retina, catarata precoce, cegueira temporária"
-                                            }
-                                        ],
-                                        tronco: [
-                                            { 
-                                                id: "avental-couro", 
-                                                nome: "Avental de couro aluminizado", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras graves de 2º e 3º graus por respingos de metal"
-                                            }
-                                        ],
-                                        maos: [
-                                            { 
-                                                id: "luvas-aciria", 
-                                                nome: "Luvas de raspa de cano longo", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras, cortes, amputações"
-                                            }
-                                        ],
-                                        pes: [
-                                            { 
-                                                id: "botas-aciria", 
-                                                nome: "Botas de segurança com solado antiderrapante", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Queimaduras nos pés, escorregões, queda de objetos nos pés"
-                                            }
-                                        ],
-                                        respiratoria: [
-                                            { 
-                                                id: "respirador-aciria", 
-                                                nome: "Respirador com filtro para gases", 
-                                                norm: "NR-15", 
-                                                obrigatorio: false, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Intoxicação por monóxido de carbono, problemas respiratórios crônicos"
-                                            }
-                                        ],
-                                        audicao: [
-                                            { 
-                                                id: "protetor-auditivo", 
-                                                nome: "Protetor auditivo tipo concha", 
-                                                norm: "NR-6", 
-                                                obrigatorio: false, 
-                                                risco: "BAIXO",
-                                                consequencia: "Perda auditiva gradual, zumbido constante"
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    id: "controle-producao-aco",
-                                    nome: "Controle de produção do aço",
-                                    descricao: "Monitoramento e ajuste de parâmetros de produção",
-                                    riscos: ["Exposição a altas temperaturas", "Ruído", "Vibração"],
-                                    nivelRisco: "MÉDIO",
-                                    epis: {
-                                        cabeca: [
-                                            { 
-                                                id: "capacete-basico", 
-                                                nome: "Capacete de segurança básico", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Traumatismo craniano em caso de queda de objetos"
-                                            }
-                                        ],
-                                        olhos: [
-                                            { 
-                                                id: "oculos-basico", 
-                                                nome: "Óculos de proteção", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Lesões oculares por partículas em suspensão"
-                                            }
-                                        ],
-                                        maos: [
-                                            { 
-                                                id: "luvas-basicas", 
-                                                nome: "Luvas de proteção térmica", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Queimaduras e cortes nas mãos"
-                                            }
-                                        ],
-                                        pes: [
-                                            { 
-                                                id: "botas-basicas", 
-                                                nome: "Botas de segurança", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "BAIXO",
-                                                consequencia: "Quedas e lesões nos pés"
-                                            }
-                                        ],
-                                        audicao: [
-                                            { 
-                                                id: "protetor-auditivo-insercao", 
-                                                nome: "Protetor auditivo de inserção", 
-                                                norm: "NR-6", 
-                                                obrigatorio: false, 
-                                                risco: "BAIXO",
-                                                consequencia: "Perda auditiva progressiva"
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    id: "monitoramento-variaveis",
-                                    nome: "Monitoramento de variáveis do processo",
-                                    descricao: "Análise de parâmetros e controle de qualidade",
-                                    riscos: ["Exposição a radiação", "Estresse térmico"],
-                                    nivelRisco: "MÉDIO",
-                                    epis: {
-                                        cabeca: [
-                                            { 
-                                                id: "capacete-monitoramento", 
-                                                nome: "Capacete de segurança", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Traumatismo craniano"
-                                            }
-                                        ],
-                                        olhos: [
-                                            { 
-                                                id: "oculos-protecao", 
-                                                nome: "Óculos de proteção", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Lesões oculares"
-                                            }
-                                        ],
-                                        tronco: [
-                                            { 
-                                                id: "avental-resistente", 
-                                                nome: "Avental resistente", 
-                                                norm: "NR-6", 
-                                                obrigatorio: false, 
-                                                risco: "BAIXO",
-                                                consequencia: "Lesões no tronco por respingos"
-                                            }
-                                        ],
-                                        maos: [
-                                            { 
-                                                id: "luvas-protecao", 
-                                                nome: "Luvas de proteção", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Lesões nas mãos"
-                                            }
-                                        ],
-                                        pes: [
-                                            { 
-                                                id: "botas-seguranca", 
-                                                nome: "Botas de segurança", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "BAIXO",
-                                                consequencia: "Lesões nos pés"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ]
+    categorias: {
+        // 2.1 PRODUÇÃO / SIDERURGIA
+        "producao-siderurgia": {
+            id: "producao-siderurgia",
+            nome: "Produção / Siderurgia",
+            icon: "fas fa-industry",
+            descricao: "Processos siderúrgicos e metalúrgicos",
+            profissoes: {
+                "operador-processos-siderurgicos": {
+                    id: "operador-processos-siderurgicos",
+                    nome: "Operador de Processos Siderúrgicos",
+                    icon: "fas fa-sliders-h",
+                    codigo: "PS-01",
+                    atividades: [
+                        {
+                            id: "operacao-aciria",
+                            nome: "Operação de processos de aciaria",
+                            descricao: "Controle e operação de fornos e conversores para produção de aço.",
+                            riscos: ["Calor radiante", "Projeção de metal fundido", "Gases tóxicos (CO, SOx)", "Ruído intenso"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                cabeca: [ { id: "capacete-jugular", nome: "Capacete de segurança com jugular", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Traumatismo craniano em caso de impacto." } ],
+                                olhos: [ 
+                                    { id: "oculos-ir-uv", nome: "Óculos de proteção com filtro IR/UV", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras na retina, catarata." },
+                                    { id: "protetor-facial", nome: "Protetor facial", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Lesões faciais por projeção de partículas." }
+                                ],
+                                tronco: [ { id: "avental-aluminizado", nome: "Avental de couro aluminizado", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras graves no tronco." } ],
+                                maos: [ { id: "luvas-raspa-cano-longo", nome: "Luvas de raspa de cano longo", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras, cortes nas mãos." } ],
+                                pes: [ { id: "botas-termicas", nome: "Botas de segurança com solado antiderrapante e isolamento térmico", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras nos pés, escorregões." } ],
+                                respiratoria: [ { id: "respirador-gases", nome: "Respirador com filtro para gases", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Intoxicação por gases." } ],
+                                audicao: [ { id: "protetor-concha", nome: "Protetor auditivo tipo concha", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Perda auditiva." } ]
+                            }
                         },
-                        "operador-alto-forno": {
-                            id: "operador-alto-forno",
-                            nome: "Operador de Alto-Forno",
-                            icon: "fas fa-fire",
-                            codigo: "PS-02",
-                            atividades: [
-                                {
-                                    id: "operacao-alto-forno",
-                                    nome: "Operação de alto-forno",
-                                    descricao: "Controle do processo de redução do minério",
-                                    riscos: ["Calor extremo", "Gases combustíveis", "Explosões"],
-                                    nivelRisco: "ALTÍSSIMO",
-                                    epis: {
-                                        cabeca: [
-                                            { 
-                                                id: "capacete-alto-forno", 
-                                                nome: "Capacete com face shield", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTÍSSIMO",
-                                                consequencia: "Queimaduras faciais graves, traumatismo craniano"
-                                            }
-                                        ],
-                                        tronco: [
-                                            { 
-                                                id: "avental-aluminizado", 
-                                                nome: "Avental aluminizado completo", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTÍSSIMO",
-                                                consequencia: "Queimaduras graves no tronco, risco de incêndio nas roupas"
-                                            }
-                                        ],
-                                        maos: [
-                                            { 
-                                                id: "luvas-alto-forno", 
-                                                nome: "Luvas de amianto tratado", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras graves nas mãos e braços"
-                                            }
-                                        ],
-                                        pes: [
-                                            { 
-                                                id: "botas-alto-forno", 
-                                                nome: "Botas de segurança com isolamento térmico", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras nos pés, derretimento de calçados comuns"
-                                            }
-                                        ],
-                                        respiratoria: [
-                                            { 
-                                                id: "respirador-co", 
-                                                nome: "Respirador autônomo ou com filtro para CO", 
-                                                norm: "NR-15", 
-                                                obrigatorio: true, 
-                                                risco: "ALTÍSSIMO",
-                                                consequencia: "Intoxicação aguda por monóxido de carbono, morte em minutos"
-                                            }
-                                        ],
-                                        pernas: [
-                                            { 
-                                                id: "perneiras", 
-                                                nome: "Perneiras de couro", 
-                                                norm: "NR-6", 
-                                                obrigatorio: false, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Queimaduras nas pernas"
-                                            }
-                                        ],
-                                        bracos: [
-                                            { 
-                                                id: "mangas", 
-                                                nome: "Mangas de proteção", 
-                                                norm: "NR-6", 
-                                                obrigatorio: false, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Queimaduras nos braços"
-                                            }
-                                        ]
-                                    }
-                                },
-                                {
-                                    id: "controle-carga-temperatura",
-                                    nome: "Controle de carga e temperatura",
-                                    descricao: "Regulação de matérias-primas e temperatura",
-                                    riscos: ["Queimaduras", "Intoxicação por monóxido", "Incêndios"],
-                                    nivelRisco: "ALTO",
-                                    epis: {
-                                        cabeca: [
-                                            { 
-                                                id: "capacete-protecao", 
-                                                nome: "Capacete de proteção", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Traumatismo craniano, queimaduras no couro cabeludo"
-                                            }
-                                        ],
-                                        olhos: [
-                                            { 
-                                                id: "oculos-protecao-termica", 
-                                                nome: "Óculos de proteção térmica", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras oculares, cegueira temporária"
-                                            }
-                                        ],
-                                        tronco: [
-                                            { 
-                                                id: "avental-couro", 
-                                                nome: "Avental de couro", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras graves no tronco"
-                                            }
-                                        ],
-                                        maos: [
-                                            { 
-                                                id: "luvas-termicas", 
-                                                nome: "Luvas térmicas", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras graves nas mãos"
-                                            }
-                                        ],
-                                        pes: [
-                                            { 
-                                                id: "botas-termicas", 
-                                                nome: "Botas térmicas", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras nos pés"
-                                            }
-                                        ],
-                                        respiratoria: [
-                                            { 
-                                                id: "respirador-gases", 
-                                                nome: "Respirador para gases", 
-                                                norm: "NR-15", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Intoxicação por gases tóxicos, problemas respiratórios"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ]
+                        {
+                            id: "controle-producao-aco",
+                            nome: "Controle de produção do aço",
+                            descricao: "Monitoramento e ajuste de parâmetros de produção, coleta de amostras.",
+                            riscos: ["Exposição a altas temperaturas", "Ruído", "Vibração", "Contato com produtos químicos"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-basico", nome: "Capacete de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ 
+                                    { id: "oculos-basico", nome: "Óculos de proteção", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." },
+                                    { id: "protetor-facial-coleta", nome: "Protetor facial", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões faciais." }
+                                ],
+                                maos: [ { id: "luvas-termicas", nome: "Luvas térmicas", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras." } ],
+                                pes: [ { id: "botas-seguranca", nome: "Botas de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                audicao: [ { id: "protetor-auditivo", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                tronco: [ { id: "avental-raspa", nome: "Avental de raspa", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Queimaduras leves." } ]
+                            }
                         }
-                    }
+                    ]
                 },
-                "metal-mecanica": {
-                    id: "metal-mecanica",
-                    nome: "Metal Mecânica",
-                    icon: "fas fa-cogs",
-                    descricao: "Usinagem, soldagem e fabricação mecânica",
-                    riscoMedio: "MÉDIO-ALTO",
-                    profissoes: {
-                        "soldador": {
-                            id: "soldador",
-                            nome: "Soldador",
-                            icon: "fas fa-burn",
-                            codigo: "MM-01",
-                            atividades: [
-                                {
-                                    id: "soldagem-eletrica",
-                                    nome: "Soldagem elétrica",
-                                    descricao: "Soldagem com eletrodo revestido",
-                                    riscos: ["Choque elétrico", "Queimaduras", "Fumos metálicos"],
-                                    nivelRisco: "ALTO",
-                                    epis: {
-                                        cabeca: [
-                                            { 
-                                                id: "capacete-solda", 
-                                                nome: "Capacete para soldagem", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras faciais, danos oculares permanentes"
-                                            }
-                                        ],
-                                        olhos: [
-                                            { 
-                                                id: "mascara-solda", 
-                                                nome: "Máscara de solda com filtro apropriado", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTÍSSIMO",
-                                                consequencia: "Cegueira por flash de solda (oftalmia), queimaduras na retina"
-                                            }
-                                        ],
-                                        tronco: [
-                                            { 
-                                                id: "avental-solda", 
-                                                nome: "Avental de couro para solda", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras graves no tronco por respingos de metal"
-                                            }
-                                        ],
-                                        maos: [
-                                            { 
-                                                id: "luvas-solda", 
-                                                nome: "Luvas de raspa para solda", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras graves nas mãos, choque elétrico"
-                                            }
-                                        ],
-                                        pes: [
-                                            { 
-                                                id: "botas-solda", 
-                                                nome: "Botas de couro de cano longo", 
-                                                norm: "NR-6", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Queimaduras nos pés, queda de objetos pesados"
-                                            }
-                                        ],
-                                        respiratoria: [
-                                            { 
-                                                id: "respirador-solda", 
-                                                nome: "Respirador com filtro P100", 
-                                                norm: "NR-15", 
-                                                obrigatorio: true, 
-                                                risco: "ALTO",
-                                                consequencia: "Intoxicação por fumos metálicos, doenças respiratórias crônicas"
-                                            }
-                                        ],
-                                        bracos: [
-                                            { 
-                                                id: "mangas-solda", 
-                                                nome: "Mangas de proteção", 
-                                                norm: "NR-6", 
-                                                obrigatorio: false, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Queimaduras nos braços"
-                                            }
-                                        ],
-                                        pernas: [
-                                            { 
-                                                id: "perneiras-solda", 
-                                                nome: "Perneiras de couro", 
-                                                norm: "NR-6", 
-                                                obrigatorio: false, 
-                                                risco: "MÉDIO",
-                                                consequencia: "Queimaduras nas pernas"
-                                            }
-                                        ]
-                                    }
-                                }
-                            ]
+                "operador-alto-forno": {
+                    id: "operador-alto-forno",
+                    nome: "Operador de Alto-Forno",
+                    icon: "fas fa-fire",
+                    codigo: "PS-02",
+                    atividades: [
+                        {
+                            id: "operacao-alto-forno",
+                            nome: "Operação de alto-forno",
+                            descricao: "Controle do processo de redução do minério, alimentação de carga, monitoramento de temperatura e pressão.",
+                            riscos: ["Calor extremo", "Gases combustíveis (CO, H₂)", "Explosões", "Projeção de partículas"],
+                            nivelRisco: "ALTO", // antes Altíssimo
+                            epis: {
+                                cabeca: [ { id: "capacete-face-shield", nome: "Capacete com face shield", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Traumatismo craniano, queimaduras faciais." } ],
+                                tronco: [ { id: "avental-aluminizado-completo", nome: "Avental aluminizado completo", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras graves no tronco." } ],
+                                maos: [ { id: "luvas-amianto", nome: "Luvas de amianto tratado (ou equivalente térmico)", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nas mãos." } ],
+                                pes: [ { id: "botas-termicas-alto-forno", nome: "Botas de segurança com isolamento térmico", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nos pés." } ],
+                                respiratoria: [ { id: "respirador-autonomo", nome: "Respirador autônomo ou com filtro para CO", norm: "NR-15", obrigatorio: true, risco: "ALTO", consequencia: "Intoxicação por monóxido de carbono." } ],
+                                olhos: [ { id: "protetor-facial-extra", nome: "Protetor facial", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Lesões oculares." } ],
+                                pernas: [ { id: "perneiras-couro", nome: "Perneiras de couro", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Queimaduras nas pernas." } ],
+                                bracos: [ { id: "mangas-protecao", nome: "Mangas de proteção", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Queimaduras nos braços." } ]
+                            }
+                        },
+                        {
+                            id: "controle-carga-temperatura",
+                            nome: "Controle de carga e temperatura",
+                            descricao: "Regulação de matérias-primas e temperatura do forno, inspeção visual.",
+                            riscos: ["Queimaduras", "Intoxicação por monóxido de carbono", "Incêndios", "Quedas"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                cabeca: [ { id: "capacete", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-termico", nome: "Óculos de proteção térmica", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras oculares." } ],
+                                tronco: [ { id: "avental-couro", nome: "Avental de couro", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras no tronco." } ],
+                                maos: [ { id: "luvas-termicas-2", nome: "Luvas térmicas", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nas mãos." } ],
+                                pes: [ { id: "botas-termicas-2", nome: "Botas térmicas", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nos pés." } ],
+                                respiratoria: [ { id: "respirador-gases-2", nome: "Respirador para gases", norm: "NR-15", obrigatorio: true, risco: "ALTO", consequencia: "Intoxicação." } ],
+                                audicao: [ { id: "protetor-auditivo-2", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Perda auditiva." } ]
+                            }
                         }
-                    }
+                    ]
                 }
             }
-        };
+        },
+
+        // 2.2 METAL MECÂNICA
+        "metal-mecanica": {
+            id: "metal-mecanica",
+            nome: "Metal Mecânica",
+            icon: "fas fa-cogs",
+            descricao: "Usinagem, soldagem e fabricação mecânica",
+            profissoes: {
+                "soldador": {
+                    id: "soldador",
+                    nome: "Soldador",
+                    icon: "fas fa-burn",
+                    codigo: "MM-01",
+                    atividades: [
+                        {
+                            id: "soldagem-eletrodo",
+                            nome: "Soldagem com eletrodo revestido",
+                            descricao: "Soldagem manual de estruturas metálicas utilizando eletrodo revestido.",
+                            riscos: ["Radiação do arco", "Respingos de metal fundido", "Fumos metálicos", "Choque elétrico"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                cabeca: [ { id: "mascara-solda-auto", nome: "Máscara de solda com filtro automático", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras faciais, danos oculares." } ],
+                                olhos: [ { id: "oculos-seguranca", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                tronco: [ { id: "avental-raspa-2", nome: "Avental de raspa", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras no tronco." } ],
+                                maos: [ { id: "luvas-raspa-forradas", nome: "Luvas de raspa forradas", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nas mãos." } ],
+                                pernas: [ { id: "perneiras", nome: "Perneiras", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras nas pernas." } ],
+                                pes: [ { id: "botas-couro-cano-longo", nome: "Botas de couro cano longo", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nos pés." } ],
+                                respiratoria: [ { id: "respirador-pff2", nome: "Respirador PFF2", norm: "NR-15", obrigatorio: true, risco: "ALTO", consequencia: "Intoxicação por fumos." } ],
+                                audicao: [ { id: "protetor-auditivo-3", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Perda auditiva." } ]
+                            }
+                        },
+                        {
+                            id: "soldagem-tig",
+                            nome: "Soldagem TIG",
+                            descricao: "Soldagem de precisão em aço inoxidável, alumínio, etc.",
+                            riscos: ["Radiação intensa", "Fumos (menores)", "Queimaduras"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                cabeca: [ { id: "mascara-solda", nome: "Máscara de solda", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras faciais." } ],
+                                maos: [ { id: "luvas-vaqueta", nome: "Luvas de vaqueta", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nas mãos." } ],
+                                tronco: [ { id: "avental-raspa-3", nome: "Avental de raspa", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras no tronco." } ],
+                                respiratoria: [ { id: "respirador-se-necessario", nome: "Respirador", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Intoxicação." } ],
+                                olhos: [ { id: "oculos-seguranca-2", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ]
+                            }
+                        }
+                    ]
+                },
+                "torneiro-mecanico": {
+                    id: "torneiro-mecanico",
+                    nome: "Torneiro Mecânico",
+                    icon: "fas fa-tools",
+                    codigo: "MM-02",
+                    atividades: [
+                        {
+                            id: "torno-convencional",
+                            nome: "Operação de torno mecânico convencional",
+                            descricao: "Usinagem de peças cilíndricas utilizando torno mecânico, com ferramentas de corte.",
+                            riscos: ["Projeção de cavacos metálicos", "Contato com partes móveis", "Ruído", "Queimaduras (peças quentes)"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ 
+                                    { id: "oculos-ampla-visao", nome: "Óculos de segurança ampla visão", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." },
+                                    { id: "protetor-facial-torno", nome: "Protetor facial", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Lesões faciais." }
+                                ],
+                                audicao: [ { id: "protetor-auditivo-4", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-seguranca", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-raspa-torno", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Cortes." } ],
+                                tronco: [ { id: "avental-raspa-torno", nome: "Avental de raspa", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Queimaduras leves." } ]
+                            }
+                        },
+                        {
+                            id: "torno-cnc",
+                            nome: "Usinagem em torno CNC",
+                            descricao: "Programação e operação de torno CNC, monitoramento da usinagem.",
+                            riscos: ["Projeção de cavacos", "Ruído", "Risco de esmagamento"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-seguranca-3", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-auditivo-5", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-seguranca-2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-cnc", nome: "Luvas", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Cortes." } ]
+                            }
+                        }
+                    ]
+                },
+                "fresador": {
+                    id: "fresador",
+                    nome: "Fresador",
+                    icon: "fas fa-cogs",
+                    codigo: "MM-03",
+                    atividades: [
+                        {
+                            id: "fresadora-convencional",
+                            nome: "Operação de fresadora convencional",
+                            descricao: "Usinagem de superfícies planas, rasgos de chaveta, engrenagens, etc.",
+                            riscos: ["Projeção de cavacos", "Contato com ferramenta rotativa", "Ruído"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ 
+                                    { id: "oculos-seguranca-4", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." },
+                                    { id: "protetor-facial-fresa", nome: "Protetor facial", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Lesões faciais." }
+                                ],
+                                audicao: [ { id: "protetor-auditivo-6", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-seguranca-3", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-raspa-fresa", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Cortes." } ],
+                                tronco: [ { id: "avental-fresa", nome: "Avental", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Queimaduras leves." } ]
+                            }
+                        },
+                        {
+                            id: "fresadora-cnc",
+                            nome: "Operação de fresadora CNC",
+                            descricao: "Programação e operação de centro de usinagem CNC.",
+                            riscos: ["Projeção de cavacos", "Ruído"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-seguranca-5", nome: "Óculos", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-auditivo-7", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-seguranca-4", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ]
+                            }
+                        }
+                    ]
+                },
+                "retificador": {
+                    id: "retificador",
+                    nome: "Retificador",
+                    icon: "fas fa-cogs",
+                    codigo: "MM-04",
+                    atividades: [
+                        {
+                            id: "retificacao-plana",
+                            nome: "Retificação plana ou cilíndrica",
+                            descricao: "Acabamento de peças com rebolo abrasivo para alta precisão dimensional.",
+                            riscos: ["Projeção de partículas abrasivas", "Ruído", "Contato com rebolo", "Queimaduras (atrito)"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ 
+                                    { id: "oculos-seguranca-6", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." },
+                                    { id: "protetor-facial-retifica", nome: "Protetor facial", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Lesões faciais." }
+                                ],
+                                audicao: [ { id: "protetor-auditivo-8", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-seguranca-5", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                tronco: [ { id: "avental-raspa-4", nome: "Avental de raspa", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Queimaduras leves." } ],
+                                maos: [ { id: "luvas-retifica", nome: "Luvas", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Cortes." } ],
+                                respiratoria: [ { id: "respirador-pff2-2", nome: "Respirador PFF2", norm: "NR-15", obrigatorio: false, risco: "BAIXO", consequencia: "Inalação de poeira." } ]
+                            }
+                        },
+                        {
+                            id: "dressagem-rebolo",
+                            nome: "Dressagem do rebolo",
+                            descricao: "Recuperação do perfil do rebolo utilizando dressador.",
+                            riscos: ["Projeção de partículas", "Ruído"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-seguranca-7", nome: "Óculos", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-auditivo-9", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                maos: [ { id: "luvas-dressagem", nome: "Luvas", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Cortes." } ]
+                            }
+                        }
+                    ]
+                },
+                "ferramenteiro": {
+                    id: "ferramenteiro",
+                    nome: "Ferramenteiro",
+                    icon: "fas fa-cogs",
+                    codigo: "MM-05",
+                    atividades: [
+                        {
+                            id: "fabricacao-moldes",
+                            nome: "Fabricação e reparo de moldes e matrizes",
+                            descricao: "Usinagem, ajuste e acabamento de ferramentas de corte, moldes de injeção, matrizes de estampagem.",
+                            riscos: ["Projeção de cavacos", "Contato com ferramentas cortantes", "Ruído", "Postura inadequada"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-seguranca-8", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-auditivo-10", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-seguranca-6", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-anti-corte", nome: "Luvas anti-corte", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                tronco: [ { id: "avental-ferramenteiro", nome: "Avental", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Queimaduras leves." } ]
+                            }
+                        },
+                        {
+                            id: "ajuste-manual",
+                            nome: "Ajuste manual e montagem de componentes",
+                            descricao: "Utilização de lima, esmeril, e outras ferramentas manuais para ajuste fino.",
+                            riscos: ["Projeção de partículas", "Cortes", "Queimaduras (esmeril)"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-seguranca-9", nome: "Óculos", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                maos: [ { id: "luvas-raspa-ajuste", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                pes: [ { id: "calcado-seguranca-7", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                audicao: [ { id: "protetor-auditivo-11", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        }
+                    ]
+                },
+                "operador-centro-usinagem": {
+                    id: "operador-centro-usinagem",
+                    nome: "Operador de Centro de Usinagem CNC",
+                    icon: "fas fa-cogs",
+                    codigo: "MM-06",
+                    atividades: [
+                        {
+                            id: "operacao-cnc",
+                            nome: "Programação e operação de centro de usinagem",
+                            descricao: "Configuração e monitoramento de máquinas CNC para usinagem de peças complexas.",
+                            riscos: ["Projeção de cavacos", "Ruído", "Risco de esmagamento"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-seguranca-10", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-auditivo-12", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-seguranca-8", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-cnc-2", nome: "Luvas", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Cortes." } ]
+                            }
+                        },
+                        {
+                            id: "setup-cnc",
+                            nome: "Troca de ferramentas e setup da máquina",
+                            descricao: "Substituição de ferramentas de corte, ajuste de dispositivos de fixação.",
+                            riscos: ["Cortes (manuseio de ferramentas afiadas)", "Esforço físico", "Queda de objetos"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-seguranca-11", nome: "Óculos", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                maos: [ { id: "luvas-anti-corte-2", nome: "Luvas anti-corte", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                pes: [ { id: "calcado-seguranca-9", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.3 MANUTENÇÃO ELÉTRICA / ELETRÔNICA
+        "manutencao-eletrica": {
+            id: "manutencao-eletrica",
+            nome: "Manutenção Elétrica / Eletrônica",
+            icon: "fas fa-bolt",
+            descricao: "Serviços em instalações e equipamentos elétricos e eletrônicos",
+            profissoes: {
+                "tecnico-preditiva-eletrica": {
+                    id: "tecnico-preditiva-eletrica",
+                    nome: "Técnico de Manutenção Preditiva Elétrica",
+                    icon: "fas fa-microchip",
+                    codigo: "EL-01",
+                    atividades: [
+                        {
+                            id: "termografia",
+                            nome: "Inspeção termográfica em painéis elétricos energizados",
+                            descricao: "Realiza varredura com câmera termográfica para detectar pontos quentes em conexões e componentes sob tensão.",
+                            riscos: ["Arco elétrico", "Choque elétrico", "Queimaduras"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                cabeca: [ { id: "capacete-classe-b", nome: "Capacete de segurança classe B (dielétrico)", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Traumatismo craniano, choque elétrico." } ],
+                                olhos: [ 
+                                    { id: "oculos-uv", nome: "Óculos de segurança com proteção UV", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." },
+                                    { id: "protetor-facial-arco", nome: "Protetor facial contra arco elétrico", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras faciais." }
+                                ],
+                                tronco: [ { id: "vestimenta-antichama", nome: "Vestimenta antichama (calça e camisa manga longa)", norm: "NR-10", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras por arco elétrico." } ],
+                                maos: [ 
+                                    { id: "luvas-isolantes", nome: "Luvas isolantes de borracha (classe adequada)", norm: "NR-10", obrigatorio: true, risco: "ALTO", consequencia: "Choque elétrico." },
+                                    { id: "manga-isolante", nome: "Manga isolante", norm: "NR-10", obrigatorio: true, risco: "ALTO", consequencia: "Choque elétrico." }
+                                ],
+                                pes: [ { id: "calcado-dieletrico", nome: "Calçado de segurança dielétrico", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Choque elétrico." } ]
+                            }
+                        },
+                        {
+                            id: "corretiva-quadros",
+                            nome: "Manutenção corretiva em quadros elétricos desenergizados",
+                            descricao: "Substitui componentes, aperta conexões e realiza reparos em quadros elétricos com a rede elétrica interrompida.",
+                            riscos: ["Choque elétrico (por energização acidental)", "Quedas", "Cortes"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-classe-b-2", nome: "Capacete classe B", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-seguranca-12", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-dieletrico-2", nome: "Calçado de segurança dielétrico", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Choque elétrico." } ],
+                                maos: [ { id: "luvas-vaqueta-2", nome: "Luvas de vaqueta", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                audicao: [ { id: "protetor-auditivo-13", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        }
+                    ]
+                },
+                "eletricista": {
+                    id: "eletricista",
+                    nome: "Eletricista",
+                    icon: "fas fa-bolt",
+                    codigo: "EL-02",
+                    atividades: [
+                        {
+                            id: "instalacao-fiacao",
+                            nome: "Instalação de fiação elétrica predial/industrial",
+                            descricao: "Executa o lançamento de cabos, montagem de eletrodutos e instalação de quadros de distribuição.",
+                            riscos: ["Queda de mesma altura ou nível diferente", "Choque elétrico", "Esforço físico"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-classe-b-3", nome: "Capacete classe B", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-seguranca-13", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-dieletrico-3", nome: "Calçado de segurança dielétrico", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Choque elétrico." } ],
+                                maos: [ { id: "luvas-vaqueta-3", nome: "Luvas de vaqueta", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                corpo: [ { id: "cinto-seguranca", nome: "Cinto de segurança tipo paraquedista com talabarte", norm: "NR-35", obrigatorio: true, risco: "ALTO", consequencia: "Queda em altura." } ]
+                            }
+                        },
+                        {
+                            id: "manutencao-motores",
+                            nome: "Manutenção em motores elétricos",
+                            descricao: "Realiza reparos, troca de rolamentos e verificação do isolamento de motores elétricos.",
+                            riscos: ["Choque elétrico", "Contato com partes rotativas", "Queimaduras", "Ruído"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-classe-b-4", nome: "Capacete classe B", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-seguranca-14", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-auditivo-14", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-seguranca-10", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ 
+                                    { id: "luvas-isolantes-2", nome: "Luvas isolantes", norm: "NR-10", obrigatorio: false, risco: "ALTO", consequencia: "Choque elétrico." },
+                                    { id: "luvas-raspa-motor", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "engenheiro-eletrica": {
+                    id: "engenheiro-eletrica",
+                    nome: "Engenheiro de Manutenção Elétrica",
+                    icon: "fas fa-user-tie",
+                    codigo: "EL-03",
+                    atividades: [
+                        {
+                            id: "supervisao-subestacao",
+                            nome: "Supervisão de equipes em subestação energizada",
+                            descricao: "Acompanha e orienta tecnicamente a equipe durante manobras e manutenções em subestações de alta tensão.",
+                            riscos: ["Arco elétrico", "Choque elétrico", "Exposição a campos eletromagnéticos"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                cabeca: [ { id: "capacete-classe-b-5", nome: "Capacete classe B", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Traumatismo craniano." } ],
+                                tronco: [ { id: "vestimenta-antichama-completa", nome: "Vestimenta antichama completa", norm: "NR-10", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras." } ],
+                                olhos: [ 
+                                    { id: "protetor-facial-arco-2", nome: "Protetor facial", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras faciais." },
+                                    { id: "oculos-seguranca-15", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." }
+                                ],
+                                maos: [ 
+                                    { id: "luvas-isolantes-3", nome: "Luvas isolantes", norm: "NR-10", obrigatorio: true, risco: "ALTO", consequencia: "Choque elétrico." },
+                                    { id: "mangas-isolantes-2", nome: "Mangas isolantes", norm: "NR-10", obrigatorio: true, risco: "ALTO", consequencia: "Choque elétrico." }
+                                ],
+                                pes: [ { id: "calcado-dieletrico-4", nome: "Calçado dielétrico", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Choque elétrico." } ],
+                                audicao: [ { id: "protetor-auditivo-15", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        },
+                        {
+                            id: "vistoria-projetos",
+                            nome: "Análise de projetos em campo (vistoria técnica)",
+                            descricao: "Realiza visitas técnicas a instalações elétricas para verificar conformidade com projetos e normas.",
+                            riscos: ["Quedas", "Contato acidental com partes energizadas", "Circulação em área industrial"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-classe-b-6", nome: "Capacete classe B", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-seguranca-16", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-dieletrico-5", nome: "Calçado de segurança dielétrico", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Choque elétrico." } ],
+                                audicao: [ { id: "protetor-auditivo-16", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        }
+                    ]
+                },
+                "tecnico-eletronica": {
+                    id: "tecnico-eletronica",
+                    nome: "Técnico de Manutenção Eletrônica",
+                    icon: "fas fa-microchip",
+                    codigo: "EL-04",
+                    atividades: [
+                        {
+                            id: "reparo-placas",
+                            nome: "Reparo de placas eletrônicas em bancada",
+                            descricao: "Realiza soldagem e substituição de componentes em placas de circuitos impressos.",
+                            riscos: ["Inalação de fumos de solda", "Queimaduras", "Radiação não ionizante"],
+                            nivelRisco: "BAIXO",
+                            epis: {
+                                olhos: [ { id: "oculos-seguranca-17", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                maos: [ { id: "luvas-antiestaticas", nome: "Luvas antiestáticas", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Danos por eletricidade estática." } ],
+                                respiratoria: [ { id: "respirador-pff2-3", nome: "Respirador PFF2", norm: "NR-15", obrigatorio: false, risco: "BAIXO", consequencia: "Inalação de fumos." } ],
+                                tronco: [ { id: "jaleco-algodao", nome: "Jaleco de algodão", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Queimaduras leves." } ]
+                            }
+                        },
+                        {
+                            id: "intervencao-campo",
+                            nome: "Intervenção em equipamentos eletrônicos em campo",
+                            descricao: "Atua diretamente em equipamentos instalados na área produtiva (inversores, CLPs, fontes).",
+                            riscos: ["Choque elétrico", "Contato com partes energizadas", "Ruído", "Contaminação"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-seguranca-18", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-seguranca-11", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-isolantes-4", nome: "Luvas isolantes", norm: "NR-10", obrigatorio: false, risco: "MÉDIO", consequencia: "Choque elétrico." } ],
+                                audicao: [ { id: "protetor-auditivo-17", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.4 MANUTENÇÃO MECÂNICA
+        "manutencao-mecanica": {
+            id: "manutencao-mecanica",
+            nome: "Manutenção Mecânica",
+            icon: "fas fa-wrench",
+            descricao: "Serviços de reparo e manutenção em equipamentos mecânicos",
+            profissoes: {
+                "mecanico": {
+                    id: "mecanico",
+                    nome: "Técnico Especialista de Manutenção Mecânica / Mecânico",
+                    icon: "fas fa-user-cog",
+                    codigo: "MM-07",
+                    atividades: [
+                        {
+                            id: "alinhamento-maquinas",
+                            nome: "Alinhamento de máquinas rotativas",
+                            descricao: "Utiliza relógios comparadores ou laser para alinhar eixos de motores e bombas.",
+                            riscos: ["Esmagamento de dedos", "Contato com partes móveis", "Projeção de partículas"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-2", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-seguranca-19", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-seguranca-12", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-raspa-5", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Esmagamento." } ],
+                                audicao: [ { id: "protetor-auditivo-18", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        },
+                        {
+                            id: "troca-rolamentos",
+                            nome: "Troca de rolamentos e vedação em bombas industriais",
+                            descricao: "Desmonta bombas, substitui rolamentos, retentores e realiza remontagem.",
+                            riscos: ["Esforço físico excessivo", "Cortes", "Contato com produtos químicos (resíduos do processo)", "Queda de objetos"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-3", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-seguranca-20", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-seguranca-13", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ 
+                                    { id: "luvas-raspa-6", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." },
+                                    { id: "luvas-quimicas", nome: "Luvas de proteção química", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Contato com produtos químicos." }
+                                ],
+                                audicao: [ { id: "protetor-auditivo-19", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                tronco: [ { id: "cinta-lombar", nome: "Cinta lombar", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Lesões lombares." } ]
+                            }
+                        }
+                    ]
+                },
+                "tecnico-inspecao": {
+                    id: "tecnico-inspecao",
+                    nome: "Técnico de Inspeção",
+                    icon: "fas fa-search",
+                    codigo: "MM-08",
+                    atividades: [
+                        {
+                            id: "inspecao-visual",
+                            nome: "Inspeção visual e dimensional de equipamentos estáticos",
+                            descricao: "Verifica corrosão, trincas e deformações em tanques, vasos de pressão e estruturas metálicas.",
+                            riscos: ["Queda no mesmo nível", "Queda em altura", "Exposição a intempéries"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-4", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-seguranca-21", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-cano-longo", nome: "Calçado de segurança cano longo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões nos pés." } ],
+                                audicao: [ { id: "protetor-auditivo-20", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                maos: [ { id: "luvas-raspa-7", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                corpo: [ { id: "cinto-seguranca-2", nome: "Cinto de segurança", norm: "NR-35", obrigatorio: false, risco: "ALTO", consequencia: "Queda em altura." } ]
+                            }
+                        },
+                        {
+                            id: "end-campo",
+                            nome: "Ensaio não destrutivo (ultrassom ou líquido penetrante) em campo",
+                            descricao: "Aplica técnicas de END para detectar descontinuidades em materiais.",
+                            riscos: ["Contato com produtos químicos (líquido penetrante, revelador)", "Posições desconfortáveis"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-5", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-seguranca-22", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-seguranca-14", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-quimicas-2", nome: "Luvas de proteção química", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Contato com produtos químicos." } ],
+                                tronco: [ { id: "avental-impermeavel", nome: "Avental impermeável", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Contato com produtos químicos." } ],
+                                audicao: [ { id: "protetor-auditivo-21", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        }
+                    ]
+                },
+                "tecnico-campo": {
+                    id: "tecnico-campo",
+                    nome: "Técnico de Campo",
+                    icon: "fas fa-hard-hat",
+                    codigo: "MM-09",
+                    atividades: [
+                        {
+                            id: "diagnostico-cliente",
+                            nome: "Diagnóstico de falhas em equipamentos no cliente (indústria externa)",
+                            descricao: "Desloca-se até a planta do cliente para identificar causas de mau funcionamento.",
+                            riscos: ["Ambientes desconhecidos", "Riscos variáveis", "Circulação"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-6", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-seguranca-23", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-seguranca-15", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                audicao: [ { id: "protetor-auditivo-portatil", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                maos: [ { id: "luvas-raspa-8", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                tronco: [ { id: "colete-refletivo", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ]
+                            }
+                        },
+                        {
+                            id: "ajuste-operacao",
+                            nome: "Ajuste e calibração de equipamentos mecânicos em operação",
+                            descricao: "Realiza regulagens finas em máquinas durante a operação monitorada.",
+                            riscos: ["Contato com partes móveis", "Projeção de partículas", "Ruído"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-7", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-seguranca-24", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-auditivo-22", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-seguranca-16", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-raspa-9", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Esmagamento." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.5 INSTRUMENTAÇÃO E AUTOMAÇÃO
+        "instrumentacao-automacao": {
+            id: "instrumentacao-automacao",
+            nome: "Instrumentação e Automação",
+            icon: "fas fa-microchip",
+            descricao: "Serviços em instrumentos de medição e controle, sistemas automatizados",
+            profissoes: {
+                "tecnico-instrumentacao": {
+                    id: "tecnico-instrumentacao",
+                    nome: "Técnico Especializado em Instrumentação",
+                    icon: "fas fa-tachometer-alt",
+                    codigo: "IA-01",
+                    atividades: [
+                        {
+                            id: "calibracao-transmissores",
+                            nome: "Calibração de transmissores de pressão e temperatura",
+                            descricao: "Retira instrumentos de campo, conecta a equipamentos de calibração e ajusta parâmetros.",
+                            riscos: ["Contato com processo (pressão, temperatura, produto químico)", "Quedas"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-ia", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-ia", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-ia", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-quimicas-ia", nome: "Luvas de proteção química", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Contato com produtos químicos." } ],
+                                audicao: [ { id: "protetor-ia", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        },
+                        {
+                            id: "manutencao-valvulas",
+                            nome: "Manutenção em válvulas de controle (posicionadores, atuadores)",
+                            descricao: "Atua em campo para reparar ou substituir componentes de válvulas automatizadas.",
+                            riscos: ["Esmagamento", "Contato com fluido do processo", "Espaço confinado (poços de válvula)"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                cabeca: [ { id: "capacete-ia2", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-ia2", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-ia2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ 
+                                    { id: "luvas-raspa-ia", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Esmagamento, cortes." },
+                                    { id: "luvas-quimicas-ia2", nome: "Luvas de proteção química", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Contato com produtos químicos." }
+                                ],
+                                audicao: [ { id: "protetor-ia2", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                respiratoria: [ { id: "respirador-ia", nome: "Respirador", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Inalação de vapores." } ]
+                            }
+                        }
+                    ]
+                },
+                "tecnico-automacao": {
+                    id: "tecnico-automacao",
+                    nome: "Técnico Especialista de Automação",
+                    icon: "fas fa-robot",
+                    codigo: "IA-02",
+                    atividades: [
+                        {
+                            id: "programacao-clp",
+                            nome: "Programação de CLP em painel elétrico",
+                            descricao: "Conecta notebook ao CLP para alterar lógica de programação, monitora entradas e saídas.",
+                            riscos: ["Trabalho em painel energizado", "Choque elétrico", "Curto-circuito"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-aut", nome: "Capacete classe B", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-aut", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-aut", nome: "Calçado de segurança dielétrico", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Choque elétrico." } ],
+                                maos: [ { id: "luvas-isolantes-aut", nome: "Luvas isolantes", norm: "NR-10", obrigatorio: false, risco: "MÉDIO", consequencia: "Choque elétrico." } ]
+                            }
+                        },
+                        {
+                            id: "comissionamento",
+                            nome: "Comissionamento de novos sistemas em campo",
+                            descricao: "Testa o funcionamento de sensores, atuadores e malhas de controle em toda a planta.",
+                            riscos: ["Circulação em área industrial", "Contato com partes energizadas", "Ruído"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-aut2", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-aut2", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-aut2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                audicao: [ { id: "protetor-aut", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                maos: [ { id: "luvas-raspa-aut", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.6 LOGÍSTICA E TRANSPORTE
+        "logistica-transporte": {
+            id: "logistica-transporte",
+            nome: "Logística e Transporte",
+            icon: "fas fa-truck",
+            descricao: "Operações de movimentação de cargas, armazenagem e transporte",
+            profissoes: {
+                "operador-empilhadeira": {
+                    id: "operador-empilhadeira",
+                    nome: "Operador de Empilhadeira",
+                    icon: "fas fa-forklift",
+                    codigo: "LT-01",
+                    atividades: [
+                        {
+                            id: "movimentacao-cargas",
+                            nome: "Movimentação de cargas pesadas em armazém",
+                            descricao: "Opera empilhadeira a combustão ou elétrica para empilhar, desempilhar e transportar paletes com materiais diversos.",
+                            riscos: ["Tombamento", "Atropelamento", "Queda de carga", "Ruído", "Vibração", "Projeção de partículas"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                cabeca: [ { id: "capacete-log", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                pes: [ { id: "calcado-log", nome: "Calçado de segurança com biqueira", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Esmagamento dos pés." } ],
+                                audicao: [ { id: "protetor-log", nome: "Protetor auditivo tipo concha", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                tronco: [ { id: "cinto-empilhadeira", nome: "Cinto de segurança (da empilhadeira)", norm: "NR-11", obrigatorio: true, risco: "ALTO", consequencia: "Projeção para fora da máquina." } ],
+                                corpo: [ { id: "colete-log", nome: "Colete refletivo de alta visibilidade", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ],
+                                maos: [ { id: "luvas-log", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Cortes." } ]
+                            }
+                        },
+                        {
+                            id: "abastecimento-linhas",
+                            nome: "Abastecimento de linhas de produção",
+                            descricao: "Transporta matéria-prima ou componentes do almoxarifado até os postos de trabalho na produção.",
+                            riscos: ["Colisão com pedestres ou estruturas", "Queda de carga", "Ruído", "Atropelamento"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-log2", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                pes: [ { id: "calcado-log2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Esmagamento dos pés." } ],
+                                audicao: [ { id: "protetor-log2", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                tronco: [ { id: "cinto-empilhadeira2", nome: "Cinto de segurança", norm: "NR-11", obrigatorio: true, risco: "ALTO", consequencia: "Projeção." } ],
+                                corpo: [ { id: "colete-log2", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ]
+                            }
+                        }
+                    ]
+                },
+                "auxiliar-almoxarifado": {
+                    id: "auxiliar-almoxarifado",
+                    nome: "Auxiliar de Almoxarifado / Conferente",
+                    icon: "fas fa-boxes",
+                    codigo: "LT-02",
+                    atividades: [
+                        {
+                            id: "separacao-materiais",
+                            nome: "Separação e conferência de materiais",
+                            descricao: "Coleta itens nas prateleiras utilizando carrinho manual ou paleteira, confere quantidades e registra no sistema.",
+                            riscos: ["Queda de materiais das prateleiras", "Esforço físico", "Cortes com embalagens ou fitas", "Quedas no mesmo nível"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                pes: [ { id: "calcado-aux", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Esmagamento dos pés." } ],
+                                maos: [ { id: "luvas-aux", nome: "Luvas de raspa ou anti-corte", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                olhos: [ { id: "oculos-aux", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                corpo: [ { id: "colete-aux", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ]
+                            }
+                        },
+                        {
+                            id: "recebimento-mercadorias",
+                            nome: "Recebimento de mercadorias (docas)",
+                            descricao: "Auxilia na descarga de caminhões, confere notas fiscais e organiza os materiais na área de recebimento.",
+                            riscos: ["Atropelamento (manobras de caminhões)", "Queda de objetos", "Poeira", "Ruído"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-aux", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                pes: [ { id: "calcado-aux2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Esmagamento." } ],
+                                corpo: [ { id: "colete-aux2", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ],
+                                olhos: [ { id: "oculos-aux2", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-aux", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                maos: [ { id: "luvas-aux2", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Cortes." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.7 QUALIDADE E PROCESSOS
+        "qualidade-processos": {
+            id: "qualidade-processos",
+            nome: "Qualidade e Processos",
+            icon: "fas fa-chart-line",
+            descricao: "Inspeção, medição e controle de qualidade",
+            profissoes: {
+                "inspetor-qualidade": {
+                    id: "inspetor-qualidade",
+                    nome: "Inspetor de Qualidade",
+                    icon: "fas fa-check-double",
+                    codigo: "QP-01",
+                    atividades: [
+                        {
+                            id: "inspecao-visual-linha",
+                            nome: "Inspeção visual em linha de produção",
+                            descricao: "Examina produtos acabados ou em processo ao longo da esteira, identificando defeitos visíveis.",
+                            riscos: ["Fadiga visual", "Postura inadequada (em pé por longos períodos)", "Ruído", "Circulação"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-qual", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-qual", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-qual", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                cabeca: [ { id: "touca-qual", nome: "Touca (para alimentos)", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Contaminação." } ]
+                            }
+                        },
+                        {
+                            id: "inspecao-instrumentos",
+                            nome: "Inspeção com instrumentos de medição (paquímetro, micrômetro)",
+                            descricao: "Realiza medições dimensionais em peças e componentes em bancada ou próximo à produção.",
+                            riscos: ["Queda de objetos", "Ruído", "Postura inadequada", "Projeção de partículas (ao manusear peças com rebarbas)"],
+                            nivelRisco: "BAIXO",
+                            epis: {
+                                olhos: [ { id: "oculos-qual2", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-qual2", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-qual2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ 
+                                    { id: "luvas-latex", nome: "Luvas de látex", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Marcas de dedo." },
+                                    { id: "luvas-anti-corte-qual", nome: "Luvas anti-corte", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Cortes." }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "tecnico-metrologia": {
+                    id: "tecnico-metrologia",
+                    nome: "Técnico em Metrologia",
+                    icon: "fas fa-ruler",
+                    codigo: "QP-02",
+                    atividades: [
+                        {
+                            id: "calibracao-lab",
+                            nome: "Calibração de instrumentos em laboratório",
+                            descricao: "Realiza procedimentos de calibração em paquímetros, micrômetros, relógios comparadores e outros instrumentos.",
+                            riscos: ["Manuseio de produtos químicos (para limpeza)", "Postura inadequada"],
+                            nivelRisco: "BAIXO",
+                            epis: {
+                                tronco: [ { id: "jaleco-metro", nome: "Jaleco", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Contaminação." } ],
+                                olhos: [ { id: "oculos-metro", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                maos: [ { id: "luvas-nitrilica", nome: "Luvas de nitrílica", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Contato com produtos químicos." } ],
+                                pes: [ { id: "calcado-metro", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ]
+                            }
+                        },
+                        {
+                            id: "coleta-instrumentos",
+                            nome: "Coleta de instrumentos em campo",
+                            descricao: "Percorre a fábrica para recolher instrumentos que serão calibrados, transportando-os até o laboratório.",
+                            riscos: ["Circulação em área industrial", "Quedas", "Atropelamento"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-metro", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-metro2", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-metro2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                audicao: [ { id: "protetor-metro", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                corpo: [ { id: "colete-metro", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.8 MEIO AMBIENTE E SEGURANÇA DO TRABALHO
+        "meio-ambiente-seguranca": {
+            id: "meio-ambiente-seguranca",
+            nome: "Meio Ambiente e Segurança do Trabalho",
+            icon: "fas fa-leaf",
+            descricao: "Atividades de prevenção, inspeção e resposta a emergências",
+            profissoes: {
+                "tecnico-seguranca": {
+                    id: "tecnico-seguranca",
+                    nome: "Técnico em Segurança do Trabalho",
+                    icon: "fas fa-hard-hat",
+                    codigo: "ST-01",
+                    atividades: [
+                        {
+                            id: "inspecao-seguranca",
+                            nome: "Inspeção de segurança nas áreas produtivas",
+                            descricao: "Percorre a planta para identificar condições inseguras, verificar uso de EPIs e orientar trabalhadores.",
+                            riscos: ["Exposição a todos os riscos da área visitada (ruído, calor, produtos químicos, queda)", "Atropelamento"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-st", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-st", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-st", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-st", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                corpo: [ { id: "colete-st", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ],
+                                respiratoria: [ { id: "respirador-st", nome: "Respirador", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Inalação." } ]
+                            }
+                        },
+                        {
+                            id: "investigacao-acidente",
+                            nome: "Investigação de acidente de trabalho",
+                            descricao: "Desloca-se ao local do acidente para coletar evidências, fotografar e entrevistar testemunhas.",
+                            riscos: ["Ambiente pós-acidente pode apresentar riscos remanescentes", "Contaminação"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-st2", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-st2", nome: "Óculos", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-st2", nome: "Calçado", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-st", nome: "Luvas", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Contaminação." } ],
+                                respiratoria: [ { id: "respirador-st2", nome: "Respirador", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Inalação." } ],
+                                corpo: [ { id: "colete-st2", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ]
+                            }
+                        }
+                    ]
+                },
+                "bombeiro-industrial": {
+                    id: "bombeiro-industrial",
+                    nome: "Bombeiro Industrial / Brigadista",
+                    icon: "fas fa-fire-extinguisher",
+                    codigo: "ST-02",
+                    atividades: [
+                        {
+                            id: "combate-incendio",
+                            nome: "Combate a princípio de incêndio",
+                            descricao: "Atua com extintores ou hidrantes no combate imediato a focos de incêndio.",
+                            riscos: ["Queimaduras", "Inalação de fumaça", "Explosão", "Desabamento", "Contato com produtos perigosos"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                cabeca: [ { id: "capacete-bombeiro", nome: "Capacete com viseira", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Traumatismo craniano, queimaduras faciais." } ],
+                                tronco: [ { id: "vestimenta-aproximacao", nome: "Vestimenta de aproximação (antichama)", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras." } ],
+                                maos: [ { id: "luvas-bombeiro", nome: "Luvas de combate a incêndio", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras." } ],
+                                cabeca: [ { id: "balaclava", nome: "Balaclava (proteção do pescoço e rosto)", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras." } ],
+                                pes: [ { id: "botas-bombeiro", nome: "Botas de borracha com biqueira e solado antiderrapante", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras, perfurações." } ],
+                                respiratoria: [ { id: "mascara-autonoma", nome: "Máscara autônoma", norm: "NR-15", obrigatorio: true, risco: "ALTO", consequencia: "Intoxicação por fumaça." } ]
+                            }
+                        },
+                        {
+                            id: "simulado-emergencia",
+                            nome: "Simulado de emergência e treinamento",
+                            descricao: "Participa da organização e execução de simulados de evacuação, combate a incêndio ou primeiros socorros.",
+                            riscos: ["Quedas", "Esforço físico", "Exposição a condições controladas de treinamento"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                corpo: [ { id: "uniforme-treinamento", nome: "Uniforme de treinamento", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Proteção básica." } ],
+                                maos: [ { id: "luvas-treinamento", nome: "Luvas", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Cortes." } ],
+                                cabeca: [ { id: "capacete-treinamento", nome: "Capacete", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Traumatismo." } ],
+                                pes: [ { id: "calcado-treinamento", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                audicao: [ { id: "protetor-treinamento", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        }
+                    ]
+                },
+                "tecnico-meio-ambiente": {
+                    id: "tecnico-meio-ambiente",
+                    nome: "Técnico em Meio Ambiente",
+                    icon: "fas fa-water",
+                    codigo: "ST-03",
+                    atividades: [
+                        {
+                            id: "coleta-efluentes",
+                            nome: "Coleta de amostras de efluentes",
+                            descricao: "Coleta amostras de água em pontos de descarte ou corpos d'água para análise laboratorial.",
+                            riscos: ["Quedas em margens", "Contato com água contaminada", "Animais peçonhentos", "Produtos químicos"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                pes: [ { id: "botas-impermeaveis", nome: "Botas impermeáveis cano longo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Contato com água contaminada." } ],
+                                maos: [ { id: "luvas-quimicas-ma", nome: "Luvas de proteção química (nitrílica)", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Contato com produtos químicos." } ],
+                                olhos: [ { id: "oculos-ma", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                tronco: [ { id: "avental-impermeavel-ma", nome: "Avental impermeável", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Contato com água contaminada." } ],
+                                corpo: [ { id: "colete-ma", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ]
+                            }
+                        },
+                        {
+                            id: "monitoramento-emissoes",
+                            nome: "Monitoramento de emissões atmosféricas",
+                            descricao: "Opera equipamentos de amostragem em chaminés ou dutos para coleta de material particulado ou gases.",
+                            riscos: ["Trabalho em altura (plataformas de amostragem)", "Exposição a gases e calor", "Queda"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                cabeca: [ { id: "capacete-ma", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-ma2", nome: "Óculos", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-ma", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                corpo: [ { id: "cinto-ma", nome: "Cinto de segurança com talabarte", norm: "NR-35", obrigatorio: true, risco: "ALTO", consequencia: "Queda em altura." } ],
+                                respiratoria: [ { id: "respirador-ma", nome: "Respirador com filtro químico", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Inalação de gases." } ],
+                                maos: [ { id: "luvas-ma", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Cortes." } ],
+                                audicao: [ { id: "protetor-ma", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.9 TECNOLOGIA DA INFORMAÇÃO INDUSTRIAL
+        "ti-industrial": {
+            id: "ti-industrial",
+            nome: "Tecnologia da Informação Industrial",
+            icon: "fas fa-network-wired",
+            descricao: "Infraestrutura de redes, sistemas e automação de TI",
+            profissoes: {
+                "tecnico-redes-industriais": {
+                    id: "tecnico-redes-industriais",
+                    nome: "Técnico em Redes Industriais",
+                    icon: "fas fa-server",
+                    codigo: "TI-01",
+                    atividades: [
+                        {
+                            id: "cabeamento-estruturado",
+                            nome: "Cabeamento estruturado em bandejas e eletrocalhas",
+                            descricao: "Passa cabos de rede, fibra óptica por bandejas suspensas, acompanhando o lay-out da planta.",
+                            riscos: ["Queda em altura (trabalho em escadas ou plataformas)", "Choque elétrico (cabos próximos a redes elétricas)", "Esforço físico"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-ti", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-ti", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-ti", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-raspa-ti", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Cortes." } ],
+                                corpo: [ { id: "cinto-ti", nome: "Cinto de segurança tipo paraquedista", norm: "NR-35", obrigatorio: true, risco: "ALTO", consequencia: "Queda em altura." } ],
+                                audicao: [ { id: "protetor-ti", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        },
+                        {
+                            id: "manutencao-switches",
+                            nome: "Manutenção em switches e roteadores em painéis fechados",
+                            descricao: "Acessa painéis elétricos para substituir ou configurar equipamentos de rede ativos.",
+                            riscos: ["Choque elétrico (componentes energizados)", "Curto-circuito", "Espaços confinados (dentro de painéis)"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-classe-b-ti", nome: "Capacete classe B", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-ti2", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-dieletrico-ti", nome: "Calçado de segurança dielétrico", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Choque elétrico." } ],
+                                maos: [ { id: "luvas-isolantes-ti", nome: "Luvas isolantes", norm: "NR-10", obrigatorio: false, risco: "MÉDIO", consequencia: "Choque elétrico." } ]
+                            }
+                        }
+                    ]
+                },
+                "tecnico-automacao-industrial": {
+                    id: "tecnico-automacao-industrial",
+                    nome: "Técnico em Automação Industrial",
+                    icon: "fas fa-robot",
+                    codigo: "TI-02",
+                    atividades: [
+                        {
+                            id: "manutencao-inversores",
+                            nome: "Manutenção de inversores de frequência em campo",
+                            descricao: "Realiza diagnósticos e reparos em inversores instalados em motores, com partes energizadas ou não.",
+                            riscos: ["Choque elétrico (capacitores carregados)", "Arco elétrico", "Contato com partes quentes"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                cabeca: [ { id: "capacete-classe-b-ti2", nome: "Capacete classe B", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-ti3", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                olhos: [ { id: "protetor-facial-ti", nome: "Protetor facial", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras faciais." } ],
+                                pes: [ { id: "calcado-dieletrico-ti2", nome: "Calçado dielétrico", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Choque elétrico." } ],
+                                maos: [ { id: "luvas-isolantes-ti2", nome: "Luvas isolantes", norm: "NR-10", obrigatorio: true, risco: "ALTO", consequencia: "Choque elétrico." } ],
+                                tronco: [ { id: "vestimenta-antichama-ti", nome: "Vestimenta antichama", norm: "NR-10", obrigatorio: false, risco: "ALTO", consequencia: "Queimaduras." } ]
+                            }
+                        },
+                        {
+                            id: "configuracao-ihm",
+                            nome: "Configuração de IHM (interface homem-máquina) em sala de controle",
+                            descricao: "Ajusta telas e parâmetros de supervisório em ambiente de sala de controle (escritório).",
+                            riscos: ["Trabalho sedentário", "Exposição à luz azul (computador)"],
+                            nivelRisco: "BAIXO",
+                            epis: {
+                                olhos: [ { id: "oculos-descanso", nome: "Óculos de descanso", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Fadiga visual." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.10 AUTOMOTIVA
+        "automotiva": {
+            id: "automotiva",
+            nome: "Automotiva",
+            icon: "fas fa-car",
+            descricao: "Serviços mecânicos, elétricos e de pintura em veículos",
+            profissoes: {
+                "mecanico-automotivo": {
+                    id: "mecanico-automotivo",
+                    nome: "Mecânico Automotivo",
+                    icon: "fas fa-wrench",
+                    codigo: "AU-01",
+                    atividades: [
+                        {
+                            id: "reparo-freios",
+                            nome: "Reparo em sistema de freios (substituição de pastilhas, discos)",
+                            descricao: "Desmonta componentes do freio, substitui peças e realiza sangria do sistema.",
+                            riscos: ["Contato com produtos químicos (fluido de freio)", "Esmagamento de dedos", "Queda de veículo (se mal apoiado)", "Cortes"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-auto", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                maos: [ 
+                                    { id: "luvas-nitrilica-auto", nome: "Luvas de nitrílica", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Contato com produtos químicos." },
+                                    { id: "luvas-raspa-auto", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Cortes." }
+                                ],
+                                pes: [ { id: "calcado-auto", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Esmagamento." } ],
+                                corpo: [ { id: "macacao-auto", nome: "Macacão", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Sujidade." } ]
+                            }
+                        },
+                        {
+                            id: "reparo-motor",
+                            nome: "Reparo em motor (troca de correias, velas, etc.)",
+                            descricao: "Acessa o compartimento do motor para substituir componentes, realizar limpeza ou diagnóstico.",
+                            riscos: ["Queimaduras (motor quente)", "Cortes", "Esforço físico", "Queda (degraus de acesso)", "Ruído"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-auto2", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                maos: [ { id: "luvas-raspa-auto2", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                pes: [ { id: "calcado-auto2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Esmagamento." } ],
+                                audicao: [ { id: "protetor-auto", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        }
+                    ]
+                },
+                "eletricista-automotivo": {
+                    id: "eletricista-automotivo",
+                    nome: "Eletricista Automotivo",
+                    icon: "fas fa-car-battery",
+                    codigo: "AU-02",
+                    atividades: [
+                        {
+                            id: "diagnostico-eletrico",
+                            nome: "Diagnóstico de falhas elétricas em veículos",
+                            descricao: "Utiliza multímetro, osciloscópio ou scanner para identificar problemas no sistema elétrico/eletrônico.",
+                            riscos: ["Choque elétrico (sistemas de alta tensão em híbridos/elétricos)", "Curto-circuito", "Queimaduras"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-eletrico", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                maos: [ { id: "luvas-isolantes-eletrico", nome: "Luvas isolantes", norm: "NR-10", obrigatorio: false, risco: "MÉDIO", consequencia: "Choque elétrico." } ],
+                                pes: [ { id: "calcado-eletrico", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Esmagamento." } ]
+                            }
+                        },
+                        {
+                            id: "manutencao-ignicao",
+                            nome: "Manutenção em sistema de ignição e partida",
+                            descricao: "Substitui bobinas, cabos de vela, motor de partida ou alternador.",
+                            riscos: ["Queimaduras (componentes quentes)", "Choque elétrico", "Esforço físico"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-eletrico2", nome: "Óculos", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                maos: [ { id: "luvas-raspa-eletrico", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                pes: [ { id: "calcado-eletrico2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Esmagamento." } ]
+                            }
+                        }
+                    ]
+                },
+                "pintor-automotivo": {
+                    id: "pintor-automotivo",
+                    nome: "Pintor Automotivo",
+                    icon: "fas fa-paint-roller",
+                    codigo: "AU-03",
+                    atividades: [
+                        {
+                            id: "preparacao-superficie",
+                            nome: "Preparação de superfície (lixamento)",
+                            descricao: "Lixa a carroceria para remover tinta antiga, massa ou ferrugem, utilizando lixadeira elétrica ou manual.",
+                            riscos: ["Poeira (partículas de tinta, massa)", "Ruído", "Vibração", "Projeção de partículas"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                respiratoria: [ { id: "respirador-pff2-auto", nome: "Respirador PFF2", norm: "NR-15", obrigatorio: true, risco: "MÉDIO", consequencia: "Inalação de poeira." } ],
+                                olhos: [ { id: "oculos-auto-pint", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-auto-pint", nome: "Protetor auditivo tipo concha", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                maos: [ { id: "luvas-raspa-auto-pint", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                corpo: [ { id: "macacao-auto-pint", nome: "Macacão", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Sujidade." } ]
+                            }
+                        },
+                        {
+                            id: "aplicacao-tinta",
+                            nome: "Aplicação de tinta em cabine de pintura",
+                            descricao: "Utiliza pistola para aplicar camadas de tinta, verniz e solventes em veículos.",
+                            riscos: ["Inalação de vapores tóxicos (isocianatos, solventes)", "Incêndio/explosão", "Névoa de tinta"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                respiratoria: [ { id: "respirador-quimico", nome: "Respirador com filtro químico (carvão ativado)", norm: "NR-15", obrigatorio: true, risco: "ALTO", consequencia: "Intoxicação." } ],
+                                tronco: [ { id: "macacao-impermeavel", nome: "Macacão impermeável descartável (Tyvek)", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Contato com tinta." } ],
+                                maos: [ { id: "luvas-quimicas-auto", nome: "Luvas de proteção química", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Contato com solventes." } ],
+                                olhos: [ { id: "oculos-auto-pint2", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                olhos: [ { id: "viseira-auto", nome: "Viseira", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Lesões faciais." } ],
+                                audicao: [ { id: "protetor-auto-pint2", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.11 ALIMENTOS E BEBIDAS
+        "alimentos-bebidas": {
+            id: "alimentos-bebidas",
+            nome: "Alimentos e Bebidas",
+            icon: "fas fa-utensils",
+            descricao: "Processamento, envase e controle de qualidade na indústria alimentícia",
+            profissoes: {
+                "operador-producao-alimentos": {
+                    id: "operador-producao-alimentos",
+                    nome: "Operador de Produção em Alimentos",
+                    icon: "fas fa-industry",
+                    codigo: "AB-01",
+                    atividades: [
+                        {
+                            id: "operacao-envase",
+                            nome: "Operação de máquina de envase",
+                            descricao: "Abastece a linha com embalagens, monitora o enchimento, realiza pequenos ajustes e troca de bobinas.",
+                            riscos: ["Cortes (lâminas, embalagens)", "Esmagamento (partes móveis)", "Ruído", "Escorregões (pisos molhados)"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                pes: [ { id: "botas-impermeaveis-alim", nome: "Botas impermeáveis antiderrapantes (brancas)", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Escorregões." } ],
+                                tronco: [ { id: "avental-impermeavel-alim", nome: "Avental impermeável", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Contato com líquidos." } ],
+                                maos: [ { id: "luvas-malha-aco", nome: "Luvas de malha de aço", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Cortes." } ],
+                                cabeca: [ { id: "touca-alim", nome: "Touca", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Contaminação." } ],
+                                audicao: [ { id: "protetor-alim", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                olhos: [ { id: "oculos-alim", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Lesões oculares." } ]
+                            }
+                        },
+                        {
+                            id: "limpeza-cip",
+                            nome: "Limpeza CIP (Clean-in-Place) de tanques e tubulações",
+                            descricao: "Opera o sistema de limpeza automatizada que circula soluções químicas (ácidos, álcalis) para higienização.",
+                            riscos: ["Contato com produtos químicos concentrados", "Queimaduras químicas", "Respingos", "Espaço confinado (se entrada em tanque)"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                pes: [ { id: "botas-impermeaveis-cip", nome: "Botas impermeáveis", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Contato com químicos." } ],
+                                tronco: [ { id: "avental-impermeavel-cip", nome: "Avental impermeável", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Contato com químicos." } ],
+                                maos: [ { id: "luvas-quimicas-cip", nome: "Luvas de proteção química (borracha butílica ou nitrílica)", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras químicas." } ],
+                                olhos: [ 
+                                    { id: "oculos-cip", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." },
+                                    { id: "viseira-cip", nome: "Viseira", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Lesões faciais." }
+                                ],
+                                respiratoria: [ { id: "respirador-cip", nome: "Respirador", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Inalação de vapores." } ],
+                                cabeca: [ { id: "touca-cip", nome: "Touca", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Contaminação." } ]
+                            }
+                        }
+                    ]
+                },
+                "inspetor-qualidade-alimentos": {
+                    id: "inspetor-qualidade-alimentos",
+                    nome: "Técnico em Alimentos / Inspetor de Qualidade Alimentar",
+                    icon: "fas fa-microscope",
+                    codigo: "AB-02",
+                    atividades: [
+                        {
+                            id: "coleta-amostras",
+                            nome: "Coleta de amostras na linha de produção",
+                            descricao: "Retira amostras de produtos em diversos pontos da linha para análise laboratorial.",
+                            riscos: ["Contato com produto quente ou frio", "Contaminação cruzada", "Ruído", "Escorregões"],
+                            nivelRisco: "BAIXO",
+                            epis: {
+                                cabeca: [ { id: "touca-qual", nome: "Touca", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Contaminação." } ],
+                                tronco: [ { id: "jaleco-qual", nome: "Jaleco", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Contaminação." } ],
+                                maos: [ { id: "luvas-descartaveis", nome: "Luvas descartáveis", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Contaminação." } ],
+                                pes: [ { id: "botas-impermeaveis-qual", nome: "Botas impermeáveis", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Escorregões." } ],
+                                audicao: [ { id: "protetor-qual", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                olhos: [ { id: "oculos-qual", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Lesões oculares." } ]
+                            }
+                        },
+                        {
+                            id: "analise-microbiologica",
+                            nome: "Análise microbiológica em laboratório",
+                            descricao: "Prepara meios de cultura, plaqueia amostras e realiza contagem de microorganismos.",
+                            riscos: ["Contato com agentes biológicos", "Produtos químicos (corantes, reagentes)", "Queimaduras (bico de Bunsen)"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                tronco: [ { id: "jaleco-manga-longa", nome: "Jaleco de manga longa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Contato com agentes biológicos." } ],
+                                maos: [ { id: "luvas-procedimento", nome: "Luvas de procedimento", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Contato com agentes biológicos." } ],
+                                olhos: [ 
+                                    { id: "oculos-lab", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." },
+                                    { id: "protetor-facial-lab", nome: "Protetor facial", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Lesões faciais." }
+                                ],
+                                respiratoria: [ { id: "mascara-pff2-lab", nome: "Máscara PFF2", norm: "NR-15", obrigatorio: false, risco: "BAIXO", consequencia: "Inalação." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.12 REFRIGERAÇÃO E CLIMATIZAÇÃO
+        "refrigeracao-climatizacao": {
+            id: "refrigeracao-climatizacao",
+            nome: "Refrigeração e Climatização",
+            icon: "fas fa-snowflake",
+            descricao: "Instalação, manutenção e reparo de sistemas de refrigeração e ar condicionado",
+            profissoes: {
+                "tecnico-refrigeracao-industrial": {
+                    id: "tecnico-refrigeracao-industrial",
+                    nome: "Técnico em Refrigeração Industrial",
+                    icon: "fas fa-temperature-low",
+                    codigo: "RC-01",
+                    atividades: [
+                        {
+                            id: "manutencao-amonia",
+                            nome: "Manutenção em sistema de amônia (NH3)",
+                            descricao: "Realiza reparos em compressores, trocadores de calor e válvulas em sistemas que utilizam amônia como refrigerante.",
+                            riscos: ["Vazamento de gás tóxico (amônia)", "Queimaduras por frio (vazamento)", "Explosão", "Trabalho em altura", "Choque elétrico"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                respiratoria: [ 
+                                    { id: "mascara-amonia", nome: "Máscara com filtro para gases (amônia)", norm: "NR-15", obrigatorio: true, risco: "ALTO", consequencia: "Intoxicação." },
+                                    { id: "mascara-autonoma-amonia", nome: "Máscara autônoma", norm: "NR-15", obrigatorio: false, risco: "ALTO", consequencia: "Intoxicação." }
+                                ],
+                                maos: [ { id: "luvas-criogenicas", nome: "Luvas criogênicas", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras por frio." } ],
+                                olhos: [ 
+                                    { id: "oculos-amonia", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." },
+                                    { id: "viseira-amonia", nome: "Viseira", norm: "NR-6", obrigatorio: false, risco: "MÉDIO", consequencia: "Lesões faciais." }
+                                ],
+                                tronco: [ { id: "avental-impermeavel-amonia", nome: "Avental impermeável", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Contato com amônia." } ],
+                                pes: [ { id: "calcado-amonia", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                cabeca: [ { id: "capacete-amonia", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                audicao: [ { id: "protetor-amonia", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                corpo: [ { id: "cinto-amonia", nome: "Cinto de segurança", norm: "NR-35", obrigatorio: false, risco: "ALTO", consequencia: "Queda." } ]
+                            }
+                        },
+                        {
+                            id: "carga-gas",
+                            nome: "Carga de gás refrigerante em sistema",
+                            descricao: "Conecta cilindros de gás (HFC, HFO, etc.) ao sistema para completar a carga, utilizando manifold e balanças.",
+                            riscos: ["Queimaduras por frio (contato com gás líquido)", "Vazamento (se em ambiente fechado)", "Pressurização excessiva"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                olhos: [ { id: "oculos-gas", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
+                                maos: [ { id: "luvas-criogenicas-gas", nome: "Luvas criogênicas", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras por frio." } ],
+                                tronco: [ { id: "avental-gas", nome: "Avental", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Queimaduras." } ],
+                                pes: [ { id: "calcado-gas", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                respiratoria: [ { id: "respirador-gas", nome: "Respirador", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Inalação." } ]
+                            }
+                        }
+                    ]
+                },
+                "instalador-ar-condicionado": {
+                    id: "instalador-ar-condicionado",
+                    nome: "Instalador de Ar Condicionado",
+                    icon: "fas fa-wind",
+                    codigo: "RC-02",
+                    atividades: [
+                        {
+                            id: "instalacao-split",
+                            nome: "Instalação de unidade condensadora em telhado",
+                            descricao: "Transporta e fixa a unidade externa em lajes ou telhados, realiza conexões elétricas e de linha frigorígena.",
+                            riscos: ["Queda em altura (principal risco)", "Choque elétrico", "Cortes (alumínio)", "Queimaduras (solda)", "Exposição solar"],
+                            nivelRisco: "ALTO",
+                            epis: {
+                                corpo: [ { id: "cinto-paraquedista", nome: "Cinto de segurança tipo paraquedista com talabarte duplo", norm: "NR-35", obrigatorio: true, risco: "ALTO", consequencia: "Queda em altura." } ],
+                                cabeca: [ { id: "capacete-ar", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-ar", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                maos: [ { id: "luvas-raspa-ar", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                pes: [ { id: "calcado-ar", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                audicao: [ { id: "protetor-ar", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pele: [ { id: "protetor-solar", nome: "Protetor solar", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Queimaduras solares." } ]
+                            }
+                        },
+                        {
+                            id: "manutencao-preventiva-ar",
+                            nome: "Manutenção preventiva (limpeza de filtros, verificação elétrica)",
+                            descricao: "Limpa filtros, verifica conexões elétricas, mede pressões e temperaturas do sistema.",
+                            riscos: ["Queda (uso de escadas)", "Choque elétrico", "Contaminação (fungos, bactérias)"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-ar2", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-ar2", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-ar2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-raspa-ar2", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                respiratoria: [ { id: "mascara-pff2-ar", nome: "Máscara PFF2", norm: "NR-15", obrigatorio: false, risco: "BAIXO", consequencia: "Inalação." } ],
+                                corpo: [ { id: "cinto-ar", nome: "Cinto de segurança", norm: "NR-35", obrigatorio: false, risco: "ALTO", consequencia: "Queda." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.13 PLANEJAMENTO E GESTÃO DE MANUTENÇÃO
+        "planejamento-gestao": {
+            id: "planejamento-gestao",
+            nome: "Planejamento e Gestão de Manutenção",
+            icon: "fas fa-chart-pie",
+            descricao: "Atividades de engenharia, coordenação e consultoria em manutenção",
+            profissoes: {
+                "engenheiro-especialista": {
+                    id: "engenheiro-especialista",
+                    nome: "Engenheiro Especialista em Manutenção",
+                    icon: "fas fa-user-tie",
+                    codigo: "PG-01",
+                    atividades: [
+                        {
+                            id: "analise-falhas",
+                            nome: "Análise de falhas em equipamentos críticos (RCA)",
+                            descricao: "Coordena reuniões técnicas e inspeções em campo para investigar causas raízes de falhas.",
+                            riscos: ["Circulação em áreas produtivas", "Ruído", "Contato com produtos químicos (ao inspecionar equipamentos contaminados)"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-eng", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-eng", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                audicao: [ { id: "protetor-eng", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                pes: [ { id: "calcado-eng", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                maos: [ { id: "luvas-raspa-eng", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                corpo: [ { id: "colete-eng", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ]
+                            }
+                        },
+                        {
+                            id: "aprovacao-tecnica",
+                            nome: "Aprovação técnica de serviços em campo",
+                            descricao: "Vistoria serviços executados por equipes ou terceiros para liberação ou recebimento.",
+                            riscos: ["Quedas", "Contato com partes energizadas/móveis", "Circulação"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-eng2", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-eng2", nome: "Óculos", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-eng2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                audicao: [ { id: "protetor-eng2", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                corpo: [ { id: "colete-eng2", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ]
+                            }
+                        }
+                    ]
+                },
+                "consultor-manutencao": {
+                    id: "consultor-manutencao",
+                    nome: "Consultor de Manutenção",
+                    icon: "fas fa-user-tie",
+                    codigo: "PG-02",
+                    atividades: [
+                        {
+                            id: "auditoria-processos",
+                            nome: "Auditoria de processos de manutenção (visita técnica)",
+                            descricao: "Percorre a planta para avaliar procedimentos, organização e condições de equipamentos.",
+                            riscos: ["Ambientes desconhecidos", "Riscos variáveis", "Circulação"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-cons", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-cons", nome: "Óculos", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-cons", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                audicao: [ { id: "protetor-cons", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                corpo: [ { id: "colete-cons", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ]
+                            }
+                        },
+                        {
+                            id: "reuniao-escritorio",
+                            nome: "Reunião em sala de conferência (escritório)",
+                            descricao: "Analisa documentação, KPIs e discute estratégias com gestores em ambiente administrativo.",
+                            riscos: [],
+                            nivelRisco: "BAIXO",
+                            epis: {}
+                        }
+                    ]
+                },
+                "tecnico-planejamento": {
+                    id: "tecnico-planejamento",
+                    nome: "Técnico de Planejamento de Manutenção / Coordenador",
+                    icon: "fas fa-clipboard-list",
+                    codigo: "PG-03",
+                    atividades: [
+                        {
+                            id: "levantamento-campo",
+                            nome: "Levantamento técnico em campo para elaborar plano de manutenção",
+                            descricao: "Visita equipamentos para coletar dados de plaquetas, condições de acesso e levantar histórico.",
+                            riscos: ["Circulação", "Quedas", "Ruído", "Contato com produtos"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-plan", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-plan", nome: "Óculos", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-plan", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões nos pés." } ],
+                                audicao: [ { id: "protetor-plan", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Perda auditiva." } ],
+                                maos: [ { id: "luvas-plan", nome: "Luvas", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ]
+                            }
+                        },
+                        {
+                            id: "programacao-sala",
+                            nome: "Programação de serviços em sala (uso de computador)",
+                            descricao: "Utiliza sistemas de gestão (CMMS/EAM) para planejar ordens de serviço.",
+                            riscos: ["Trabalho sedentário", "Exposição à luz azul"],
+                            nivelRisco: "BAIXO",
+                            epis: {}
+                        }
+                    ]
+                }
+            }
+        },
+
+        // 2.14 SUPRIMENTOS E ARMAZENAMENTO
+        "suprimentos-armazenamento": {
+            id: "suprimentos-armazenamento",
+            nome: "Suprimentos e Armazenamento",
+            icon: "fas fa-warehouse",
+            descricao: "Gestão de estoques, recebimento e preservação de materiais",
+            profissoes: {
+                "assessor-armazenamento": {
+                    id: "assessor-armazenamento",
+                    nome: "Assessor de Armazenamento e Preservação de Materiais",
+                    icon: "fas fa-boxes",
+                    codigo: "SA-01",
+                    atividades: [
+                        {
+                            id: "inspecao-recebidos",
+                            nome: "Inspeção de materiais recebidos (conferência visual)",
+                            descricao: "Verifica avarias, condições de embalagem e conformidade com o pedido na área de recebimento.",
+                            riscos: ["Queda de objetos", "Atropelamento (movimentação de veículos)", "Cortes"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                cabeca: [ { id: "capacete-sup", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-sup", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                pes: [ { id: "calcado-sup", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Esmagamento." } ],
+                                corpo: [ { id: "colete-sup", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ],
+                                maos: [ { id: "luvas-raspa-sup", nome: "Luvas de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ]
+                            }
+                        },
+                        {
+                            id: "vistoria-estoques",
+                            nome: "Vistoria de estoques (inventário rotativo)",
+                            descricao: "Percorre corredores de armazenagem para contar e verificar condições dos materiais em prateleiras ou racks.",
+                            riscos: ["Queda de materiais", "Queda em altura (se uso de escada)", "Esforço físico"],
+                            nivelRisco: "MÉDIO",
+                            epis: {
+                                pes: [ { id: "calcado-sup2", nome: "Calçado de segurança", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Esmagamento." } ],
+                                cabeca: [ { id: "capacete-sup2", nome: "Capacete", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Traumatismo craniano." } ],
+                                olhos: [ { id: "oculos-sup2", nome: "Óculos", norm: "NR-6", obrigatorio: true, risco: "BAIXO", consequencia: "Lesões oculares." } ],
+                                maos: [ { id: "luvas-sup2", nome: "Luvas", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Cortes." } ],
+                                corpo: [ { id: "colete-sup2", nome: "Colete refletivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Atropelamento." } ]
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    }
+};
+
+
 
         // ===== VARIÁVEIS GLOBAIS =====
         let currentState = {
@@ -4245,4 +5294,3 @@ document.getElementById('employeeSector').value = userData.setor || '';
 
 </body>
 </html>
-
