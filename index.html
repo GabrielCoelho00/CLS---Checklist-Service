@@ -2165,39 +2165,144 @@
                     nome: "Soldador",
                     icon: "fas fa-burn",
                     codigo: "MM-01",
-                    atividades: [
-                        {
-                            id: "soldagem-eletrodo",
-                            nome: "Soldagem com eletrodo revestido",
-                            descricao: "Soldagem manual de estruturas metálicas utilizando eletrodo revestido.",
-                            riscos: ["Radiação do arco", "Respingos de metal fundido", "Fumos metálicos", "Choque elétrico"],
-                            nivelRisco: "ALTO",
-                            epis: {
-                                cabeca: [ { id: "mascara-solda-auto", nome: "Máscara de solda com filtro automático", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras faciais, danos oculares." } ],
-                                olhos: [ { id: "oculos-seguranca", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ],
-                                tronco: [ { id: "avental-raspa-2", nome: "Avental de raspa", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras no tronco." } ],
-                                maos: [ { id: "luvas-raspa-forradas", nome: "Luvas de raspa forradas", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nas mãos." } ],
-                                pernas: [ { id: "perneiras", nome: "Perneiras", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras nas pernas." } ],
-                                pes: [ { id: "botas-couro-cano-longo", nome: "Botas de couro cano longo", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nos pés." } ],
-                                respiratoria: [ { id: "respirador-pff2", nome: "Respirador PFF2", norm: "NR-15", obrigatorio: true, risco: "ALTO", consequencia: "Intoxicação por fumos." } ],
-                                audicao: [ { id: "protetor-auditivo-3", nome: "Protetor auditivo", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Perda auditiva." } ]
-                            }
-                        },
-                        {
-                            id: "soldagem-tig",
-                            nome: "Soldagem TIG",
-                            descricao: "Soldagem de precisão em aço inoxidável, alumínio, etc.",
-                            riscos: ["Radiação intensa", "Fumos (menores)", "Queimaduras"],
-                            nivelRisco: "ALTO",
-                            epis: {
-                                cabeca: [ { id: "mascara-solda", nome: "Máscara de solda", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras faciais." } ],
-                                maos: [ { id: "luvas-vaqueta", nome: "Luvas de vaqueta", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nas mãos." } ],
-                                tronco: [ { id: "avental-raspa-3", nome: "Avental de raspa", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras no tronco." } ],
-                                respiratoria: [ { id: "respirador-se-necessario", nome: "Respirador", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Intoxicação." } ],
-                                olhos: [ { id: "oculos-seguranca-2", nome: "Óculos de segurança", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Lesões oculares." } ]
-                            }
-                        }
-                    ]
+                    "atividades": [
+    {
+        id: "soldagem-eletrodo",
+        nome: "Soldagem com eletrodo revestido",
+        descricao: "Processo SMAW (Shielded Metal Arc Welding) com eletrodo revestido consumível.",
+        riscos: ["Choque elétrico", "Queimaduras", "Fumos metálicos (alta emissão)", "Radiação UV"],
+        nivelRisco: "ALTO",
+        epis: {
+            cabeca: [
+                { id: "touca-solda", nome: "Touca árabe (balaclava) antichamas", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras no couro cabeludo e pescoço" },
+                { id: "mascara-solda", nome: "Máscara de solda com filtro escuro", norm: "NR-6", obrigatorio: true, risco: "ALTÍSSIMO", consequencia: "Queimaduras na retina, cegueira por flash" }
+            ],
+            tronco: [
+                { id: "avental-solda", nome: "Avental de raspa (proteção de tronco e ombros)", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras no tronco e ombros" }
+            ],
+            bracos: [
+                { id: "mangas-solda", nome: "Mangotes de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras nos braços" }
+            ],
+            maos: [
+                { id: "luvas-solda", nome: "Luvas de raspa para solda", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras graves nas mãos, choque elétrico" }
+            ],
+            pernas: [
+                { id: "perneiras-solda", nome: "Perneiras de couro", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras nas pernas" }
+            ],
+            pes: [
+                { id: "botas-solda", nome: "Botas de segurança com biqueira", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queda de objetos nos pés, queimaduras" }
+            ],
+            respiratoria: [
+                { id: "respirador-solda", nome: "Respirador PFF2 (opcional)", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Proteção contra fumos metálicos" }
+            ],
+            audicao: [
+                { id: "protetor-auditivo", nome: "Protetor auditivo (opcional)", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Prevenção de perda auditiva" }
+            ]
+        }
+    },
+    {
+        id: "soldagem-mig-mag",
+        nome: "Soldagem MIG/MAG",
+        descricao: "Processo GMAW (Gas Metal Arc Welding) com arame contínuo e gás de proteção.",
+        riscos: ["Fumos metálicos (emissão intermediária)", "Radiação UV", "Ruído", "Queimaduras"],
+        nivelRisco: "ALTO",
+        epis: {
+            cabeca: [
+                { id: "touca-solda", nome: "Touca árabe (balaclava) antichamas", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras no couro cabeludo e pescoço" },
+                { id: "mascara-solda", nome: "Máscara de solda com filtro escuro", norm: "NR-6", obrigatorio: true, risco: "ALTÍSSIMO", consequencia: "Queimaduras na retina, cegueira por flash" }
+            ],
+            tronco: [
+                { id: "avental-solda", nome: "Avental de raspa (proteção de tronco e ombros)", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras no tronco e ombros" }
+            ],
+            bracos: [
+                { id: "mangas-solda", nome: "Mangotes de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras nos braços" }
+            ],
+            maos: [
+                { id: "luvas-solda", nome: "Luvas de raspa para solda", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nas mãos" }
+            ],
+            pernas: [
+                { id: "perneiras-solda", nome: "Perneiras de couro", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras nas pernas" }
+            ],
+            pes: [
+                { id: "botas-solda", nome: "Botas de segurança com biqueira", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queda de objetos nos pés, queimaduras" }
+            ],
+            respiratoria: [
+                { id: "respirador-solda", nome: "Respirador PFF2 (opcional)", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Proteção contra fumos metálicos" }
+            ],
+            audicao: [
+                { id: "protetor-auditivo", nome: "Protetor auditivo (opcional)", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Prevenção de perda auditiva" }
+            ]
+        }
+    },
+    {
+        id: "soldagem-arame-tubular",
+        nome: "Soldagem com arame tubular",
+        descricao: "Processo FCAW (Flux-Cored Arc Welding) com arame tubular contendo fluxo no interior.",
+        riscos: ["Fumos metálicos (alta emissão)", "Respingos intensos", "Radiação UV", "Ruído"],
+        nivelRisco: "ALTÍSSIMO",
+        epis: {
+            cabeca: [
+                { id: "touca-solda", nome: "Touca árabe (balaclava) antichamas", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras no couro cabeludo e pescoço" },
+                { id: "mascara-solda", nome: "Máscara de solda com filtro escuro", norm: "NR-6", obrigatorio: true, risco: "ALTÍSSIMO", consequencia: "Queimaduras na retina, cegueira por flash" }
+            ],
+            tronco: [
+                { id: "avental-solda", nome: "Avental de raspa (proteção de tronco e ombros)", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras no tronco e ombros" }
+            ],
+            bracos: [
+                { id: "mangas-solda", nome: "Mangotes de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras nos braços" }
+            ],
+            maos: [
+                { id: "luvas-solda", nome: "Luvas de raspa reforçadas", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras nas mãos, proteção contra respingos intensos" }
+            ],
+            pernas: [
+                { id: "perneiras-solda", nome: "Perneiras de couro", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras nas pernas" }
+            ],
+            pes: [
+                { id: "botas-solda", nome: "Botas de segurança com biqueira", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queda de objetos nos pés, queimaduras" }
+            ],
+            respiratoria: [
+                { id: "respirador-solda", nome: "Respirador PFF2 (opcional)", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Proteção contra fumos metálicos" }
+            ],
+            audicao: [
+                { id: "protetor-auditivo", nome: "Protetor auditivo (opcional)", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Prevenção de perda auditiva" }
+            ]
+        }
+    },
+    {
+        id: "soldagem-tig",
+        nome: "Soldagem TIG",
+        descricao: "Processo GTAW (Gas Tungsten Arc Welding) com eletrodo de tungstênio não consumível.",
+        riscos: ["Ozônio", "Radiação UV", "Queimaduras", "Baixa emissão de fumos"],
+        nivelRisco: "MÉDIO",
+        epis: {
+            cabeca: [
+                { id: "touca-solda", nome: "Touca árabe (balaclava) antichamas", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras no couro cabeludo e pescoço" },
+                { id: "mascara-solda", nome: "Máscara de solda com filtro escuro", norm: "NR-6", obrigatorio: true, risco: "ALTÍSSIMO", consequencia: "Queimaduras na retina, cegueira por flash" }
+            ],
+            tronco: [
+                { id: "avental-solda", nome: "Avental de raspa (proteção de tronco e ombros)", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queimaduras no tronco e ombros" }
+            ],
+            bracos: [
+                { id: "mangas-solda", nome: "Mangotes de raspa", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras nos braços" }
+            ],
+            maos: [
+                { id: "luvas-vaqueta", nome: "Luvas de vaqueta para TIG", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Proteção térmica com destreza para soldagem TIG" }
+            ],
+            pernas: [
+                { id: "perneiras-solda", nome: "Perneiras de couro", norm: "NR-6", obrigatorio: true, risco: "MÉDIO", consequencia: "Queimaduras nas pernas" }
+            ],
+            pes: [
+                { id: "botas-solda", nome: "Botas de segurança com biqueira", norm: "NR-6", obrigatorio: true, risco: "ALTO", consequencia: "Queda de objetos nos pés, queimaduras" }
+            ],
+            respiratoria: [
+                { id: "respirador-solda", nome: "Respirador PFF2 (opcional)", norm: "NR-15", obrigatorio: false, risco: "MÉDIO", consequencia: "Proteção contra fumos (recomendado em ambientes fechados)" }
+            ],
+            audicao: [
+                { id: "protetor-auditivo", nome: "Protetor auditivo (opcional)", norm: "NR-6", obrigatorio: false, risco: "BAIXO", consequencia: "Prevenção de perda auditiva" }
+            ]
+        }
+    }
+]
                 },
                 "torneiro-mecanico": {
                     id: "torneiro-mecanico",
